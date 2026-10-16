@@ -1,0 +1,15 @@
+# Encabezados base de Cloudflare Pages (todos los ambientes).
+# scripts/generate-env-files.ts agrega la Content-Security-Policy y, en QA,
+# X-Robots-Tag: noindex. Documentación: docs/ambientes-y-despliegue.md
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), browsing-topics=()
+  Strict-Transport-Security: max-age=31536000
+  Cross-Origin-Opener-Policy: same-origin
+
+# Archivos con hash generados por Vite: se cachean un año.
+/static/*
+  Cache-Control: public, max-age=31536000, immutable

@@ -1,0 +1,32 @@
+# Dependencias y builds
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Reportes de pruebas
+coverage/
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
+
+# Variables locales (nunca se suben; los .env.[modo] solo tienen valores públicos)
+.env.local
+.env.*.local
+*.local
+
+# Insumos de diseño originales (los assets necesarios se copian a public/ y docs/)
+insumos/
+
+# Sistema y editores
+.DS_Store
+*.log
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+
+# Herramientas locales de Claude Code
+.claude/
+.agents/
+skills-lock.json

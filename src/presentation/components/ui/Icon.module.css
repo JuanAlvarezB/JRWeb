@@ -1,0 +1,6 @@
+/* Tamaño por defecto relativo al texto; cada componente lo ajusta con sus tokens. */
+.icon {
+  width: 1.25em;
+  height: 1.25em;
+  flex-shrink: 0;
+}

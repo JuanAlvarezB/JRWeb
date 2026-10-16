@@ -1,0 +1,255 @@
+{
+  "component": {
+    "$description": "Medidas de componentes tomadas literalmente de las notas de handoff aprobadas (14 oct 2026, sección 2). No introducen colores, fuentes, radios ni sombras nuevos: solo dimensiones y capas para que los CSS Modules no tengan números sueltos. Fuente de verdad: DESIGN.md.",
+    "nav": {
+      "$type": "dimension",
+      "link-gap": {
+        "$value": "28px",
+        "$description": "Separación entre enlaces del menú de escritorio."
+      },
+      "logo-width": {
+        "$value": "{size.logo-min-width}",
+        "$description": "Logo completo (mínimo del manual)."
+      },
+      "logo-compact-width": {
+        "$value": "96px",
+        "$description": "Logo-ícono en el menú compacto de escritorio."
+      },
+      "logo-mobile-width": {
+        "$value": "84px",
+        "$description": "Logo-ícono en móvil."
+      },
+      "logo-padding-block": {
+        "$value": "15px",
+        "$description": "Espacio libre arriba y abajo del logo completo."
+      },
+      "compact-scroll-threshold": {
+        "$value": "80px",
+        "$description": "Scroll a partir del cual el menú pasa a modo compacto."
+      },
+      "underline-width": {
+        "$value": "2px",
+        "$description": "Borde inferior del enlace activo."
+      }
+    },
+    "mobile-menu": {
+      "link-font-size": {
+        "$type": "dimension",
+        "$value": "22px"
+      },
+      "row-height": {
+        "$type": "dimension",
+        "$value": "56px"
+      }
+    },
+    "button": {
+      "$type": "dimension",
+      "padding-inline": {
+        "$value": "{space.6}"
+      },
+      "icon-size": {
+        "$value": "20px"
+      },
+      "icon-gap": {
+        "$value": "10px"
+      },
+      "border-width": {
+        "$value": "1.5px",
+        "$description": "Botón contorno."
+      },
+      "whatsapp-hero-height": {
+        "$value": "60px",
+        "$description": "Botón grande de WhatsApp en Contáctanos."
+      }
+    },
+    "action-link": {
+      "$type": "dimension",
+      "underline-thickness": {
+        "$value": "2px"
+      },
+      "underline-offset": {
+        "$value": "4px"
+      },
+      "focus-radius": {
+        "$value": "4px"
+      },
+      "icon-gap": {
+        "$value": "{space.1}",
+        "$description": "Separación entre el texto y la flecha."
+      }
+    },
+    "fab": {
+      "$type": "dimension",
+      "icon-size": {
+        "$value": "28px"
+      },
+      "offset-mobile": {
+        "$value": "{space.4}"
+      },
+      "offset-desktop": {
+        "$value": "{space.6}"
+      }
+    },
+    "ribbon": {
+      "$type": "dimension",
+      "padding-inline": {
+        "$value": "48px"
+      },
+      "padding-inline-small": {
+        "$value": "22px"
+      },
+      "cut": {
+        "$value": "28px",
+        "$description": "Recorte horizontal = alto × tan(30°)."
+      },
+      "cut-small": {
+        "$value": "17px"
+      }
+    },
+    "section-heading": {
+      "$type": "dimension",
+      "gap": {
+        "$value": "10px"
+      },
+      "subtitle-size-mobile": {
+        "$value": "17px"
+      }
+    },
+    "card": {
+      "$type": "dimension",
+      "benefit-icon-size": {
+        "$value": "36px"
+      },
+      "benefit-title-size": {
+        "$value": "22px"
+      },
+      "plan-name-size": {
+        "$value": "26px"
+      },
+      "testimonial-quote-size": {
+        "$value": "18px",
+        "$description": "Rango aprobado 17–20 px."
+      },
+      "hero-min-width": {
+        "$value": "250px"
+      },
+      "hero-max-width": {
+        "$value": "290px"
+      },
+      "contact-icon-size": {
+        "$value": "22px"
+      },
+      "hover-duration": {
+        "$type": "duration",
+        "$value": "{motion.duration.nav}",
+        "$description": "Hover de tarjetas: 200 ms (handoff §2)."
+      }
+    },
+    "selector": {
+      "$type": "dimension",
+      "chip-min-width": {
+        "$value": "88px"
+      },
+      "chip-height": {
+        "$value": "{size.button-height}"
+      },
+      "chip-border-width": {
+        "$value": "1.5px"
+      }
+    },
+    "accordion": {
+      "$type": "dimension",
+      "gap": {
+        "$value": "{space.3}"
+      },
+      "trigger-min-height": {
+        "$value": "64px"
+      },
+      "trigger-size-mobile": {
+        "$value": "17px"
+      },
+      "chevron-size": {
+        "$value": "22px"
+      },
+      "answer-line-height": {
+        "$type": "number",
+        "$value": 1.6
+      }
+    },
+    "location": {
+      "$type": "dimension",
+      "map-height-mobile": {
+        "$value": "240px"
+      }
+    },
+    "notice": {
+      "$type": "dimension",
+      "padding-block": {
+        "$value": "18px"
+      },
+      "padding-inline": {
+        "$value": "22px"
+      }
+    },
+    "footer": {
+      "$type": "dimension",
+      "brand-column": {
+        "$value": "280px"
+      },
+      "gap-top-desktop": {
+        "$value": "96px"
+      },
+      "gap-top-mobile": {
+        "$value": "{space.12}"
+      }
+    },
+    "border": {
+      "$type": "dimension",
+      "hairline": {
+        "$value": "1px",
+        "$description": "Divisores Niebla."
+      }
+    },
+    "photo": {
+      "aspect-ratio": {
+        "$type": "number",
+        "$value": 1.3333,
+        "$description": "Fotos futuras 4:3."
+      }
+    },
+    "layer": {
+      "$type": "number",
+      "header": {
+        "$value": 100
+      },
+      "floating": {
+        "$value": 200,
+        "$description": "Botón flotante y aviso de privacidad."
+      },
+      "mobile-menu": {
+        "$value": 300
+      },
+      "environment-badge": {
+        "$value": 400
+      }
+    },
+    "hero-wash": {
+      "$type": "dimension",
+      "blur": {
+        "$value": "20px",
+        "$description": "Difuminado de la aguada del hero (DESIGN.md §4: blur ~18–22 px)."
+      }
+    },
+    "speedometer": {
+      "$type": "dimension",
+      "value-size": {
+        "$value": "{font.size.display}",
+        "$description": "Número del centro con leyenda \"horas en total\" (handoff §2: 56 px)."
+      },
+      "value-size-alone": {
+        "$value": "64px",
+        "$description": "Número del centro sin leyenda (404 y tarjeta del hero), medido en los mockups."
+      }
+    }
+  }
+}

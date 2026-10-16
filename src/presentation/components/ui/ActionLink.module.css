@@ -1,0 +1,51 @@
+.actionLink {
+  display: inline-flex;
+  gap: var(--component-action-link-icon-gap);
+  align-items: center;
+  min-height: var(--size-touch-target);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-brand-default);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--font-letter-spacing-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--motion-duration-fast) var(--motion-easing-out);
+}
+
+.actionLink:hover {
+  color: var(--color-brand-hover);
+}
+
+.actionLink:hover .label {
+  text-decoration: underline;
+  text-decoration-thickness: var(--component-action-link-underline-thickness);
+  text-underline-offset: var(--component-action-link-underline-offset);
+}
+
+.actionLink:focus-visible {
+  border-radius: var(--component-action-link-focus-radius);
+  outline-offset: var(--focus-offset-link);
+}
+
+.actionLink[aria-disabled='true'] {
+  color: var(--color-neutral-text-disabled);
+  cursor: not-allowed;
+}
+
+.actionLink[aria-disabled='true'] .label {
+  text-decoration: none;
+}
+
+.arrow {
+  width: 1em;
+  height: 1em;
+}
+
+.leadingIcon {
+  width: 1.125em;
+  height: 1.125em;
+}

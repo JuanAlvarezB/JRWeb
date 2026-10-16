@@ -1,0 +1,86 @@
+.button {
+  display: inline-flex;
+  gap: var(--component-button-icon-gap);
+  align-items: center;
+  justify-content: center;
+  min-height: var(--size-button-height);
+  padding: 0 var(--component-button-padding-inline);
+  border: var(--component-button-border-width) solid transparent;
+  border-radius: var(--radius-button);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+  letter-spacing: var(--font-letter-spacing-body);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition-property: background-color, border-color, color;
+  transition-duration: var(--motion-duration-fast);
+  transition-timing-function: var(--motion-easing-out);
+}
+
+.primary {
+  background-color: var(--color-brand-default);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-neutral-surface);
+}
+
+.primary:hover {
+  background-color: var(--color-brand-hover);
+  color: var(--color-neutral-surface);
+}
+
+.outline {
+  background-color: transparent;
+  border-color: var(--color-brand-default);
+  color: var(--color-brand-default);
+}
+
+.outline:hover {
+  /* Verde Sinú al 6 % (handoff §2). */
+  background-color: color-mix(in sRGB, var(--color-brand-default) 6%, transparent);
+  border-color: var(--color-brand-hover);
+  color: var(--color-brand-hover);
+}
+
+.button:disabled,
+.button[aria-disabled='true'] {
+  background-color: var(--color-neutral-border);
+  border-color: var(--color-neutral-border);
+  box-shadow: none;
+  color: var(--color-neutral-text-disabled);
+  cursor: not-allowed;
+}
+
+.outline:disabled,
+.outline[aria-disabled='true'] {
+  background-color: transparent;
+  border-color: var(--color-neutral-border-strong);
+}
+
+.large {
+  min-height: var(--component-button-whatsapp-hero-height);
+  font-size: var(--font-size-body-lg);
+}
+
+.fullWidthOnMobile {
+  width: 100%;
+  min-height: var(--size-button-height-mobile);
+}
+
+.icon {
+  width: var(--component-button-icon-size);
+  height: var(--component-button-icon-size);
+}
+
+@media (width >= 720px) {
+  .fullWidthOnMobile {
+    width: auto;
+    min-height: var(--size-button-height);
+  }
+
+  .fullWidthOnMobile.large {
+    min-height: var(--component-button-whatsapp-hero-height);
+  }
+}

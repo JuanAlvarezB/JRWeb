@@ -1,0 +1,35 @@
+.card {
+  background-color: var(--color-neutral-surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-lg);
+  transition: box-shadow var(--component-card-hover-duration) var(--motion-easing-out);
+}
+
+@media (hover: hover) {
+  .hoverable:hover {
+    box-shadow: var(--shadow-lg-hover);
+  }
+}
+
+.paddingLg,
+.paddingMd {
+  padding: var(--layout-card-padding-mobile);
+}
+
+.paddingSm {
+  padding: var(--space-5);
+}
+
+@media (width >= 720px) {
+  .paddingLg {
+    padding: var(--layout-card-padding-desktop) var(--space-8);
+  }
+
+  .paddingMd {
+    padding: var(--space-8);
+  }
+
+  .paddingSm {
+    padding: var(--space-6);
+  }
+}

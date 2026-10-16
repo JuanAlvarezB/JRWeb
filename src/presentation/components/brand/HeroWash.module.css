@@ -1,0 +1,17 @@
+.wash {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: var(--radius-card);
+  background-image: var(--gradient-hero-wash);
+  filter: blur(var(--component-hero-wash-blur));
+  opacity: var(--opacity-hero-wash);
+  pointer-events: none;
+
+  /* Centro transparente: el texto del hero queda sobre Marfil limpio. */
+  mask-image: radial-gradient(
+    ellipse 42% 58% at 50% 48%,
+    transparent 55%,
+    var(--color-neutral-surface) 100%
+  );
+}

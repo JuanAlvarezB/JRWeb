@@ -1,0 +1,12 @@
+/*
+ * Fuentes autoalojadas con Fontsource (licencia SIL OFL 1.1), subconjunto latino
+ * (incluye tildes, ñ, ¿ y ¡) y font-display: swap.
+ * Solo los pesos y estilos definidos en DESIGN.md §3:
+ *   Barlow 400 / 500 / 600 / 700 y Barlow Condensed 800 itálica (titular).
+ * La del titular se precarga desde vite.config.ts (plugin preloadDisplayFont).
+ */
+@import url('@fontsource/barlow/latin-400.css');
+@import url('@fontsource/barlow/latin-500.css');
+@import url('@fontsource/barlow/latin-600.css');
+@import url('@fontsource/barlow/latin-700.css');
+@import url('@fontsource/barlow-condensed/latin-800-italic.css');

@@ -1,0 +1,46 @@
+.ribbon {
+  /* Variante pequeña por defecto (móvil): Rojo Aguja, texto 14 px. */
+  --ribbon-height: var(--size-ribbon-height-small);
+  --ribbon-padding: var(--component-ribbon-padding-inline-small);
+  --ribbon-cut: var(--component-ribbon-cut-small);
+  --ribbon-background: var(--color-ribbon-small);
+  --ribbon-font-size: var(--font-size-ribbon-small);
+  --ribbon-tracking: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--ribbon-height);
+  padding-inline: var(--ribbon-padding);
+  margin: 0;
+  background-color: var(--ribbon-background);
+  clip-path: polygon(var(--ribbon-cut) 0, 100% 0, calc(100% - var(--ribbon-cut)) 100%, 0 100%);
+  color: var(--color-neutral-surface);
+  font-family: var(--font-family-body);
+  font-size: var(--ribbon-font-size);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  letter-spacing: var(--ribbon-tracking);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.large {
+  --ribbon-height: var(--size-ribbon-height);
+  --ribbon-padding: var(--component-ribbon-padding-inline);
+  --ribbon-cut: var(--component-ribbon-cut);
+  --ribbon-background: var(--color-ribbon-default);
+  --ribbon-font-size: var(--font-size-ribbon);
+  --ribbon-tracking: var(--font-letter-spacing-ribbon);
+}
+
+@media (width >= 720px) {
+  .responsive {
+    --ribbon-height: var(--size-ribbon-height);
+    --ribbon-padding: var(--component-ribbon-padding-inline);
+    --ribbon-cut: var(--component-ribbon-cut);
+    --ribbon-background: var(--color-ribbon-default);
+    --ribbon-font-size: var(--font-size-ribbon);
+    --ribbon-tracking: var(--font-letter-spacing-ribbon);
+  }
+}

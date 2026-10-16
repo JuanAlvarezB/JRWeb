@@ -1,0 +1,87 @@
+.arc {
+  --needle-rotation: 0deg;
+  --needle-from: 0deg;
+  --needle-origin: 50% 50%;
+
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.segment {
+  transition-property: stroke-dasharray, stroke-dashoffset;
+  transition-duration: var(--motion-duration-arc);
+  transition-timing-function: var(--motion-easing-out);
+}
+
+/* Excepción documentada (DESIGN.md §2): colores del arco por horas. */
+.theory {
+  stroke: var(--color-course-theory);
+}
+
+.workshop {
+  stroke: var(--color-course-workshop);
+}
+
+.driving {
+  stroke: var(--color-course-driving);
+}
+
+.brand {
+  stroke: var(--color-brand-default);
+}
+
+/* Anillo interno decorativo en Lima. */
+.ring {
+  stroke: var(--color-brand-lime);
+}
+
+.needle {
+  fill: var(--color-ribbon-small);
+  transform: rotate(var(--needle-rotation));
+  transform-box: view-box;
+  transform-origin: var(--needle-origin);
+}
+
+/* Detalle memorable: la aguja barre de 0 a su posición en 900 ms (DESIGN.md §7). */
+.sweep {
+  animation: needle-sweep var(--motion-duration-needle) var(--motion-easing-out) both;
+}
+
+@keyframes needle-sweep {
+  from {
+    transform: rotate(var(--needle-from));
+  }
+
+  to {
+    transform: rotate(var(--needle-rotation));
+  }
+}
+
+.value {
+  fill: var(--color-neutral-text);
+  font-family: var(--font-family-body);
+  font-size: var(--component-speedometer-value-size);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0;
+}
+
+.valueAlone {
+  font-size: var(--component-speedometer-value-size-alone);
+}
+
+.caption {
+  fill: var(--color-neutral-text-muted);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sweep {
+    animation: none;
+  }
+
+  .segment {
+    transition: none;
+  }
+}

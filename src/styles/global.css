@@ -1,0 +1,119 @@
+/*
+ * Estilos base del sitio (DESIGN.md). Solo usa variables generadas en variables.css.
+ * Un único punto de quiebre: 720 px (móvil < 720 ≤ escritorio).
+ */
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  background-color: var(--color-neutral-canvas);
+  scroll-padding-top: var(--size-nav-height-mobile);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background-color: var(--color-neutral-canvas);
+  color: var(--color-neutral-text);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--font-line-height-body);
+  letter-spacing: var(--font-letter-spacing-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Titular display: el único H1 de cada página (DESIGN.md §3). */
+h1 {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-display-mobile);
+  font-style: italic;
+  font-weight: var(--font-weight-extrabold);
+  line-height: var(--font-line-height-display);
+  letter-spacing: var(--font-letter-spacing-display);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+/* Títulos de sección: Barlow 600, tipo oración, siempre en Tinta. */
+h2 {
+  font-size: var(--font-size-section-mobile);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--font-line-height-heading);
+  letter-spacing: var(--font-letter-spacing-heading);
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--font-line-height-heading);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--color-brand-default);
+  text-underline-offset: var(--component-action-link-underline-offset);
+}
+
+a:hover {
+  color: var(--color-brand-hover);
+}
+
+strong,
+b {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Foco visible en Verde Sinú, solo con teclado (DESIGN.md §5, handoff §1). */
+:focus-visible {
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+}
+
+a:focus-visible {
+  outline-offset: var(--focus-offset-link);
+  border-radius: var(--component-action-link-focus-radius);
+}
+
+::selection {
+  background-color: var(--color-brand-glow);
+  color: var(--color-neutral-text);
+}
+
+@media (width >= 720px) {
+  html {
+    scroll-padding-top: var(--size-nav-height-compact);
+  }
+
+  h1 {
+    font-size: var(--font-size-display-lg);
+  }
+
+  h2 {
+    font-size: var(--font-size-section);
+  }
+}
+
+/* Todo el movimiento se desactiva con "reducir movimiento" (DESIGN.md §7). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+  }
+}

@@ -1,0 +1,186 @@
+/**
+ * ARCHIVO GENERADO por scripts/build-tokens.ts desde design-tokens/.
+ * No editar a mano: cambia DESIGN.md y los tokens, y ejecuta `npm run tokens`.
+ */
+
+:root {
+  --color-brand-default: #005932; /** Verde Sinú. Único color de acción: botón principal, links, menú activo, eyebrows, checks y foco. */
+  --color-brand-hover: #00502c; /** Verde Profundo. Hover y pressed del botón principal y de links. Sustituye a #00472A de DESIGN.md (ajuste aprobado: sale del logo). */
+  --color-brand-bright: #00aa4c; /** Verde Pista. Solo decorativo: degradado, aguada y tramo Manejo del arco. Nunca texto (2.9:1). */
+  --color-brand-lime: #9bc844; /** Lima Velocímetro. Solo decorativo: arcos internos, tramo Taller del arco, aguada, comillas. Nunca texto (1.8:1). */
+  --color-brand-glow: #e8f3d6; /** Brillo Lima. Círculos de íconos y lavados atmosféricos. Nunca fondo de sección. */
+  --color-ribbon-default: #f10825; /** Rojo Franja. Solo la franja firma, texto blanco bold ≥ 19 px (4.37:1). */
+  --color-ribbon-small: #c71424; /** Rojo Aguja. Franja pequeña (texto < 19 px, 5.9:1) y aguja del velocímetro. */
+  --color-neutral-canvas: #fbf8f0; /** Marfil Sinú. Fondo de todas las páginas, menú y footer. */
+  --color-neutral-surface: #ffffff; /** Papel. Tarjetas, paneles y aviso de privacidad. */
+  --color-neutral-text: #1d1e1c; /** Tinta. Texto principal e íconos (15.8:1 sobre Marfil). */
+  --color-neutral-text-muted: #615f5c; /** Piedra. Texto secundario (6.0:1). */
+  --color-neutral-text-disabled: #8e8b87; /** Madera. Trazos decorativos y deshabilitados. No texto informativo (3.2:1). */
+  --color-neutral-border-strong: #c0bbb6; /** Hueso. Bordes de controles en reposo. */
+  --color-neutral-border: #e4dfd3; /** Niebla. Divisores, líneas finas y fondo de botón deshabilitado. */
+  --color-feedback-error: #b42318; /** Mensajes de error, siempre con ícono y texto (6.2:1). */
+  --color-course-theory: #005932; /** Tramo Teoría del arco (excepción documentada). */
+  --color-course-workshop: #9bc844; /** Tramo Taller del arco (excepción documentada). */
+  --color-course-driving: #00aa4c; /** Tramo Manejo del arco (excepción documentada). */
+  --gradient-car: linear-gradient(90deg, #00502C 36.9%, #00793C 67.8%, #008941 77.7%, #00AA4C 95.7%); /** Degradado del auto del logo, 90° de la nariz a la cola. Paradas: #00502C 36.9 %, #00793C 67.8 %, #008941 77.7 %, #00AA4C 95.7 %. */
+  --gradient-hero-wash: linear-gradient(110deg, #005932 0%, #00AA4C 55%, #9BC844 100%); /** Aguada del hero: forma orgánica difuminada (blur ~18–22 px), nunca detrás de texto. */
+  --opacity-hero-wash: 0.24; /** Rango permitido 0.18–0.30. */
+  --font-family-display: 'Barlow Condensed', 'Arial Narrow', sans-serif; /** Solo H1 del hero y títulos de página. Itálica 800, MAYÚSCULAS. Un titular por pantalla. */
+  --font-family-body: Barlow, system-ui, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-size-caption: 13px;
+  --font-size-small: 14px;
+  --font-size-body: 16px;
+  --font-size-body-lg: 18px;
+  --font-size-heading-sm: 20px;
+  --font-size-heading: 24px;
+  --font-size-heading-lg: 32px;
+  --font-size-section: 40px;
+  --font-size-display: 56px;
+  --font-size-display-lg: 72px;
+  --font-size-display-mobile: 40px; /** Rango móvil 36–44 px. */
+  --font-size-section-mobile: 28px;
+  --font-size-ribbon: 22px; /** Mínimo 19 px sobre Rojo Franja. */
+  --font-size-ribbon-small: 14px;
+  --font-line-height-display: 0.98;
+  --font-line-height-heading: 1.12;
+  --font-line-height-body: 1.55;
+  --font-letter-spacing-display: 0em;
+  --font-letter-spacing-heading: -0.01em;
+  --font-letter-spacing-body: 0.015em;
+  --font-letter-spacing-eyebrow: 0.06em;
+  --font-letter-spacing-ribbon: 0.04em;
+  --typography-display: 800 72px/0.98 'Barlow Condensed', 'Arial Narrow', sans-serif; /** Itálica + MAYÚSCULAS. */
+  --typography-display-mobile: 800 40px/0.98 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --typography-section: 600 40px/1.12 Barlow, system-ui, sans-serif;
+  --typography-heading: 600 24px/1.12 Barlow, system-ui, sans-serif;
+  --typography-eyebrow: 700 14px/1.55 Barlow, system-ui, sans-serif; /** MAYÚSCULAS, color brand.default. */
+  --typography-body: 400 16px/1.55 Barlow, system-ui, sans-serif;
+  --typography-button: 600 16px/1 Barlow, system-ui, sans-serif;
+  --typography-ribbon: 700 22px/1 Barlow, system-ui, sans-serif; /** MAYÚSCULAS, blanco. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-28: 112px;
+  --layout-container-max: 1200px;
+  --layout-gutter-mobile: 16px;
+  --layout-gutter-desktop: 32px;
+  --layout-section-gap-mobile: 48px;
+  --layout-section-gap-desktop: 80px;
+  --layout-card-padding-mobile: 24px;
+  --layout-card-padding-desktop: 40px;
+  --layout-reading-width: 720px; /** Columna de la Política de datos. */
+  --layout-section-header-width: 700px;
+  --size-touch-target: 44px;
+  --size-button-height: 48px;
+  --size-button-height-mobile: 52px;
+  --size-nav-height: 124px; /** Arriba de la página, con el logo completo. */
+  --size-nav-height-compact: 72px; /** Con scroll > 80 px, con el logo-ícono. */
+  --size-nav-height-mobile: 64px;
+  --size-logo-min-width: 240px;
+  --size-logo-icon-min-width: 80px;
+  --size-fab: 56px;
+  --size-icon-circle: 64px;
+  --size-icon-circle-small: 48px;
+  --size-notice-max-width: 360px;
+  --size-ribbon-height: 48px;
+  --size-ribbon-height-small: 30px;
+  --radius-button: 16px;
+  --radius-input: 16px;
+  --radius-image: 16px;
+  --radius-accordion: 16px;
+  --radius-card: 20px;
+  --radius-pill: 999px;
+  --radius-ribbon: 0px; /** Paralelogramo sin radio. */
+  --angle-ribbon-skew: 30deg; /** Desplazamiento horizontal = 0.577 × alto; se dibuja con clip-path para que el texto no se incline (ajuste aprobado; DESIGN.md decía −12°). */
+  --angle-hero-card-tilt: 2deg; /** Alternando −2° / +2°. Sin rotación en móvil. */
+  --shadow-sm: 0px 1px 4px 0px rgba(29, 30, 28, 0.16); /** Botón principal. */
+  --shadow-lg: 6px 4px 24px 0px rgba(0, 89, 50, 0.14); /** Tarjetas flotantes y destacadas. */
+  --shadow-lg-hover: 8px 8px 32px 0px rgba(0, 89, 50, 0.18); /** Hover de tarjeta (DESIGN.md: 'sombra un poco mayor'). */
+  --focus-color: #005932;
+  --focus-width: 2px;
+  --focus-offset: 3px;
+  --focus-offset-link: 2px;
+  --breakpoint-mobile: 390px; /** Ancho de diseño móvil. */
+  --breakpoint-layout: 720px; /** Cambio de disposición móvil ↔ escritorio usado en los mockups. */
+  --breakpoint-desktop: 1440px; /** Ancho de diseño de escritorio. */
+  --motion-duration-fast: 150ms; /** Cambio de color de botones. */
+  --motion-duration-nav: 200ms; /** Menú a modo compacto; giro del chevron. */
+  --motion-duration-enter: 300ms; /** Entrada de tarjetas. */
+  --motion-duration-stagger: 60ms;
+  --motion-duration-arc: 600ms; /** Redistribución de tramos al cambiar de categoría. */
+  --motion-duration-needle: 900ms; /** Barrido de la aguja en la primera carga. */
+  --motion-duration-copied: 2000ms; /** Tiempo del estado 'Copiado'. */
+  --motion-easing-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-distance-enter: 12px;
+  --component-nav-link-gap: 28px; /** Separación entre enlaces del menú de escritorio. */
+  --component-nav-logo-width: 240px; /** Logo completo (mínimo del manual). */
+  --component-nav-logo-compact-width: 96px; /** Logo-ícono en el menú compacto de escritorio. */
+  --component-nav-logo-mobile-width: 84px; /** Logo-ícono en móvil. */
+  --component-nav-logo-padding-block: 15px; /** Espacio libre arriba y abajo del logo completo. */
+  --component-nav-compact-scroll-threshold: 80px; /** Scroll a partir del cual el menú pasa a modo compacto. */
+  --component-nav-underline-width: 2px; /** Borde inferior del enlace activo. */
+  --component-mobile-menu-link-font-size: 22px;
+  --component-mobile-menu-row-height: 56px;
+  --component-button-padding-inline: 24px;
+  --component-button-icon-size: 20px;
+  --component-button-icon-gap: 10px;
+  --component-button-border-width: 1.5px; /** Botón contorno. */
+  --component-button-whatsapp-hero-height: 60px; /** Botón grande de WhatsApp en Contáctanos. */
+  --component-action-link-underline-thickness: 2px;
+  --component-action-link-underline-offset: 4px;
+  --component-action-link-focus-radius: 4px;
+  --component-action-link-icon-gap: 4px; /** Separación entre el texto y la flecha. */
+  --component-fab-icon-size: 28px;
+  --component-fab-offset-mobile: 16px;
+  --component-fab-offset-desktop: 24px;
+  --component-ribbon-padding-inline: 48px;
+  --component-ribbon-padding-inline-small: 22px;
+  --component-ribbon-cut: 28px; /** Recorte horizontal = alto × tan(30°). */
+  --component-ribbon-cut-small: 17px;
+  --component-section-heading-gap: 10px;
+  --component-section-heading-subtitle-size-mobile: 17px;
+  --component-card-benefit-icon-size: 36px;
+  --component-card-benefit-title-size: 22px;
+  --component-card-plan-name-size: 26px;
+  --component-card-testimonial-quote-size: 18px; /** Rango aprobado 17–20 px. */
+  --component-card-hero-min-width: 250px;
+  --component-card-hero-max-width: 290px;
+  --component-card-contact-icon-size: 22px;
+  --component-card-hover-duration: 200ms; /** Hover de tarjetas: 200 ms (handoff §2). */
+  --component-selector-chip-min-width: 88px;
+  --component-selector-chip-height: 48px;
+  --component-selector-chip-border-width: 1.5px;
+  --component-accordion-gap: 12px;
+  --component-accordion-trigger-min-height: 64px;
+  --component-accordion-trigger-size-mobile: 17px;
+  --component-accordion-chevron-size: 22px;
+  --component-accordion-answer-line-height: 1.6;
+  --component-location-map-height-mobile: 240px;
+  --component-notice-padding-block: 18px;
+  --component-notice-padding-inline: 22px;
+  --component-footer-brand-column: 280px;
+  --component-footer-gap-top-desktop: 96px;
+  --component-footer-gap-top-mobile: 48px;
+  --component-border-hairline: 1px; /** Divisores Niebla. */
+  --component-photo-aspect-ratio: 1.3333; /** Fotos futuras 4:3. */
+  --component-layer-header: 100;
+  --component-layer-floating: 200; /** Botón flotante y aviso de privacidad. */
+  --component-layer-mobile-menu: 300;
+  --component-layer-environment-badge: 400;
+  --component-hero-wash-blur: 20px; /** Difuminado de la aguada del hero (DESIGN.md §4: blur ~18–22 px). */
+  --component-speedometer-value-size: 56px; /** Número del centro con leyenda "horas en total" (handoff §2: 56 px). */
+  --component-speedometer-value-size-alone: 64px; /** Número del centro sin leyenda (404 y tarjeta del hero), medido en los mockups. */
+}

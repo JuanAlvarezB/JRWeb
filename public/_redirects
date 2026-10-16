@@ -1,0 +1,8 @@
+# Redirecciones de Cloudflare Pages (formato: origen destino código).
+# Rutas alternativas que la gente suele escribir o compartir.
+/inicio                 /                                   301
+/contacto               /contactanos                        301
+/faq                    /preguntas-frecuentes               301
+/preguntas              /preguntas-frecuentes               301
+/politica-de-datos      /politica-de-tratamiento-de-datos   301
+/privacidad             /politica-de-tratamiento-de-datos   301

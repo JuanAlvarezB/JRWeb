@@ -1,0 +1,13 @@
+dist/
+coverage/
+playwright-report/
+test-results/
+insumos/
+docs/mockups/
+package-lock.json
+src/styles/variables.css
+tests/e2e/specs/visual/**/*-snapshots/
+
+# Texto legal literal: no se formatea automáticamente
+src/data/content/legal/
+src/shared/constants/designTokens.ts
