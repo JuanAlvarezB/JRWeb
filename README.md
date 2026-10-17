@@ -47,6 +47,58 @@ Arquitectura limpia con la regla de dependencias `presentation -> domain <- data
 
 Flujo de datos: componente → hook → caso de uso → contrato del repositorio → implementación en `data/`.
 
+### Inyección de dependencias
+
+- **`src/di/container.ts`** (composition root): `createStaticRepositories()` crea un repositorio por contrato del dominio y `createContainer(repositories)` construye los casos de uso con ellos.
+- **`main.tsx`** llama a `createContainer()` y pasa el resultado a `<App>`.
+- **`AppProviders`** monta dos providers:
+  - **`QueryProvider`**: caché de TanStack Query. El contenido es estático, así que una consulta resuelta no se vuelve a pedir. Los errores del dominio no se reintentan; las fallas de red, hasta 2 veces.
+  - **`DependencyProvider`**: entrega los casos de uso por Context. Solo los hooks de datos llaman a `useDependencies()`.
+- **`AppDependencies`** (en `presentation/providers/`) es el contrato: la presentación declara qué casos de uso necesita y el contenedor los entrega.
+- **Pruebas:** usan `createContainer(inMemoryRepositories())`, con repositorios en memoria y sin archivos.
+
+### Cambiar la fuente de datos (fase 2: Supabase)
+
+Solo se crean repositorios nuevos en `data/` y se modifica `src/di/container.ts`. Dominio, hooks y componentes no cambian. Ejemplo con los planes:
+
+```ts
+// src/data/repositories/SupabasePlanRepository.ts
+import type { SupabaseClient } from '@supabase/supabase-js';
+import type { Plan } from '../../domain/entities/Plan';
+import type { PlanRepository } from '../../domain/repositories/PlanRepository';
+import { mapPlans } from '../mappers/plansMapper';
+
+export class SupabasePlanRepository implements PlanRepository {
+  constructor(private readonly db: SupabaseClient) {}
+
+  async list(): Promise<readonly Plan[]> {
+    const { data, error } = await this.db.from('plans').select('*');
+    if (error) throw error; // falla técnica: TanStack Query la reintenta
+    return mapPlans(data); // mismo esquema Zod y mismas reglas del dominio
+  }
+}
+```
+
+```ts
+// src/di/container.ts
+import { createSupabaseClient } from '@/data/supabase/client'; // URL y llave pública desde env
+
+export function createSupabaseRepositories(db: SupabaseClient): Repositories {
+  return {
+    ...createStaticRepositories(), // lo que siga siendo estático (empresa, política…)
+    plans: new SupabasePlanRepository(db),
+  };
+}
+
+export function createContainer(
+  repositories: Repositories = createSupabaseRepositories(createSupabaseClient()),
+): AppDependencies {
+  /* sin cambios */
+}
+```
+
+La migración puede hacerse repositorio por repositorio. Si una columna de la tabla tiene otro nombre que el campo del JSON, el ajuste va en el mapper.
+
 ## Sistema de diseño
 
 1. **[`DESIGN.md`](DESIGN.md)**: reglas, roles de cada color y componente, y registro de cambios.
