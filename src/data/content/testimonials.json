@@ -1,0 +1,23 @@
+{
+  "rating": {
+    "score": 5,
+    "reviewCount": 5,
+    "asOf": "2026-10-14",
+    "reviewsUrl": "https://maps.app.goo.gl/Zko5WSsCAiaZyExX7"
+  },
+  "testimonials": [
+    {
+      "id": "excelente-servicio",
+      "quote": "Excelente servicio, calidad en sus procesos.",
+      "source": "google",
+      "retrievedAt": "2026-10-14"
+    },
+    {
+      "id": "cruz-p",
+      "quote": "Trámites rápidos y lo más importante, legal. Buenos precios, y los instructores y el personal de recepción están muy capacitados para brindar información y responder las dudas que uno tiene. Recomendados. Desde Montería viajé a hacerlo allá por sus costos y fue muy humano y cálido el trato.",
+      "author": "Cruz P.",
+      "source": "google",
+      "retrievedAt": "2026-10-14"
+    }
+  ]
+}

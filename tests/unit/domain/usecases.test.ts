@@ -60,10 +60,11 @@ describe('casos de uso', () => {
       'precio',
       'ubicacion',
     ]);
-    expect((await useCase.execute({ placement: 'plans' })).map((faq) => faq.id)).toEqual([
+    // En Planes, "¿Cuánto cuesta?" va antes que "¿Qué requisitos?" (orden propio de la página).
+    expect((await useCase.execute({ page: 'plans' })).map((faq) => faq.id)).toEqual([
       'edad',
-      'requisitos',
       'precio',
+      'requisitos',
     ]);
     expect((await useCase.execute({ topic: 'location' })).map((faq) => faq.id)).toEqual([
       'ubicacion',
