@@ -32,3 +32,7 @@ insumos/
 .agents/
 skills-lock.json
 docs/*
+# Capturas de regresión visual hechas fuera de Linux: las de referencia salen del CI
+# (workflow "Actualizar capturas de referencia").
+tests/e2e/specs/visual/**/*-darwin.png
+tests/e2e/specs/visual/**/*-win32.png

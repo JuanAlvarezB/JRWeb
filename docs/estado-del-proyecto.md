@@ -2,7 +2,7 @@
 
 Sitio web de Conducir J&R del Sinú: etapas terminadas y etapas que faltan.
 
-Actualizado el 17 oct 2026, al cerrar la etapa de SEO, prerender y analítica.
+Actualizado el 17 oct 2026, al cerrar la etapa de pruebas.
 
 ## Resumen
 
@@ -10,15 +10,14 @@ Actualizado el 17 oct 2026, al cerrar la etapa de SEO, prerender y analítica.
   - El sitio está completo: 8 páginas con contenido real que cumplen DESIGN.md y los mockups.
   - Cada página se genera como HTML estático con SEO y datos estructurados.
   - Rendimiento medido en Lighthouse: 98–100.
-  - El CI de GitHub valida cada PR hacia `qa`.
+  - El CI de GitHub valida cada PR hacia `qa`, con pruebas de cada página y de cada flujo en 4 navegadores.
 - **Falta para publicar:**
-  - Ampliar las pruebas.
   - Desplegar en Cloudflare Pages (QA privado y PDN).
   - Llevar `qa` a `main`.
 
 | Rama   | Estado                                                             |
 | ------ | ------------------------------------------------------------------ |
-| `qa`   | Etapas 1–9 integradas; la 10 entra al aprobarse su PR.             |
+| `qa`   | Etapas 1–10 integradas; la 11 entra al aprobarse su PR. |
 | `main` | Solo el primer commit. Ninguna etapa ha pasado a PDN.              |
 | Sitio  | Aún no está publicado: el despliegue en Cloudflare es la etapa 12. |
 
@@ -36,7 +35,8 @@ Actualizado el 17 oct 2026, al cerrar la etapa de SEO, prerender y analítica.
 | 7   | Hooks                        | Hooks de datos con TanStack Query y Suspense, claves de consulta centralizadas y enlaces de contacto (WhatsApp, llamada, mapas).         | #13             |
 | 8   | Features                     | Componentes de cada sección con datos reales, validados contra los mockups a 1440 y 390 px.                                              | #14             |
 | 9   | Páginas                      | Detalle más abajo.                                                                                                                       | #15             |
-| 10  | SEO, prerender y analítica   | Detalle más abajo.                                                                                                                       | Pendiente de PR |
+| 10  | SEO, prerender y analítica   | Detalle más abajo.                                                                                                                       | #16             |
+| 11  | Pruebas                      | Detalle más abajo.                                                                                                                       | Pendiente de PR |
 
 Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar el flujo de ramas `feature/*`.
 
@@ -64,11 +64,26 @@ Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar
   - Una prueba de `eval` de Zod que Firefox bloqueaba.
 - **Rendimiento (Lighthouse, móvil):** 98–100, con primera pintura de 1.0 a 1.8 s y 0 ms de bloqueo.
 
+### Detalle de la etapa 11 (pruebas)
+
+- **Page Objects** por página (`tests/e2e/pages/`), usados como fixtures: `home`, `plans`, `contact`, `faq` y `policy`.
+- **Flujos e2e en Chromium, Firefox, WebKit y móvil:**
+  - navegación con la página activa y el foco en el contenido;
+  - "Saltar al contenido";
+  - WhatsApp con el número y el mensaje de cada plan;
+  - "Tu curso en horas" con mouse y teclado;
+  - menú móvil (foco atrapado, Esc);
+  - aviso de privacidad, que se recuerda y no lo tapa el botón;
+  - Contáctanos: llamar, correo, redes, "Copiar" y el mapa que no carga Google antes de tocarlo;
+  - anclas y preguntas frecuentes.
+- **Regresión visual:** las 8 páginas a 1440 y 390 px. Las capturas de referencia se generan en Linux con el workflow "Actualizar capturas de referencia".
+- **Smoke de PDN:** titular, WhatsApp, ubicación, indexación (robots y sitemap) y 404.
+- **Cobertura mínima obligatoria:** dominio, datos, formateadores y SEO.
+
 ## Etapas que faltan
 
 | #   | Etapa                          | Alcance                                                                                                                                                                                                                                                             |
 | --- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 11  | Pruebas                        | Page Objects por página. Flujos e2e: WhatsApp con mensaje, selector de horas, menú móvil, aviso de privacidad y anclas. Capturas de referencia por página (`test:visual`). Smoke de PDN con WhatsApp y ubicación.                                                   |
 | 12  | Despliegue en Cloudflare Pages | `deploy-reusable.yml`, `deploy-qa.yml` (integración en `qa` → QA + regresión) y `deploy-prod.yml` (`main` → aprobación → PDN + smoke). Cloudflare Access para QA con Service Token para las pruebas. Secrets en los environments de GitHub. Fase 3 de los rulesets. |
 | 13  | Documentación                  | `configuracion-cloudflare.md`, `guia-actualizar-contenido.md` y `checklist-pruebas-manuales-qa.md`. Actualizar `ambientes-y-despliegue.md` y `configuracion-github.md` (regla de Dependabot sobre versiones mayores).                                               |
 | 14  | Paso a PDN                     | PR `qa` → `main` con todas las verificaciones, aprobación del despliegue y revisión del checklist en QA antes de publicar.                                                                                                                                          |
@@ -77,14 +92,16 @@ Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar
 
 Los asuntos abiertos (fotos reales, aprobación de respuestas, token de analítica, Search Console…) se registran en [pendientes.md](pendientes.md).
 
-## Verificaciones al cierre de la etapa 10
+## Verificaciones al cierre de la etapa 11
 
-| Verificación                                | Resultado                                                        |
-| ------------------------------------------- | ---------------------------------------------------------------- |
-| Lint (ESLint, Stylelint, Prettier, tokens)  | Sin errores                                                      |
-| Tipos (`npm run typecheck`)                 | Sin errores                                                      |
-| Validación de contenido                     | Sin precios, esquemas y coherencia correctos                     |
-| Pruebas unitarias y de componentes (Vitest) | 237 pasan                                                        |
-| E2E (Chromium, Firefox, WebKit y móvil)     | 100 pasan: axe WCAG AA y SEO del HTML en las 8 rutas, con la CSP |
-| Lighthouse (móvil)                          | Rendimiento 98–100; accesibilidad y buenas prácticas 98–100      |
-| gitleaks                                    | Sin hallazgos                                                    |
+| Verificación                                | Resultado                                                                                                     |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Lint (ESLint, Stylelint, Prettier, tokens)  | Sin errores                                                                                                   |
+| Tipos (`npm run typecheck`)                 | Sin errores                                                                                                   |
+| Validación de contenido                     | Sin precios, esquemas y coherencia correctos                                                                  |
+| Pruebas unitarias y de componentes (Vitest) | 239 pasan; cobertura: dominio 100 %, datos 96 %, formateadores y SEO sobre su mínimo                          |
+| E2E de regresión                            | 191 pasan en 4 navegadores (17 se omiten porque no aplican a ese ancho o navegador)                           |
+| Regresión visual                            | 16 capturas estables en local; las de referencia de Linux se generan con el workflow                          |
+| Smoke de PDN                                | 5 pasan contra la build de producción                                                                         |
+| Lighthouse (móvil, etapa 10)                | Rendimiento 98–100; accesibilidad y buenas prácticas 98–100                                                   |
+| gitleaks                                    | Sin hallazgos                                                                                                 |
