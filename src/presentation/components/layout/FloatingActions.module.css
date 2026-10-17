@@ -1,0 +1,88 @@
+.floating {
+  position: fixed;
+  inset-inline: var(--component-fab-offset-mobile);
+  inset-block-end: var(--component-fab-offset-mobile);
+  z-index: var(--component-layer-floating);
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-4);
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.floating > * {
+  pointer-events: auto;
+}
+
+.notice {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  padding: var(--component-notice-padding-block) var(--component-notice-padding-inline);
+  border-radius: var(--radius-accordion);
+  background-color: var(--color-neutral-surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.noticeText {
+  font-size: var(--font-size-small);
+  color: var(--color-neutral-text-muted);
+  line-height: var(--font-line-height-body);
+}
+
+.noticeText a {
+  font-weight: var(--font-weight-semibold);
+}
+
+.dismiss {
+  align-self: flex-end;
+}
+
+.fab {
+  display: grid;
+  place-items: center;
+  inline-size: var(--size-fab);
+  block-size: var(--size-fab);
+  border-radius: 50%;
+  background-color: var(--color-brand-default);
+  color: var(--color-neutral-surface);
+  box-shadow: var(--shadow-lg);
+  transition:
+    background-color var(--motion-duration-fast) var(--motion-easing-out),
+    box-shadow var(--motion-duration-fast) var(--motion-easing-out);
+}
+
+.fab:hover {
+  background-color: var(--color-brand-hover);
+  box-shadow: var(--shadow-lg-hover);
+  color: var(--color-neutral-surface);
+}
+
+.fab:focus-visible {
+  border-radius: 50%;
+  outline-offset: var(--focus-offset);
+}
+
+.fabIcon {
+  inline-size: var(--component-fab-icon-size);
+  block-size: var(--component-fab-icon-size);
+}
+
+/* Escritorio: el aviso a la izquierda (máx. 360 px) y el botón a la derecha. */
+@media (width >= 720px) {
+  .floating {
+    inset-inline: var(--component-fab-offset-desktop);
+    inset-block-end: var(--component-fab-offset-desktop);
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .notice {
+    max-inline-size: var(--size-notice-max-width);
+  }
+
+  .fab {
+    margin-inline-start: auto;
+  }
+}

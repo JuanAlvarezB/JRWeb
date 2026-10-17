@@ -1,18 +1,10 @@
 import type { QueryClient } from '@tanstack/react-query';
-import { lazy, Suspense, type JSX } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { Suspense, type JSX } from 'react';
+import { BrowserRouter } from 'react-router';
+import { PageErrorBoundary } from '@/presentation/components/layout/PageErrorBoundary';
 import type { AppDependencies } from '@/presentation/providers/AppDependencies';
 import { AppProviders } from '@/presentation/providers/AppProviders';
-import { appConfig } from '@/shared/config/env';
-import { UI_TEXT } from '@/shared/constants/uiText';
-
-/** Catálogo y vista previa de features: solo existen en DEV (Vite los elimina de QA y PDN). */
-const ComponentCatalog = import.meta.env.DEV
-  ? lazy(() => import('@/presentation/dev/ComponentCatalog'))
-  : null;
-const FeaturePreview = import.meta.env.DEV
-  ? lazy(() => import('@/presentation/dev/FeaturePreview'))
-  : null;
+import { AppRoutes } from '@/presentation/router/AppRoutes';
 
 interface AppProps {
   /** Casos de uso del composition root (`createContainer()` en `main.tsx`). */
@@ -22,28 +14,19 @@ interface AppProps {
 }
 
 /**
- * Raíz de la aplicación: monta los providers.
- * Mientras llegan el router y las páginas, muestra el catálogo de componentes en DEV.
+ * Raíz de la aplicación en el navegador: providers, router y un Error Boundary
+ * general por si falla algo fuera de las páginas (menú o footer).
  */
 export function App({ dependencies, queryClient }: AppProps): JSX.Element {
   return (
     <AppProviders dependencies={dependencies} queryClient={queryClient}>
-      {ComponentCatalog === null || FeaturePreview === null ? (
-        <main>
-          <h1>{UI_TEXT.brand.name}</h1>
-          <p>{UI_TEXT.brand.tagline}</p>
-          <p>{UI_TEXT.setup.environmentReady(appConfig.envName)}</p>
-        </main>
-      ) : (
-        <BrowserRouter>
+      <BrowserRouter>
+        <PageErrorBoundary>
           <Suspense>
-            <Routes>
-              <Route path="/features" element={<FeaturePreview />} />
-              <Route path="*" element={<ComponentCatalog />} />
-            </Routes>
+            <AppRoutes />
           </Suspense>
-        </BrowserRouter>
-      )}
+        </PageErrorBoundary>
+      </BrowserRouter>
     </AppProviders>
   );
 }

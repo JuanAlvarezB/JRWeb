@@ -11,12 +11,11 @@ export const UI_TEXT = {
   },
   a11y: {
     opensInNewTab: '(se abre en una pestaña nueva)',
+    skipToContent: 'Saltar al contenido',
+    loading: 'Cargando…',
   },
   speedometer: {
     totalCaption: 'horas en total',
-  },
-  setup: {
-    environmentReady: (envName: string): string => `Entorno listo · ambiente: ${envName}`,
   },
   serviceType: {
     private: 'Particular',
@@ -160,5 +159,137 @@ export const UI_TEXT = {
     factsText: (nit: string, address: string): string => `NIT ${nit} · ${address}`,
     mission: 'Misión',
     vision: 'Visión',
+  },
+  nav: {
+    label: 'Navegación principal',
+    homeLink: 'Conducir J&R del Sinú, ir al inicio',
+    links: {
+      home: 'Inicio',
+      about: 'Nosotros',
+      services: 'Servicios',
+      plans: 'Planes',
+      faq: 'Preguntas frecuentes',
+      contact: 'Contáctanos',
+    },
+    call: 'Llamar',
+    write: 'Escríbenos',
+    writeWhatsApp: 'Escríbenos por WhatsApp',
+    openMenu: 'Abrir menú',
+    closeMenu: 'Cerrar menú',
+    mobileMenuLabel: 'Menú',
+  },
+  footer: {
+    pages: 'Páginas',
+    contact: 'Contacto',
+    schedules: 'Horarios de clases',
+    social: 'Redes',
+    phonesLabel: 'WhatsApp y llamadas',
+    /** "Teóricas · lun a vie". */
+    theoryDay: (days: string): string => `Teóricas · ${days}`,
+    theoryNight: 'Nocturnas',
+    practice: 'Prácticas',
+    /** "© 2026 Conducir J&R del Sinú · NIT 901722359-5". */
+    copyright: (year: number, brandName: string, nit: string): string =>
+      `© ${String(year)} ${brandName} · NIT ${nit}`,
+    dataPolicy: 'Política de Tratamiento de Datos',
+  },
+  privacyNotice: {
+    label: 'Aviso de privacidad',
+    textBefore: 'Medimos las visitas de forma anónima y sin cookies. Conoce nuestra ',
+    link: 'Política de Tratamiento de Datos',
+    textAfter: '.',
+    dismiss: 'Entendido',
+  },
+  environment: {
+    qaBadge: 'QA',
+    qaDescription: 'Ambiente de pruebas',
+  },
+  errors: {
+    title: 'Algo salió mal',
+    text: 'No pudimos mostrar esta página. Recárgala o vuelve al inicio; si sigue fallando, escríbenos.',
+    reload: 'Recargar la página',
+    home: 'Volver al inicio',
+  },
+  faqTopics: {
+    courses: 'Cursos',
+    schedules: 'Horarios',
+    pricing: 'Precios y requisitos',
+    location: 'Ubicación',
+  },
+  pages: {
+    /** Título de la pestaña: "Planes · Conducir J&R del Sinú". */
+    documentTitle: (page: string): string => `${page} · Conducir J&R del Sinú`,
+    home: {
+      documentTitle: 'Conducir J&R del Sinú · Centro de Enseñanza Automovilística en Cereté',
+      title: 'Aprende a conducir con confianza en Cereté',
+      lead: 'Cursos para licencias A2, B1 y C1 con instructores certificados. Clases teóricas de día o de noche y prácticas de lunes a sábado.',
+      seePlans: 'Ver planes',
+      benefitsEyebrow: 'Por qué J&R',
+      benefitsTitle: 'Por qué estudiar con nosotros',
+      hoursEyebrow: 'Tu curso en horas',
+      hoursTitle: 'Así se reparten tus horas de clase',
+      hoursSubtitle:
+        'Elige tu categoría y mira cuántas horas son de teoría, de taller y de manejo.',
+      plansEyebrow: 'Planes',
+      plansTitle: 'Elige tu licencia',
+      plansSubtitle: 'Escríbenos y te enviamos el precio y las promociones vigentes.',
+      plansLink: 'Ver la distribución de horas de cada plan',
+      servicesEyebrow: 'Servicios',
+      servicesTitle: 'Un curso para cada vehículo',
+      testimonialsEyebrow: 'Testimonios',
+      testimonialsTitle: 'Lo que dicen de nosotros',
+      locationEyebrow: 'Visítanos',
+      /** "Estamos en Cereté". */
+      locationTitle: (city: string): string => `Estamos en ${city}`,
+    },
+    about: {
+      title: 'Nosotros',
+      statementsLabel: 'Misión y visión',
+      differenceEyebrow: 'Lo que nos diferencia',
+      differenceTitle: 'Instructores certificados y horarios que se ajustan a ti',
+      ctaTitle: '¿Tienes preguntas sobre tu curso?',
+      ctaText: 'Escríbenos y te contamos precios, requisitos y horarios.',
+    },
+    services: {
+      title: 'Servicios',
+      lead: 'Cursos de conducción para tres categorías de licencia. Mira para quién es cada una y qué vehículos cubre.',
+      ctaTitle: '¿Cuántas horas dura cada curso?',
+      ctaText: 'En Planes ves la distribución de teoría, taller y manejo, y consultas el precio.',
+      ctaAction: 'Ver planes',
+    },
+    plans: {
+      title: 'Planes',
+      lead: 'Cada curso con su distribución de horas. Escríbenos y te enviamos el precio y las promociones vigentes.',
+      faqEyebrow: 'Preguntas sobre los planes',
+      faqTitle: 'Antes de elegir tu curso',
+    },
+    contact: {
+      title: 'Contáctanos',
+      lead: 'Escríbenos por WhatsApp: es la forma más rápida de resolver tus dudas sobre precios, requisitos y horarios.',
+      channelsTitle: 'Todos nuestros canales',
+      locationTitle: 'Cómo llegar a la sede',
+      schedulesTitle: 'Horarios de clases',
+    },
+    faq: {
+      title: 'Preguntas frecuentes',
+      lead: 'Las dudas más comunes sobre edades, horas, horarios, precios y ubicación.',
+      ctaTitle: '¿Tienes otra duda?',
+      ctaText: 'Escríbenos y te respondemos por WhatsApp.',
+    },
+    dataPolicy: {
+      title: 'Política de tratamiento de datos',
+      /** "Conducir J&R del Sinú · NIT 901722359-5". */
+      subtitle: (brandName: string, nit: string): string => `${brandName} · NIT ${nit}`,
+      /** "Vigente desde el 15 de enero de 2024". */
+      effective: (date: string): string => `Vigente desde el ${date}`,
+      index: 'Índice',
+    },
+    notFound: {
+      documentTitle: 'Página no encontrada',
+      title: 'Te saliste de la vía',
+      lead: 'La página que buscas no existe o cambió de dirección. Vuelve al inicio y retoma el camino.',
+      arcLabel: 'Velocímetro en cero',
+      home: 'Volver al inicio',
+    },
   },
 } as const;

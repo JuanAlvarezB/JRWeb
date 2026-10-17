@@ -1,0 +1,175 @@
+/*
+ * Menú principal. Los enlaces de escritorio necesitan unos 1200 px (logo 240 + 6
+ * enlaces + "Llamar" y "Escríbenos"): con menos espacio se usa ☰. Por eso la
+ * visibilidad de los enlaces depende del ancho del menú (consulta de contenedor),
+ * y la altura y el logo, del punto de quiebre de 720 px.
+ */
+.header {
+  container: header / inline-size;
+  block-size: var(--size-nav-height-mobile);
+}
+
+.bar {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: var(--component-layer-header);
+  border-block-end: var(--component-border-hairline) solid transparent;
+  background-color: var(--color-neutral-canvas);
+  transition: border-color var(--motion-duration-nav) var(--motion-easing-out);
+}
+
+.compact .bar {
+  border-block-end-color: var(--color-neutral-border);
+}
+
+.inner {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  max-inline-size: calc(var(--layout-container-max) + 2 * var(--layout-gutter-mobile));
+  block-size: var(--size-nav-height-mobile);
+  margin-inline: auto;
+  padding-inline: var(--layout-gutter-mobile);
+}
+
+.home {
+  display: flex;
+  align-items: center;
+  margin-inline-end: auto;
+  border-radius: var(--component-action-link-focus-radius);
+}
+
+.logoFull {
+  display: none;
+  inline-size: var(--component-nav-logo-width);
+  block-size: auto;
+}
+
+.logoIcon {
+  inline-size: var(--component-nav-logo-mobile-width);
+  block-size: auto;
+}
+
+.nav {
+  display: none;
+}
+
+.links {
+  display: flex;
+  gap: var(--component-nav-link-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: inline-block;
+  padding-block: var(--space-2);
+  border-block-end: var(--component-nav-underline-width) solid transparent;
+  color: var(--color-neutral-text);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  transition: color var(--motion-duration-fast) var(--motion-easing-out);
+}
+
+.link:hover {
+  color: var(--color-brand-default);
+}
+
+.active {
+  border-block-end-color: var(--color-brand-default);
+  color: var(--color-brand-default);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.call {
+  display: none;
+}
+
+.write {
+  min-block-size: var(--size-touch-target);
+  block-size: var(--size-touch-target);
+  padding-inline: var(--space-5);
+}
+
+.menuButton {
+  display: grid;
+  place-items: center;
+  inline-size: var(--size-touch-target);
+  block-size: var(--size-touch-target);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-button);
+  background: none;
+  color: var(--color-neutral-text);
+  cursor: pointer;
+}
+
+.menuIcon {
+  inline-size: var(--component-button-icon-size);
+  block-size: var(--component-button-icon-size);
+}
+
+@media (width >= 720px) {
+  .header {
+    block-size: var(--size-nav-height);
+  }
+
+  .inner {
+    gap: var(--space-8);
+    max-inline-size: calc(var(--layout-container-max) + 2 * var(--layout-gutter-desktop));
+    block-size: var(--size-nav-height);
+    padding-inline: var(--layout-gutter-desktop);
+    transition: block-size var(--motion-duration-nav) var(--motion-easing-out);
+  }
+
+  .logoFull {
+    display: block;
+  }
+
+  .logoIcon {
+    display: none;
+    inline-size: var(--component-nav-logo-compact-width);
+  }
+
+  .compact .inner {
+    block-size: var(--size-nav-height-compact);
+  }
+
+  .compact .logoFull {
+    display: none;
+  }
+
+  .compact .logoIcon {
+    display: block;
+  }
+
+  .actions {
+    gap: var(--space-5);
+  }
+
+  .call {
+    display: inline-flex;
+  }
+
+  .write {
+    block-size: var(--size-button-height);
+    padding-inline: var(--component-button-padding-inline);
+  }
+}
+
+@container header (width >= 1240px) {
+  .nav {
+    display: block;
+  }
+
+  .menuButton {
+    display: none;
+  }
+}

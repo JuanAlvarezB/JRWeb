@@ -33,6 +33,7 @@
 }
 
 .entry {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-1) var(--space-4);
@@ -58,6 +59,13 @@
   gap: var(--space-6);
 }
 
+/* Móvil: el enlace cubre toda la fila (área táctil grande). */
+.rowLink::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+}
+
 /* "Copiar" solo en escritorio (DESIGN.md §5): en el celular se toca el enlace. */
 .copy {
   display: none;
@@ -75,5 +83,9 @@
 
   .copy {
     display: inline-flex;
+  }
+
+  .rowLink::after {
+    content: none;
   }
 }

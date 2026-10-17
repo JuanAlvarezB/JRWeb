@@ -1,0 +1,16 @@
+.skipLink {
+  position: fixed;
+  inset-block-start: var(--space-2);
+  inset-inline-start: var(--space-2);
+  z-index: var(--component-layer-environment-badge);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-button);
+  background-color: var(--color-neutral-surface);
+  box-shadow: var(--shadow-lg);
+  font-weight: var(--font-weight-semibold);
+  translate: 0 calc(-100% - var(--space-4));
+}
+
+.skipLink:focus-visible {
+  translate: 0 0;
+}

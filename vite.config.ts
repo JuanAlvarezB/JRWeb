@@ -49,6 +49,11 @@ function preloadDisplayFont(): Plugin {
  */
 export default defineConfig({
   plugins: [react(), preloadDisplayFont()],
+  // Año de la build para el copyright: el HTML prerenderizado y el navegador muestran
+  // el mismo valor (con `new Date()` en el cliente no coincidirían en enero).
+  define: {
+    __BUILD_YEAR__: JSON.stringify(new Date().getFullYear()),
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

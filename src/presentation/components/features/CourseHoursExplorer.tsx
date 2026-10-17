@@ -1,4 +1,4 @@
-import { useState, type JSX } from 'react';
+import { useRef, useState, type JSX } from 'react';
 import { totalHours, type CourseHours } from '@/domain/entities/CourseHours';
 import type { LicenseCategory } from '@/domain/entities/LicenseCategory';
 import { SpeedometerArc } from '@/presentation/components/brand/SpeedometerArc';
@@ -23,6 +23,30 @@ const LEGEND: readonly { readonly key: keyof CourseHours; readonly label: string
   { key: 'driving', label: HOURS.driving },
 ];
 
+/** Teclas del grupo de radios (patrón WAI-ARIA): flechas, Inicio y Fin, con vuelta. */
+const KEY_STEPS: Readonly<Record<string, number | 'first' | 'last'>> = {
+  ArrowRight: 1,
+  ArrowDown: 1,
+  ArrowLeft: -1,
+  ArrowUp: -1,
+  Home: 'first',
+  End: 'last',
+};
+
+/** Categoría a la que lleva una tecla, o `undefined` si la tecla no mueve la selección. */
+export function nextCategory(
+  categories: readonly LicenseCategory[],
+  current: LicenseCategory,
+  key: string,
+): LicenseCategory | undefined {
+  const step = KEY_STEPS[key];
+  if (step === undefined || categories.length === 0) return undefined;
+  if (step === 'first') return categories[0];
+  if (step === 'last') return categories.at(-1);
+  const index = categories.indexOf(current);
+  return categories[(index + step + categories.length) % categories.length];
+}
+
 /**
  * "Tu curso en horas" (Inicio): selector de categoría y arco del velocímetro con la
  * distribución real de horas. Cambiar de categoría no hace consultas nuevas.
@@ -32,10 +56,12 @@ export function CourseHoursExplorer(): JSX.Element | null {
   const services = useServices();
   const whatsAppLink = useWhatsAppLinkBuilder();
   const [category, setCategory] = useState<LicenseCategory>(DEFAULT_CATEGORY);
+  const chipRefs = useRef(new Map<LicenseCategory, HTMLButtonElement>());
 
   const plan = plans.find((item) => item.category === category) ?? plans[0];
   if (plan === undefined) return null;
   const service = services.find((item) => item.category === plan.category);
+  const categories = plans.map((item) => item.category);
   const total = totalHours(plan.hours);
   const { theory, workshop, driving } = plan.hours;
 
@@ -53,20 +79,40 @@ export function CourseHoursExplorer(): JSX.Element | null {
       </div>
 
       <div className={styles.details}>
-        <div role="group" aria-label={UI_TEXT.courseHours.selectorLabel} className={styles.chips}>
-          {plans.map((item) => (
-            <button
-              key={item.category}
-              type="button"
-              aria-pressed={item.category === plan.category}
-              className={cx(styles.chip, item.category === plan.category && styles.chipSelected)}
-              onClick={() => {
-                setCategory(item.category);
-              }}
-            >
-              {item.category}
-            </button>
-          ))}
+        <div
+          role="radiogroup"
+          aria-label={UI_TEXT.courseHours.selectorLabel}
+          className={styles.chips}
+        >
+          {plans.map((item) => {
+            const checked = item.category === plan.category;
+            return (
+              <button
+                key={item.category}
+                ref={(node) => {
+                  if (node === null) chipRefs.current.delete(item.category);
+                  else chipRefs.current.set(item.category, node);
+                }}
+                type="button"
+                role="radio"
+                aria-checked={checked}
+                tabIndex={checked ? 0 : -1}
+                className={cx(styles.chip, checked && styles.chipSelected)}
+                onClick={() => {
+                  setCategory(item.category);
+                }}
+                onKeyDown={(event) => {
+                  const next = nextCategory(categories, plan.category, event.key);
+                  if (next === undefined) return;
+                  event.preventDefault();
+                  setCategory(next);
+                  chipRefs.current.get(next)?.focus();
+                }}
+              >
+                {item.category}
+              </button>
+            );
+          })}
         </div>
 
         <div aria-live="polite">

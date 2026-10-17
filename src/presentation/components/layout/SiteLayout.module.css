@@ -1,0 +1,4 @@
+/* El foco al cambiar de página es para lectores de pantalla: sin anillo visible. */
+.main:focus {
+  outline: none;
+}

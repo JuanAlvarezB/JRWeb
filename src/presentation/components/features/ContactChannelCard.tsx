@@ -32,7 +32,8 @@ interface ContactChannelCardProps {
 
 /**
  * Tarjeta de canal de contacto (DESIGN.md §5): ícono en círculo Brillo Lima, etiqueta,
- * cada dato con su acción y, en escritorio, "Copiar".
+ * cada dato con su acción y, en escritorio, "Copiar". En móvil toda la fila es el
+ * enlace (handoff §2).
  */
 export function ContactChannelCard({
   channel,
@@ -54,7 +55,7 @@ export function ContactChannelCard({
           <li key={entry.value} className={styles.entry}>
             <p className={styles.value}>{entry.display}</p>
             <p className={styles.actions}>
-              <ActionLink href={entry.href} newTab={entry.external}>
+              <ActionLink href={entry.href} newTab={entry.external} className={styles.rowLink}>
                 {TEXT.actions[channel.kind]}
               </ActionLink>
               {copyable && (

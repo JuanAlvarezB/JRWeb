@@ -73,3 +73,18 @@ export function formatMonthYear(isoDate: string): string {
 export function formatRating(score: number): string {
   return score.toFixed(1);
 }
+
+/** Fecha larga de una fecha AAAA-MM-DD (p. ej. "15 de enero de 2024"), sin zona horaria. */
+export function formatLongDate(isoDate: string): string {
+  const [, , day] = isoDate.split('-').map(Number);
+  return `${String(day)} de ${formatMonthYear(isoDate)}`;
+}
+
+/**
+ * Título en tipo oración: "ÁMBITO DE APLICACIÓN" → "Ámbito de aplicación". Solo para
+ * mostrar títulos escritos en mayúsculas sostenidas (DESIGN.md §3); no cambia el
+ * contenido guardado.
+ */
+export function toSentenceCase(text: string): string {
+  return capitalizeFirst(text.toLocaleLowerCase('es-CO'));
+}

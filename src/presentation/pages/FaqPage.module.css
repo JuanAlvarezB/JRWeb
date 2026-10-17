@@ -1,0 +1,26 @@
+/* Los grupos van seguidos (24 px entre tema y tema en el mockup), no a 80 px. */
+.group {
+  gap: var(--space-4);
+  max-inline-size: calc(
+    var(--layout-reading-width) + var(--space-20) + var(--space-5) + 2 * var(--layout-gutter-mobile)
+  );
+  padding-block: var(--space-3);
+}
+
+.topic {
+  font: var(--typography-eyebrow);
+  letter-spacing: var(--font-letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-brand-default);
+}
+
+@media (width >= 720px) {
+  .group {
+    gap: var(--space-4);
+    max-inline-size: calc(
+      var(--layout-reading-width) + var(--space-20) + var(--space-5) + 2 *
+        var(--layout-gutter-desktop)
+    );
+    padding-block: var(--space-3);
+  }
+}

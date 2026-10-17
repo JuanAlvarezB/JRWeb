@@ -12,6 +12,11 @@ export default mergeConfig(
   viteConfig,
   defineConfig({
     test: {
+      // Mismos valores públicos que DEV (.env.development): el layout valida el entorno.
+      env: {
+        VITE_ENV_NAME: 'development',
+        VITE_SITE_URL: 'http://localhost:5173',
+      },
       projects: [
         {
           extends: true,
