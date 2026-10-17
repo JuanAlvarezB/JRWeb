@@ -1,0 +1,31 @@
+.figure {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  margin: 0;
+}
+
+.quoteMark {
+  inline-size: var(--space-10);
+  block-size: var(--space-8);
+  fill: var(--color-brand-lime);
+}
+
+.quote {
+  margin: var(--space-6) 0 var(--space-6);
+  font-size: var(--component-card-testimonial-quote-size);
+  line-height: var(--component-accordion-answer-line-height);
+  text-wrap: pretty;
+  color: var(--color-neutral-text);
+}
+
+.caption {
+  margin-block-start: auto;
+  font-size: var(--font-size-small);
+  color: var(--color-neutral-text-muted);
+}
+
+.author {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-text);
+}

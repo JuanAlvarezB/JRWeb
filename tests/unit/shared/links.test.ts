@@ -3,6 +3,7 @@ import {
   buildDirectionsLink,
   buildMailtoLink,
   buildTelLink,
+  buildWazeLink,
   buildWhatsAppLink,
 } from '@/shared/utils/links';
 
@@ -41,5 +42,20 @@ describe('buildDirectionsLink', () => {
     expect(
       new URL(buildDirectionsLink('Calle 13 # 10-96, Cereté')).searchParams.get('destination'),
     ).toBe('Calle 13 # 10-96, Cereté');
+  });
+});
+
+describe('buildWazeLink', () => {
+  it('navega por coordenadas', () => {
+    const url = new URL(buildWazeLink({ latitude: 8.8877998, longitude: -75.7887601 }));
+    expect(url.origin + url.pathname).toBe('https://waze.com/ul');
+    expect(url.searchParams.get('ll')).toBe('8.8877998,-75.7887601');
+    expect(url.searchParams.get('navigate')).toBe('yes');
+  });
+
+  it('o por dirección en texto', () => {
+    const url = new URL(buildWazeLink('Calle 13 # 10-96, Cereté'));
+    expect(url.searchParams.get('q')).toBe('Calle 13 # 10-96, Cereté');
+    expect(url.searchParams.has('ll')).toBe(false);
   });
 });

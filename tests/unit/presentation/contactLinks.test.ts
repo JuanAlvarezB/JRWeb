@@ -67,6 +67,8 @@ describe('toLocationView', () => {
     expect(new URL(view.directionsUrl).searchParams.get('destination')).toBe(
       '8.8877998,-75.7887601',
     );
+    expect(view.shortAddress).toBe('Calle 13 # 10-96, Cereté, Córdoba');
+    expect(new URL(view.wazeUrl).searchParams.get('ll')).toBe('8.8877998,-75.7887601');
     expect(view.googleProfileUrl).toBe(location.googleProfileUrl);
   });
 
@@ -75,5 +77,8 @@ describe('toLocationView', () => {
     expect(
       new URL(toLocationView(withoutCoordinates).directionsUrl).searchParams.get('destination'),
     ).toBe('Calle 13 # 10-96, Cereté, Córdoba, Colombia');
+    expect(new URL(toLocationView(withoutCoordinates).wazeUrl).searchParams.get('q')).toBe(
+      'Calle 13 # 10-96, Cereté, Córdoba, Colombia',
+    );
   });
 });

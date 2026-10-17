@@ -1,0 +1,10 @@
+/* 820 px en los mockups: columna de lectura (720) más el relleno de las tarjetas. */
+.accordion {
+  inline-size: 100%;
+  max-inline-size: calc(var(--layout-reading-width) + var(--space-20) + var(--space-5));
+  margin-inline: auto;
+}
+
+.action {
+  margin-block-start: var(--space-3);
+}

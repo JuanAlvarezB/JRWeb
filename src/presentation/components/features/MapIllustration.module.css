@@ -1,0 +1,25 @@
+.map {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.street {
+  fill: var(--color-neutral-canvas);
+}
+
+.block {
+  fill: var(--color-neutral-border);
+}
+
+.pin {
+  fill: var(--color-brand-default);
+}
+
+.pinDot {
+  fill: var(--color-neutral-surface);
+}
+
+.pinShadow {
+  fill: var(--color-neutral-border-strong);
+}

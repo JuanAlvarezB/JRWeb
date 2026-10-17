@@ -1,0 +1,38 @@
+.map {
+  position: relative;
+  overflow: hidden;
+  min-block-size: var(--component-location-map-height-mobile);
+  border-radius: var(--radius-image);
+  background-color: var(--color-neutral-canvas);
+}
+
+.map > svg {
+  position: absolute;
+  inset: 0;
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
+}
+
+.overlay {
+  position: absolute;
+  inset-block-end: var(--space-5);
+  inset-inline-start: var(--space-5);
+}
+
+/* Sobre el plano, el botón contorno necesita fondo para leerse. */
+.button {
+  background-color: var(--color-neutral-surface);
+}
+
+/* Escritorio: la proporción del plano (400 × 260), ≈ 440 px de alto como en el mockup. */
+@media (width >= 720px) {
+  .map {
+    aspect-ratio: 400 / 260;
+  }
+}

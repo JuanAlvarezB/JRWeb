@@ -128,6 +128,8 @@ La migración puede hacerse repositorio por repositorio. Si una columna de la ta
 
 **Catálogo de componentes:** con `npm run dev`, <http://localhost:5173> muestra cada componente (botones, links, franja, encabezados, tarjetas, acordeón, velocímetro, aguada e íconos) con datos de los mockups. Solo existe en DEV: Vite lo elimina de las builds de QA y PDN.
 
+**Vista previa de features:** <http://localhost:5173/features> muestra los componentes de `presentation/components/features/` en el orden de las páginas y con el contenido real (hero, horas, planes, servicios, opiniones, ubicación, Nosotros y Contáctanos). Sirve para compararlos con los mockups y, como el catálogo, solo existe en DEV.
+
 Los mockups aprobados están en [`docs/mockups/`](docs/mockups/) (390 y 1440 px; en `con-flotantes/`, con el botón de WhatsApp y el aviso de privacidad).
 
 ## Documentación
