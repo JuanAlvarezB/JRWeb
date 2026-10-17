@@ -19,13 +19,25 @@ Se ejecuta en **cada PR hacia `qa` o `main`**. Cada job tiene un nombre fijo por
 | 2   | `typecheck`           | TypeScript estricto en app, scripts y pruebas                                                            | `npm run typecheck`                                  |
 | 3   | `content-validation`  | Ningún precio en el contenido; política de datos aprobada y con analítica (obligatorio hacia `main`)     | `npm run content:validate`                           |
 | 4   | `secret-scan`         | gitleaks sobre todo el historial                                                                         | `gitleaks git .` (opcional: `brew install gitleaks`) |
-| 5   | `unit-tests`          | Vitest con cobertura (dominio ≥ 80 %)                                                                    | `npm run test:unit`                                  |
+| 5   | `unit-tests`          | Vitest con cobertura mínima por capa: dominio, datos, formateadores y SEO                                | `npm run test:unit`                                  |
 | 6   | `component-tests`     | React Testing Library                                                                                    | `npm run test:components`                            |
 | 7   | `build`               | Build del ambiente destino: `qa` en PR hacia `qa`, `production` hacia `main`                             | `npm run build:qa`                                   |
-| 8   | `e2e-tests`           | Playwright + axe en Chromium, Firefox, WebKit y móvil, contra la build del paso 7                        | `npm run test:e2e`                                   |
+| 8   | `e2e-tests`           | Playwright en Chromium, Firefox, WebKit y móvil, contra la build del paso 7 servida como Cloudflare Pages: accesibilidad (axe), SEO del HTML y flujos | `npm run test:e2e`                                   |
 | 9   | `visual-tests`        | Capturas de cada página contra las de referencia                                                         | `npm run test:visual`                                |
 
 Los jobs 0 a 6 corren en paralelo; `build` espera a todos; `e2e-tests` y `visual-tests` esperan a `build`. Si cualquiera falla, el PR no se puede integrar (cuando los rulesets estén en fase 2).
+
+### Qué prueba cada suite
+
+| Suite                                | Dónde                        | Qué cubre                                                                                                                                                                                                                             |
+| ------------------------------------ | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Unitarias                            | `tests/unit/`                | Reglas del dominio, esquemas y coherencia del contenido, formateadores, SEO y datos estructurados, scripts de build y servidor local                                                                                                   |
+| Componentes                          | `tests/components/`          | Hooks, features, páginas y layout con el contenido real: menú móvil, aviso de privacidad, Error Boundary, caché del prerender                                                                                                          |
+| E2E de regresión                     | `tests/e2e/specs/regression/` | Cada página: un H1, sin errores de consola, axe WCAG AA y SEO del HTML. Flujos: navegación y foco, WhatsApp con su mensaje por plan, "Tu curso en horas" (mouse y teclado), menú móvil, aviso de privacidad, contacto, mapa, anclas y preguntas |
+| Visual                               | `tests/e2e/specs/visual/`    | Cada página completa a 1440 y 390 px contra su captura de referencia                                                                                                                                                                  |
+| Smoke de PDN                         | `tests/e2e/specs/smoke/`     | Después de publicar: titular, WhatsApp, ubicación, indexación (robots, sitemap) y 404                                                                                                                                                  |
+
+Los Page Objects de cada página están en `tests/e2e/pages/` y se usan como fixtures (`home`, `plans`, `contact`, `faq`, `policy`).
 
 ### Leer los resultados
 
@@ -54,7 +66,7 @@ Las capturas dependen del sistema operativo, así que **las de referencia se gen
 3. Al terminar, descarga el artefacto `capturas-de-referencia` y descomprímelo en `tests/e2e/specs/visual/`.
 4. Revisa las imágenes, haz commit y push. En el PR, GitHub muestra las capturas nuevas para revisarlas.
 
-Solo se actualizan cuando el cambio de diseño es intencional.
+Solo se actualizan cuando el cambio de diseño o de contenido es intencional. Mientras una rama no tenga sus capturas de Linux, el job `visual-tests` falla con "A snapshot doesn't exist": es la señal para ejecutar este workflow.
 
 ## 3. Despliegue a QA y PDN
 
