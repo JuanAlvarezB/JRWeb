@@ -80,7 +80,12 @@ Para detener un servidor: `Ctrl + C` en la Terminal.
 | `npm run format`                                | Corrige el formato de todos los archivos                                                        |
 | `npm run build:qa` / `npm run build:production` | Construye `dist/` y genera `robots.txt` y `_headers` del ambiente                               |
 
-Las pruebas (`npm test` y sus variantes) se agregan en la etapa de pruebas.
+| `npm run content:validate` | Contenido sin precios y política de datos lista |
+| `npm run test:unit` / `npm run test:components` | Pruebas unitarias (con cobertura) y de componentes |
+| `npm run test:e2e` / `npm run test:visual` | Playwright (regresión + accesibilidad) y regresión visual, sobre `dist/` |
+| `npm test` | Todo lo anterior en orden: es lo que conviene ejecutar antes de un PR |
+
+La primera vez, instala los navegadores de Playwright con `npx playwright install` (unos 300 MB, una sola vez). El detalle del pipeline está en [`ambientes-y-despliegue.md`](ambientes-y-despliegue.md).
 
 ## 6. Variables de entorno
 

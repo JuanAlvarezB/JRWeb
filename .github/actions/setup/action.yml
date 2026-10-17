@@ -1,0 +1,14 @@
+name: Preparar Node y dependencias
+description: Instala la versión de Node de .nvmrc (con caché de npm) y las dependencias exactas del lockfile.
+runs:
+  using: composite
+  steps:
+    - name: Instalar Node (versión de .nvmrc)
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      with:
+        node-version-file: .nvmrc
+        cache: npm
+
+    - name: Instalar dependencias (npm ci)
+      shell: bash
+      run: npm ci --no-audit --no-fund
