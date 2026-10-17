@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
+import { createContainer } from './di/container';
 import './styles/fonts.css';
 import './styles/reset.css';
 import './styles/variables.css';
@@ -13,6 +14,6 @@ if (rootElement === null) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <App />
+    <App dependencies={createContainer()} />
   </StrictMode>,
 );

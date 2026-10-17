@@ -1,4 +1,5 @@
 /** Repositorios falsos en memoria: los casos de uso se prueban sin archivos ni red. */
+import type { Repositories } from '@/di/container';
 import type { ClassSchedule } from '@/domain/entities/ClassSchedule';
 import type { CompanyInfo } from '@/domain/entities/CompanyInfo';
 import type { ContactChannel } from '@/domain/entities/ContactChannel';
@@ -18,6 +19,7 @@ import type { PlanRepository } from '@/domain/repositories/PlanRepository';
 import type { ScheduleRepository } from '@/domain/repositories/ScheduleRepository';
 import type { ServiceRepository } from '@/domain/repositories/ServiceRepository';
 import type { TestimonialRepository } from '@/domain/repositories/TestimonialRepository';
+import * as sample from './samples';
 
 export class InMemoryCompanyRepository implements CompanyRepository {
   constructor(private readonly data: CompanyInfo) {}
@@ -92,4 +94,23 @@ export class InMemoryLegalDocumentRepository implements LegalDocumentRepository 
   getDataPolicy(): Promise<LegalDocument> {
     return Promise.resolve(this.policy);
   }
+}
+
+/**
+ * Todos los repositorios en memoria con los datos de `samples.ts`. Se inyectan en
+ * `createContainer`, igual que lo haría la fase 2 con los repositorios de Supabase.
+ */
+export function inMemoryRepositories(overrides: Partial<Repositories> = {}): Repositories {
+  return {
+    company: new InMemoryCompanyRepository(sample.company),
+    services: new InMemoryServiceRepository(sample.services),
+    plans: new InMemoryPlanRepository(sample.plans),
+    location: new InMemoryLocationRepository(sample.location),
+    contact: new InMemoryContactRepository(sample.channels, sample.whatsAppMessages),
+    schedule: new InMemoryScheduleRepository(sample.schedule),
+    faqs: new InMemoryFaqRepository(sample.faqs),
+    testimonials: new InMemoryTestimonialRepository(sample.testimonials, sample.rating),
+    legalDocuments: new InMemoryLegalDocumentRepository(sample.dataPolicy),
+    ...overrides,
+  };
 }

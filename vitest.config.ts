@@ -33,7 +33,7 @@ export default mergeConfig(
       ],
       coverage: {
         provider: 'v8',
-        include: ['src/domain/**', 'src/shared/**', 'src/data/**', 'scripts/**'],
+        include: ['src/domain/**', 'src/shared/**', 'src/data/**', 'src/di/**', 'scripts/**'],
         exclude: ['src/shared/constants/designTokens.ts', 'src/data/content/**', '**/*.d.ts'],
         reporter: ['text-summary', 'json-summary', 'html'],
         reportsDirectory: 'coverage',
