@@ -5,6 +5,7 @@
 
 const WHATSAPP_BASE = 'https://wa.me/';
 const GOOGLE_MAPS_DIRECTIONS = 'https://www.google.com/maps/dir/';
+const WAZE_LINK = 'https://waze.com/ul';
 
 /**
  * Chat de WhatsApp con un mensaje prellenado.
@@ -39,5 +40,28 @@ export function buildDirectionsLink(destination: string): string {
   const url = new URL(GOOGLE_MAPS_DIRECTIONS);
   url.searchParams.set('api', '1');
   url.searchParams.set('destination', destination);
+  return url.href;
+}
+
+/** Coordenadas de un punto, en grados decimales. */
+export interface GeoPoint {
+  readonly latitude: number;
+  readonly longitude: number;
+}
+
+/**
+ * Navegación en Waze (abre la app en el celular): por coordenadas si las hay o por
+ * dirección en texto.
+ *
+ * @see https://developers.google.com/waze/deeplinks
+ */
+export function buildWazeLink(destination: GeoPoint | string): string {
+  const url = new URL(WAZE_LINK);
+  if (typeof destination === 'string') {
+    url.searchParams.set('q', destination);
+  } else {
+    url.searchParams.set('ll', `${String(destination.latitude)},${String(destination.longitude)}`);
+  }
+  url.searchParams.set('navigate', 'yes');
   return url.href;
 }

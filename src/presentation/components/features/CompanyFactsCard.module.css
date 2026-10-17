@@ -1,0 +1,51 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.iconCircle {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  inline-size: var(--size-icon-circle);
+  block-size: var(--size-icon-circle);
+  border-radius: 50%;
+  background-color: var(--color-brand-glow);
+  color: var(--color-neutral-text);
+}
+
+.icon {
+  inline-size: var(--component-card-contact-icon-size);
+  block-size: var(--component-card-contact-icon-size);
+}
+
+.facts {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.label {
+  font-size: var(--font-size-caption);
+  color: var(--color-neutral-text-muted);
+}
+
+.title {
+  font-size: var(--font-size-body-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--font-line-height-heading);
+  color: var(--color-neutral-text);
+}
+
+.text {
+  font-size: var(--font-size-small);
+  color: var(--color-neutral-text-muted);
+}
+
+@media (width >= 720px) {
+  .card {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-6);
+  }
+}

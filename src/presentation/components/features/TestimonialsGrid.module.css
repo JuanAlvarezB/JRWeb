@@ -1,0 +1,15 @@
+.grid {
+  display: grid;
+  gap: var(--space-4);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/* La calificación es más angosta que las opiniones, como en el mockup (320 / 416 px). */
+@media (width >= 720px) {
+  .grid {
+    grid-template-columns: minmax(0, 4fr) repeat(2, minmax(0, 5fr));
+    gap: var(--space-6);
+  }
+}

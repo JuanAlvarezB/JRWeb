@@ -1,0 +1,100 @@
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrow {
+  font: var(--typography-eyebrow);
+  letter-spacing: var(--font-letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-brand-default);
+}
+
+.name {
+  margin-block: var(--space-3) var(--space-4);
+  font-size: var(--component-card-plan-name-size);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--font-line-height-heading);
+  color: var(--color-neutral-text);
+}
+
+.description {
+  color: var(--color-neutral-text-muted);
+  line-height: var(--font-line-height-body);
+}
+
+.includes {
+  margin-block-start: var(--space-6);
+  padding-block-start: var(--space-6);
+  border-block-start: var(--component-border-hairline) solid var(--color-neutral-border);
+}
+
+.includesLabel {
+  margin-block-end: var(--space-2);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-text-muted);
+}
+
+.rows {
+  display: grid;
+  gap: var(--space-2);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  color: var(--color-neutral-text);
+}
+
+.check {
+  flex-shrink: 0;
+  inline-size: var(--component-button-icon-size);
+  block-size: var(--component-button-icon-size);
+  color: var(--color-brand-default);
+}
+
+.rowLabel {
+  flex: 1;
+}
+
+.rowValue,
+.total {
+  font-weight: var(--font-weight-semibold);
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  margin-block-start: var(--space-3);
+  padding-block-start: var(--space-4);
+  border-block-start: var(--component-border-hairline) solid var(--color-neutral-border);
+  font-size: var(--font-size-body-lg);
+  color: var(--color-neutral-text);
+}
+
+/* El pie (horas, botón y link) queda abajo: las tarjetas de una fila se alinean. */
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-block-start: auto;
+  padding-block-start: var(--space-6);
+}
+
+.footer > .rows {
+  padding-block-start: var(--space-4);
+  border-block-start: var(--component-border-hairline) solid var(--color-neutral-border);
+}
+
+.priceButton {
+  inline-size: 100%;
+}
+
+.requirements {
+  align-self: center;
+}

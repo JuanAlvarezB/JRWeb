@@ -1,0 +1,10 @@
+.list {
+  display: grid;
+  gap: var(--layout-section-gap-mobile);
+}
+
+@media (width >= 720px) {
+  .list {
+    gap: var(--layout-section-gap-desktop);
+  }
+}

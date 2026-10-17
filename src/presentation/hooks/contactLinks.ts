@@ -12,6 +12,7 @@ import {
   buildDirectionsLink,
   buildMailtoLink,
   buildTelLink,
+  buildWazeLink,
   buildWhatsAppLink,
 } from '@/shared/utils/links';
 
@@ -35,10 +36,16 @@ export interface WhatsAppInquiry {
   readonly category: LicenseCategory;
 }
 
-/** Ubicación con la dirección en una línea y el enlace para llegar. */
+/** Ubicación con la dirección en una línea y los enlaces para llegar. */
 export interface LocationView extends Location {
+  /** "Calle 13 # 10-96, Cereté, Córdoba, Colombia". */
   readonly fullAddress: string;
+  /** Sin el país: "Calle 13 # 10-96, Cereté, Córdoba". */
+  readonly shortAddress: string;
+  /** "Cómo llegar" en Google Maps. */
   readonly directionsUrl: string;
+  /** "Abrir en Waze". */
+  readonly wazeUrl: string;
 }
 
 function entryLink(kind: ContactChannelKind, value: string, messages: WhatsAppMessages): string {
@@ -93,16 +100,19 @@ export function toWhatsAppLink(
   return buildWhatsAppLink(whatsApp.value, message);
 }
 
-/** Ubicación con dirección completa e indicaciones (por coordenadas si las hay). */
+/** Ubicación con dirección completa y enlaces de navegación (por coordenadas si las hay). */
 export function toLocationView(location: Location): LocationView {
   const { coordinates } = location;
-  const destination =
-    coordinates === undefined
-      ? formatAddress(location.address)
-      : `${coordinates.latitude},${coordinates.longitude}`;
+  const fullAddress = formatAddress(location.address);
   return {
     ...location,
-    fullAddress: formatAddress(location.address),
-    directionsUrl: buildDirectionsLink(destination),
+    fullAddress,
+    shortAddress: formatAddress(location.address, false),
+    directionsUrl: buildDirectionsLink(
+      coordinates === undefined
+        ? fullAddress
+        : `${String(coordinates.latitude)},${String(coordinates.longitude)}`,
+    ),
+    wazeUrl: buildWazeLink(coordinates ?? fullAddress),
   };
 }
