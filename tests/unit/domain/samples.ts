@@ -67,6 +67,7 @@ export const services: readonly Service[] = [
     category: 'B1',
     title: 'Vehículos de servicio particular',
     audience: 'Para quienes van a conducir carro, camioneta o microbús de uso particular.',
+    summary: 'Automóviles, camionetas y otros vehículos de servicio particular.',
     vehicles: 'Automóviles, motocarros, cuatrimotos, camperos, camionetas y microbuses.',
     serviceType: 'private',
     minimumAge: 16,
@@ -76,6 +77,7 @@ export const services: readonly Service[] = [
     category: 'A2',
     title: 'Motocicletas',
     audience: 'Para quienes van a conducir moto de alto cilindraje en servicio particular.',
+    summary: 'Motocicletas, motociclos y mototriciclos de más de 125 cc.',
     vehicles: 'Motocicletas, motociclos y mototriciclos con cilindrada mayor a 125 cc.',
     serviceType: 'private',
     minimumAge: 16,
@@ -160,7 +162,7 @@ export const faqs: readonly Faq[] = [
     question: '¿Cuánto cuesta el curso?',
     answer: 'Escríbenos por WhatsApp y te enviamos el precio y las promociones vigentes.',
     action: { kind: 'whatsapp', label: 'Escríbenos por WhatsApp' },
-    placements: ['plans'],
+    placements: [{ page: 'plans', order: 3 }],
     order: 2,
   },
   {
@@ -168,7 +170,7 @@ export const faqs: readonly Faq[] = [
     topic: 'courses',
     question: '¿Desde qué edad puedo hacer el curso?',
     answer: 'A2 y B1 desde los 16 años. C1 para mayores de 18 años.',
-    placements: ['plans'],
+    placements: [{ page: 'plans', order: 1 }],
     order: 1,
   },
   {
@@ -185,7 +187,7 @@ export const faqs: readonly Faq[] = [
     topic: 'pricing',
     question: '¿Qué requisitos necesito?',
     answer: 'Escríbenos por WhatsApp y te contamos los requisitos de tu categoría.',
-    placements: ['plans'],
+    placements: [{ page: 'plans', order: 4 }],
     order: 1,
   },
 ];

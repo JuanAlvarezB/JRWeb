@@ -4,7 +4,8 @@
  * 1. Ningún precio en el contenido: los precios se consultan por WhatsApp.
  * 2. La Política de Tratamiento de Datos está aprobada e incluye la sección de
  *    analítica del sitio (el aviso de privacidad la anuncia).
- * 3. (Etapa de datos) Cada JSON de contenido cumple su esquema Zod.
+ * 3. Cada archivo cumple su esquema Zod y las reglas del dominio, y los archivos son
+ *    coherentes entre sí (src/data/validateContent.ts).
  *
  * Uso: `tsx scripts/validate-content.ts`. Con `TARGET_BRANCH=main` (PR hacia PDN),
  * los problemas de la política son errores; hacia `qa` son advertencias.
@@ -12,6 +13,8 @@
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { parseFrontmatter } from '../src/data/mappers/markdown.ts';
+import { validateContent } from '../src/data/validateContent.ts';
 
 export const CONTENT_DIR = 'src/data/content';
 export const DATA_POLICY_FILE = 'src/data/content/legal/data-policy.md';
@@ -30,7 +33,8 @@ export interface PriceFinding {
 const PRICE_PATTERNS: readonly RegExp[] = [
   /\$\s?\d/u,
   /\bCOP\b/u,
-  /\d{1,3}(?:[.,]\d{3})+(?:\s*(?:pesos|cop|mil))?/iu,
+  // Montos con separador de miles (850.000), sin confundir decimales largos (8.8877998).
+  /(?<![\d.,])\d{1,3}(?:[.,]\d{3})+(?![\d.,])(?:\s*(?:pesos|cop|mil))?/iu,
   /\b\d+\s*(?:pesos|mil pesos)\b/iu,
   /"(?:price|precio|valor|costo|tarifa|amount)"\s*:\s*"?\d/iu,
 ];
@@ -50,17 +54,7 @@ export function findPrices(file: string, text: string): PriceFinding[] {
   return findings;
 }
 
-/** Lee el bloque `---` inicial de un Markdown como pares clave: valor. */
-export function parseFrontmatter(markdown: string): Record<string, string> {
-  const block = /^---\n([\s\S]*?)\n---/u.exec(markdown);
-  if (block?.[1] === undefined) return {};
-  const entries = block[1]
-    .split('\n')
-    .map((line) => /^([\w-]+):\s*(.*)$/u.exec(line))
-    .filter((match): match is RegExpExecArray => match !== null)
-    .map((match) => [match[1] ?? '', (match[2] ?? '').replace(/^"|"$/gu, '')] as const);
-  return Object.fromEntries(entries);
-}
+export { parseFrontmatter };
 
 /** Problemas de publicación de la política de datos (vacío = lista para PDN). */
 export function checkDataPolicy(markdown: string): string[] {
@@ -98,7 +92,16 @@ async function main(): Promise<void> {
   }
   console.log(`✓ Revisados ${String(files.length)} archivos de contenido en busca de precios.`);
 
-  // 2. Política de datos
+  // 2. Esquemas, reglas del dominio y coherencia entre archivos
+  const problems = await validateContent((file) => readFile(path.join(CONTENT_DIR, file), 'utf8'));
+  for (const problem of problems) {
+    console.error(`::error file=${CONTENT_DIR}/${problem.file}::${problem.message}`);
+    errors += 1;
+  }
+  if (problems.length === 0)
+    console.log('✓ Contenido válido: esquemas, reglas del dominio y coherencia.');
+
+  // 3. Política de datos
   const policyProblems = checkDataPolicy(await readFile(DATA_POLICY_FILE, 'utf8'));
   for (const problem of policyProblems) {
     console.log(`::${toProduction ? 'error' : 'warning'} file=${DATA_POLICY_FILE}::${problem}`);

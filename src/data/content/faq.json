@@ -1,0 +1,98 @@
+[
+  {
+    "id": "edad",
+    "topic": "courses",
+    "order": 1,
+    "question": "¿Desde qué edad puedo hacer el curso?",
+    "answer": "A2 y B1 desde los 16 años, para servicio particular. C1 para mayores de 18 años, servicio público.",
+    "placements": [
+      {
+        "page": "plans",
+        "order": 1
+      }
+    ]
+  },
+  {
+    "id": "horas",
+    "topic": "courses",
+    "order": 2,
+    "question": "¿Cuántas horas dura cada curso?",
+    "answer": "Depende de la categoría: A2 dura 43 horas, B1 50 horas y C1 65 horas, repartidas entre clases teóricas, prácticas de taller y prácticas de manejo.",
+    "action": {
+      "kind": "plans",
+      "label": "Ver la distribución de horas"
+    },
+    "placements": [
+      {
+        "page": "plans",
+        "order": 2
+      }
+    ]
+  },
+  {
+    "id": "horario-teoricas",
+    "topic": "schedules",
+    "order": 1,
+    "question": "¿En qué horarios son las clases teóricas?",
+    "answer": "De lunes a viernes en cuatro franjas diurnas: 8:00 a 10:00 a. m., 10:00 a. m. a 12:00 m., 2:00 a 4:00 p. m. y 4:00 a 6:00 p. m. También hay jornada nocturna los lunes, martes y miércoles, de 6:00 a 8:00 p. m.",
+    "placements": []
+  },
+  {
+    "id": "dias-practicas",
+    "topic": "schedules",
+    "order": 2,
+    "question": "¿Qué días son las clases prácticas?",
+    "answer": "De lunes a sábado. Escríbenos para coordinar tus clases de manejo.",
+    "action": {
+      "kind": "whatsapp",
+      "label": "Escríbenos por WhatsApp"
+    },
+    "placements": []
+  },
+  {
+    "id": "requisitos",
+    "topic": "pricing",
+    "order": 1,
+    "question": "¿Qué requisitos necesito?",
+    "answer": "Los requisitos dependen de la categoría de tu licencia. Escríbenos por WhatsApp y te los enviamos.",
+    "action": {
+      "kind": "whatsapp",
+      "label": "Escríbenos por WhatsApp"
+    },
+    "placements": [
+      {
+        "page": "plans",
+        "order": 4
+      }
+    ]
+  },
+  {
+    "id": "precio",
+    "topic": "pricing",
+    "order": 2,
+    "question": "¿Cuánto cuesta el curso?",
+    "answer": "Escríbenos por WhatsApp y te enviamos el precio y las promociones vigentes.",
+    "action": {
+      "kind": "whatsapp",
+      "label": "Escríbenos por WhatsApp"
+    },
+    "placements": [
+      {
+        "page": "plans",
+        "order": 3
+      }
+    ]
+  },
+  {
+    "id": "ubicacion",
+    "topic": "location",
+    "order": 1,
+    "question": "¿Dónde están ubicados?",
+    "answer": "Estamos en la Calle 13 # 10-96, en Cereté, Córdoba.",
+    "action": {
+      "kind": "directions",
+      "label": "Cómo llegar"
+    },
+    "placements": []
+  }
+]

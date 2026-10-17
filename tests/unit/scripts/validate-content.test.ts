@@ -18,6 +18,8 @@ describe('findPrices', () => {
     'NIT 901722359-5 · Ley 1581 de 2012 · Decreto 1074 de 2015',
     'Teléfonos: 3246525153 – 3165641048',
     'Calle 13 # 10-96, Cereté · B1: 50 horas',
+    '"latitude": 8.8877998, "longitude": -75.7887601',
+    'https://www.google.com/maps/embed?pb=!1m18!1d3941.911719722109',
   ])('no confunde con un precio: "%s"', (text) => {
     expect(findPrices('contenido', text)).toEqual([]);
   });

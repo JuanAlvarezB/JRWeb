@@ -1,0 +1,27 @@
+{
+  "legalName": "CENTRO DE ENSEÑANZA AUTOMOVILÍSTICA CONDUCIR J & R DEL SINÚ S.A.S.",
+  "brandName": "Conducir J&R del Sinú",
+  "tagline": "Centro de Enseñanza Automovilística",
+  "nit": "901722359-5",
+  "summary": "Somos un Centro de Enseñanza Automovilística en Cereté, Córdoba, con cursos para licencias A2, B1 y C1.",
+  "mission": {
+    "title": "Formar conductores que respeten la seguridad vial",
+    "text": "Formar conductores con capacidades, habilidades y destrezas que respeten los principios de la seguridad vial, mediante una metodología formativa moderna y adecuada a las necesidades y expectativas de nuestros aprendices y demás partes interesadas, para lo cual contamos con un talento humano capacitado, infraestructura y equipo adecuados que garantizan el cumplimiento de los estándares del sector."
+  },
+  "vision": {
+    "title": "Un referente local en 2028",
+    "text": "Nuestro propósito es convertirnos, para el año 2028 en uno de los principales referentes como proveedor de información en la enseñanza de la conducción de vehículos a nivel local. Apoyándonos en los valores que rigen nuestro día a día y que nos permiten crecer de la mano de nuestros clientes, tanto por la calidad de los medios que le proporcionamos, como por el trato individualizado que se brinda cada aprendiz y su facilidades ofrecidas."
+  },
+  "differentiators": [
+    {
+      "id": "instructores-certificados",
+      "title": "Instructores certificados",
+      "description": "Aprendes con instructores certificados, en teoría, taller y manejo."
+    },
+    {
+      "id": "horarios-flexibles",
+      "title": "Horarios flexibles",
+      "description": "Clases teóricas de día o de noche, y prácticas de lunes a sábado."
+    }
+  ]
+}

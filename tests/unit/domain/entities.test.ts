@@ -279,9 +279,13 @@ describe('Faq', () => {
         question: 'Cuánto cuesta',
         answer: '',
         action: { kind: 'whatsapp', label: '' },
+        placements: [
+          { page: 'plans', order: 1 },
+          { page: 'plans', order: 2 },
+        ],
       }),
     );
-    expect(issues).toHaveLength(4);
+    expect(issues).toHaveLength(5);
   });
 });
 

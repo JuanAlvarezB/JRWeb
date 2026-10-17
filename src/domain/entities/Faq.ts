@@ -5,8 +5,14 @@ export const FAQ_TOPICS = ['courses', 'schedules', 'pricing', 'location'] as con
 
 export type FaqTopic = (typeof FAQ_TOPICS)[number];
 
-/** Otras páginas donde aparece la pregunta además de Preguntas frecuentes. */
-export type FaqPlacement = 'plans';
+/** Otras páginas donde se repite la pregunta, además de Preguntas frecuentes. */
+export type FaqPage = 'plans';
+
+/** Aparición de la pregunta en otra página, con su posición en esa página. */
+export interface FaqPlacement {
+  readonly page: FaqPage;
+  readonly order: number;
+}
 
 /**
  * Acción dentro de la respuesta (link de acción):
@@ -34,6 +40,11 @@ export function createFaq(props: Faq): Faq {
   issues.check(/^[a-z0-9-]+$/u.test(props.id), 'El id debe usar minúsculas, números y guiones.');
   issues.check(/^¿.+\?$/u.test(props.question.trim()), 'La pregunta debe ir entre ¿ y ?.');
   issues.check(isNonEmpty(props.answer), 'La respuesta es obligatoria.');
+  const pages = props.placements.map((placement) => placement.page);
+  issues.check(
+    new Set(pages).size === pages.length,
+    'Una pregunta aparece una sola vez por página.',
+  );
   if (props.action !== undefined) {
     issues.check(isNonEmpty(props.action.label), 'La acción necesita un texto.');
   }

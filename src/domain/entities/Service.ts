@@ -20,6 +20,8 @@ export interface Service {
   readonly title: string;
   /** Para quién es el curso. */
   readonly audience: string;
+  /** Línea corta para el resumen de servicios del Inicio. */
+  readonly summary: string;
   /** Vehículos que cubre la licencia. */
   readonly vehicles: string;
   readonly serviceType: ServiceType;
@@ -35,6 +37,7 @@ export function createService(props: Service): Service {
   const issues = new Issues(`Service ${props.category}`);
   issues.check(isNonEmpty(props.title), 'El título es obligatorio.');
   issues.check(isNonEmpty(props.audience), 'El público del curso es obligatorio.');
+  issues.check(isNonEmpty(props.summary), 'El resumen corto es obligatorio.');
   issues.check(isNonEmpty(props.vehicles), 'Los vehículos son obligatorios.');
   issues.check(
     isNonNegativeInteger(props.minimumAge) && props.minimumAge > 0,
