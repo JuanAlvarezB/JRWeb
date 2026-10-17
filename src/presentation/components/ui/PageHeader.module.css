@@ -1,0 +1,34 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  align-items: center;
+  max-inline-size: calc(var(--layout-section-header-width) + 2 * var(--layout-gutter-mobile));
+  margin-inline: auto;
+  padding: var(--space-10) var(--layout-gutter-mobile) var(--space-4);
+  text-align: center;
+}
+
+.title {
+  color: var(--color-neutral-text);
+}
+
+/* ≈ 600 px en los mockups: la entrada corta en dos líneas equilibradas. */
+.lead {
+  max-inline-size: calc(var(--layout-reading-width) - var(--space-28));
+  font-size: var(--component-section-heading-subtitle-size-mobile);
+  color: var(--color-neutral-text-muted);
+  line-height: var(--font-line-height-body);
+  text-wrap: balance;
+}
+
+@media (width >= 720px) {
+  .header {
+    max-inline-size: calc(var(--layout-section-header-width) + 2 * var(--layout-gutter-desktop));
+    padding: var(--space-20) var(--layout-gutter-desktop) var(--space-6);
+  }
+
+  .lead {
+    font-size: var(--font-size-heading-sm);
+  }
+}

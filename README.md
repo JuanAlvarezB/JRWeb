@@ -77,6 +77,18 @@ Los componentes solo usan estos hooks:
 - **Claves y consultas:** las definiciones de `queries.ts` son la única fuente. El prerender usará las mismas con `queryClient.query(queries.plans(container))`.
 - **Lógica de enlaces:** las funciones puras de `contactLinks.ts` y `shared/utils/links.ts` arman los enlaces, y se prueban sin React.
 
+### Páginas y layout
+
+- **Rutas** (`presentation/router/AppRoutes.tsx`): una por página, cada una en un fragmento aparte (carga diferida). La misma definición servirá para el prerender.
+- **Layout** (`presentation/components/layout/`):
+  - Menú fijo de 124 → 72 px al hacer scroll. Usa ☰ cuando los enlaces no caben (celular y pantallas de menos de unos 1240 px).
+  - Menú móvil con `<dialog>`: atrapa el foco y se cierra con Esc.
+  - Footer, botón flotante de WhatsApp y aviso de privacidad. El aviso se recuerda en `localStorage` con try/catch.
+  - Etiqueta "QA" solo en QA.
+  - "Saltar al contenido".
+- **Error Boundary por página:** si una página falla, el menú y el footer siguen funcionando.
+- **Al cambiar de página:** la vista vuelve arriba (o al ancla, p. ej. `/contactanos#horarios`) y el foco pasa al contenido.
+
 ### Cambiar la fuente de datos (fase 2: Supabase)
 
 Solo se crean repositorios nuevos en `data/` y se modifica `src/di/container.ts`. Dominio, hooks y componentes no cambian. Ejemplo con los planes:
@@ -126,9 +138,9 @@ La migración puede hacerse repositorio por repositorio. Si una columna de la ta
 3. **`npm run tokens`** → `src/styles/variables.css` (CSS) y `src/shared/constants/designTokens.ts` (los pocos valores que usa JavaScript). Ambos archivos son generados: no se editan a mano.
 4. Los CSS Modules solo usan variables. Stylelint rechaza colores, tamaños y familias de fuente, pesos, sombras y radios literales; variables inexistentes, y cualquier punto de quiebre distinto de 720 px.
 
-**Catálogo de componentes:** con `npm run dev`, <http://localhost:5173> muestra cada componente (botones, links, franja, encabezados, tarjetas, acordeón, velocímetro, aguada e íconos) con datos de los mockups. Solo existe en DEV: Vite lo elimina de las builds de QA y PDN.
+**Sitio en DEV:** con `npm run dev`, <http://localhost:5173> muestra el sitio completo con el contenido real.
 
-**Vista previa de features:** <http://localhost:5173/features> muestra los componentes de `presentation/components/features/` en el orden de las páginas y con el contenido real (hero, horas, planes, servicios, opiniones, ubicación, Nosotros y Contáctanos). Sirve para compararlos con los mockups y, como el catálogo, solo existe en DEV.
+**Catálogo de componentes:** <http://localhost:5173/dev/componentes> muestra cada componente base (botones, links, franja, encabezados, tarjetas, acordeón, velocímetro, aguada e íconos) con datos de los mockups. Solo existe en DEV: Vite lo elimina de las builds de QA y PDN.
 
 Los mockups aprobados están en [`docs/mockups/`](docs/mockups/) (390 y 1440 px; en `con-flotantes/`, con el botón de WhatsApp y el aviso de privacidad).
 
@@ -138,5 +150,6 @@ Los mockups aprobados están en [`docs/mockups/`](docs/mockups/) (390 y 1440 px;
 | -------------------------------------------------------------- | ---------------------------------------------------------------- |
 | [`docs/instalacion-local.md`](docs/instalacion-local.md)       | Instalación en macOS y comandos                                  |
 | [`docs/configuracion-github.md`](docs/configuracion-github.md) | Rulesets, environments, seguridad, Azure Boards y flujo de ramas |
+| [`docs/estado-del-proyecto.md`](docs/estado-del-proyecto.md)   | Etapas terminadas y etapas que faltan                            |
 
 Se completa en cada etapa: ambientes y despliegue, GitHub, Cloudflare, guía para actualizar contenido y checklist de QA.

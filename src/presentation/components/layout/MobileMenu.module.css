@@ -1,0 +1,89 @@
+.menu {
+  inline-size: 100%;
+  max-inline-size: none;
+  block-size: 100dvh;
+  max-block-size: none;
+  margin: 0;
+  padding: 0 var(--layout-gutter-mobile) var(--space-6);
+  border: 0;
+  background-color: var(--color-neutral-canvas);
+  color: var(--color-neutral-text);
+  overflow-y: auto;
+}
+
+.menu[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu::backdrop {
+  background-color: var(--color-neutral-canvas);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  block-size: var(--size-nav-height-mobile);
+}
+
+.home {
+  display: flex;
+  border-radius: var(--component-action-link-focus-radius);
+}
+
+.logo {
+  inline-size: var(--component-nav-logo-mobile-width);
+  block-size: auto;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  inline-size: var(--size-touch-target);
+  block-size: var(--size-touch-target);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-button);
+  background: none;
+  color: var(--color-neutral-text);
+  cursor: pointer;
+}
+
+.closeIcon {
+  inline-size: var(--component-button-icon-size);
+  block-size: var(--component-button-icon-size);
+}
+
+.links {
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--component-mobile-menu-row-height);
+  border-block-end: var(--component-border-hairline) solid var(--color-neutral-border);
+  color: var(--color-neutral-text);
+  font-size: var(--component-mobile-menu-link-font-size);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}
+
+.active {
+  color: var(--color-brand-default);
+}
+
+.actions {
+  display: grid;
+  gap: var(--space-3);
+  margin-block-start: auto;
+  padding-block-start: var(--space-8);
+}
+
+.action {
+  inline-size: 100%;
+  block-size: var(--size-button-height-mobile);
+}

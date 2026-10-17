@@ -34,10 +34,10 @@ describe('CourseHoursExplorer', () => {
     renderWithProviders(<CourseHoursExplorer />);
 
     expect(await screen.findByRole('heading', { name: 'Licencia B1' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'B1' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('radio', { name: 'B1' })).toHaveAttribute('aria-checked', 'true');
     expect(screen.getByText('20 horas')).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: 'C1' }));
+    await user.click(screen.getByRole('radio', { name: 'C1' }));
 
     expect(screen.getByRole('heading', { name: 'Licencia C1' })).toBeInTheDocument();
     expect(
@@ -47,6 +47,31 @@ describe('CourseHoursExplorer', () => {
     expect(
       textOf(screen.getByRole('link', { name: /Consulta los requisitos/u }).getAttribute('href')),
     ).toBe('Hola, vi en la página web el curso C1 y quiero conocer los requisitos.');
+  });
+});
+
+describe('CourseHoursExplorer con teclado (grupo de radios)', () => {
+  it('las flechas, Inicio y Fin cambian la categoría y mueven el foco', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<CourseHoursExplorer />);
+    const b1 = await screen.findByRole('radio', { name: 'B1' });
+    expect(screen.getByRole('radiogroup', { name: 'Categoría de licencia' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'A2' })).toHaveAttribute('tabindex', '-1');
+
+    b1.focus();
+    await user.keyboard('{ArrowRight}');
+    expect(screen.getByRole('radio', { name: 'C1' })).toHaveFocus();
+    expect(screen.getByRole('heading', { name: 'Licencia C1' })).toBeInTheDocument();
+
+    await user.keyboard('{ArrowRight}');
+    expect(screen.getByRole('radio', { name: 'A2' })).toHaveAttribute('aria-checked', 'true');
+
+    await user.keyboard('{End}');
+    expect(screen.getByRole('radio', { name: 'C1' })).toHaveFocus();
+    await user.keyboard('{Home}');
+    expect(screen.getByRole('radio', { name: 'A2' })).toHaveFocus();
+    await user.keyboard('{ArrowLeft}');
+    expect(screen.getByRole('radio', { name: 'C1' })).toHaveAttribute('aria-checked', 'true');
   });
 });
 

@@ -1,6 +1,7 @@
 import type { JSX, ReactNode } from 'react';
 import { cx } from '@/shared/utils/cx';
 import styles from './Card.module.css';
+import { useReveal } from './useReveal';
 
 export type CardElement = 'div' | 'article' | 'section' | 'li' | 'aside';
 
@@ -39,8 +40,11 @@ export function Card({
   ariaLabelledBy,
   testId,
 }: CardProps): JSX.Element {
+  const reveal = useReveal();
+
   return (
     <Element
+      ref={reveal}
       className={cx(styles.card, PADDING_CLASS[padding], hoverable && styles.hoverable, className)}
       aria-labelledby={ariaLabelledBy}
       data-testid={testId}

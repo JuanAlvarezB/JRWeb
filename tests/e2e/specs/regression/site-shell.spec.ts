@@ -2,10 +2,19 @@ import { expect, test } from '../../fixtures/test';
 import { findAccessibilityViolations } from '../../utils/accessibility';
 
 /**
- * Base común de todas las páginas. Se amplía en la etapa de pruebas con las rutas
- * del sitio (Inicio, Nosotros, Servicios, Planes, Contáctanos, Preguntas, Política, 404).
+ * Base común de todas las páginas: idioma, un único H1, sin errores de consola y sin
+ * violaciones WCAG AA. `/no-existe` cubre la página 404.
  */
-const PAGES = ['/'] as const;
+const PAGES = [
+  '/',
+  '/nosotros',
+  '/servicios',
+  '/planes',
+  '/contactanos',
+  '/preguntas-frecuentes',
+  '/politica-de-tratamiento-de-datos',
+  '/no-existe',
+] as const;
 
 for (const path of PAGES) {
   test.describe(`Página ${path}`, () => {
