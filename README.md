@@ -60,8 +60,9 @@ Los mockups aprobados están en [`docs/mockups/`](docs/mockups/) (390 y 1440 px;
 
 ## Documentación
 
-| Documento                                                | Contenido                       |
-| -------------------------------------------------------- | ------------------------------- |
-| [`docs/instalacion-local.md`](docs/instalacion-local.md) | Instalación en macOS y comandos |
+| Documento                                                      | Contenido                                                        |
+| -------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [`docs/instalacion-local.md`](docs/instalacion-local.md)       | Instalación en macOS y comandos                                  |
+| [`docs/configuracion-github.md`](docs/configuracion-github.md) | Rulesets, environments, seguridad, Azure Boards y flujo de ramas |
 
 Se completa en cada etapa: ambientes y despliegue, GitHub, Cloudflare, guía para actualizar contenido y checklist de QA.

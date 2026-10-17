@@ -144,9 +144,15 @@ export default defineConfig([
     },
   },
 
+  // Pruebas end-to-end: los fixtures de Playwright no son hooks de React.
+  {
+    files: ['tests/e2e/**/*.ts'],
+    rules: { 'react-hooks/rules-of-hooks': 'off' },
+  },
+
   // Archivos de configuración y scripts de Node
   {
-    files: ['*.config.{js,ts}', 'scripts/**/*.ts'],
+    files: ['*.config.{js,ts}', 'scripts/**/*.ts', 'tests/**/*.{ts,tsx}'],
     languageOptions: { globals: { ...globals.node } },
     rules: { 'no-console': 'off' },
   },
