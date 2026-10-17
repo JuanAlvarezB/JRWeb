@@ -3,7 +3,8 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * Pruebas end-to-end con Playwright.
  *
- * - Sin `BASE_URL`: levanta `vite preview` sobre `dist/` (CI y tu equipo).
+ * - Sin `BASE_URL`: sirve `dist/` con `scripts/serve-dist.ts`, que aplica las reglas de
+ *   Cloudflare Pages (rutas, 404, `_headers` con la CSP y compresión).
  * - Con `BASE_URL`: prueba un sitio ya publicado (QA o PDN). Si existen
  *   `CF_ACCESS_CLIENT_ID` y `CF_ACCESS_CLIENT_SECRET`, se envían como encabezados
  *   del Service Token de Cloudflare Access (solo QA). Nunca se escriben en el repo.
@@ -60,7 +61,7 @@ export default defineConfig({
   ...(externalBaseUrl === undefined
     ? {
         webServer: {
-          command: 'npx vite preview --port 4173 --strictPort',
+          command: 'npx tsx scripts/serve-dist.ts --port 4173',
           url: baseURL,
           reuseExistingServer: !isCI,
           timeout: 60_000,

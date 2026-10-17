@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '../../shared/config/zod';
 import { licenseCategory, nonNegativeInt, serviceType, text } from './common';
 
 /** Esquema de `plans.json`. Estricto: un campo de precio hace fallar la validación. */

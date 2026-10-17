@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '../../shared/config/zod';
 import { text } from './common';
 
 /** Esquema de `contact.json`: canales en orden y mensajes prellenados de WhatsApp. */

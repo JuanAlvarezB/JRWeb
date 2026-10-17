@@ -91,6 +91,15 @@ describe('títulos y fechas de la política', () => {
     expect(formatLegalHeading('ANALÍTICA DEL SITIO WEB')).toBe('Analítica del sitio web');
   });
 
+  it('conserva las siglas conocidas', () => {
+    expect(formatLegalHeading('7. RECLAMOS ANTE LA SIC Y DATOS DEL NIT')).toBe(
+      '7. Reclamos ante la SIC y datos del NIT',
+    );
+    expect(formatLegalHeading('DATOS DE CONDUCIR DEL SINÚ S.A.S.')).toBe(
+      'Datos de conducir del sinú S.A.S',
+    );
+  });
+
   it('toSentenceCase y formatLongDate', () => {
     expect(toSentenceCase('ÁMBITO DE APLICACIÓN')).toBe('Ámbito de aplicación');
     expect(formatLongDate('2024-01-15')).toBe('15 de enero de 2024');

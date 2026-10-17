@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '../../shared/config/zod';
 import { WEEKDAYS } from '../../domain/entities/ClassSchedule';
 import { text } from './common';
 

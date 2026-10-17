@@ -1,8 +1,11 @@
 /*
- * Menú principal. Los enlaces de escritorio necesitan unos 1200 px (logo 240 + 6
- * enlaces + "Llamar" y "Escríbenos"): con menos espacio se usa ☰. Por eso la
- * visibilidad de los enlaces depende del ancho del menú (consulta de contenedor),
- * y la altura y el logo, del punto de quiebre de 720 px.
+ * Menú principal. La altura sigue el punto de quiebre de 720 px; qué cabe en la
+ * barra depende de su ancho (consulta de contenedor). Medidas: logo 240, enlaces 610,
+ * "Llamar" 72 y "Escríbenos" 161 px, más separaciones y márgenes:
+ * - ≥ 1240 px: todo, como en el mockup.
+ * - 1140–1239 px: sin "Llamar" (está en el footer y en Contáctanos).
+ * - 1000–1139 px: además, logo-ícono en lugar del logo completo.
+ * - < 1000 px: ☰ abre el menú a pantalla completa.
  */
 .header {
   container: header / inline-size;
@@ -164,12 +167,28 @@
   }
 }
 
-@container header (width >= 1240px) {
+@container header (width >= 1000px) {
   .nav {
     display: block;
   }
 
   .menuButton {
     display: none;
+  }
+}
+
+@container header (width < 1240px) {
+  .call {
+    display: none;
+  }
+}
+
+@container header (width < 1140px) {
+  .logoFull {
+    display: none;
+  }
+
+  .header:not(.compact) .logoIcon {
+    display: block;
   }
 }

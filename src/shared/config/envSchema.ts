@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from './zod';
 
 /** Ambientes soportados. Coinciden con los modos de Vite y los archivos `.env.[modo]`. */
 export const ENV_NAMES = ['development', 'qa', 'production'] as const;

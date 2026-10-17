@@ -11,3 +11,4 @@ tests/e2e/specs/visual/**/*-snapshots/
 # Texto legal literal: no se formatea automáticamente
 src/data/content/legal/
 src/shared/constants/designTokens.ts
+dist-server/

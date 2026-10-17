@@ -4,6 +4,7 @@ import { formatLegalHeading } from '@/presentation/formatters/legal';
 import { formatLongDate } from '@/presentation/formatters/text';
 import { useCompanyInfo } from '@/presentation/hooks/useCompanyInfo';
 import { useDataPolicy } from '@/presentation/hooks/useDataPolicy';
+import { usePageMeta } from '@/presentation/seo/usePageMeta';
 import { UI_TEXT } from '@/shared/constants/uiText';
 import styles from './DataPolicyPage.module.css';
 
@@ -15,12 +16,12 @@ const TEXT = UI_TEXT.pages.dataPolicy;
  * descarga solo al abrir esta página.
  */
 export default function DataPolicyPage(): JSX.Element {
+  usePageMeta('dataPolicy');
   const policy = useDataPolicy();
   const { brandName, nit } = useCompanyInfo();
 
   return (
     <>
-      <title>{UI_TEXT.pages.documentTitle(TEXT.title)}</title>
       <header className={styles.header}>
         <h1 className={styles.title}>{TEXT.title}</h1>
         <p className={styles.meta}>

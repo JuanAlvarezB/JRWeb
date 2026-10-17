@@ -8,17 +8,18 @@ import { Section } from '@/presentation/components/ui/Section';
 import { SectionHeading } from '@/presentation/components/ui/SectionHeading';
 import { useWhatsAppLink } from '@/presentation/hooks/useWhatsAppLink';
 import { SECTION_IDS } from '@/shared/constants/routes';
+import { usePageMeta } from '@/presentation/seo/usePageMeta';
 import { UI_TEXT } from '@/shared/constants/uiText';
 
 const TEXT = UI_TEXT.pages.contact;
 
 /** Contáctanos (DESIGN.md §8): WhatsApp grande, canales, ubicación y horarios. */
 export default function ContactPage(): JSX.Element {
+  usePageMeta('contact');
   const whatsAppHref = useWhatsAppLink();
 
   return (
     <>
-      <title>{UI_TEXT.pages.documentTitle(TEXT.title)}</title>
       <PageHeader title={TEXT.title} lead={TEXT.lead}>
         <Button href={whatsAppHref} newTab icon="whatsapp" size="large" fullWidthOnMobile>
           {UI_TEXT.nav.writeWhatsApp}

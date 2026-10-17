@@ -63,11 +63,11 @@ npm ci
 
 ## 4. Ejecutar el sitio
 
-| Comando                      | Qué hace                                                              | Dónde se ve             |
-| ---------------------------- | --------------------------------------------------------------------- | ----------------------- |
-| `npm run dev`                | Servidor de desarrollo con recarga automática (modo `development`)    | <http://localhost:5173> |
-| `npm run preview:qa`         | Construye la versión de **QA** y la sirve tal como quedaría publicada | <http://localhost:4173> |
-| `npm run preview:production` | Igual, con la configuración de **PDN**                                | <http://localhost:4173> |
+| Comando                      | Qué hace                                                                                                   | Dónde se ve             |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `npm run dev`                | Servidor de desarrollo con recarga automática (modo `development`)                                         | <http://localhost:5173> |
+| `npm run preview:qa`         | Construye la versión de **QA** y la sirve con las reglas de Cloudflare Pages (rutas, 404, CSP, compresión) | <http://localhost:4173> |
+| `npm run preview:production` | Igual, con la configuración de **PDN**                                                                     | <http://localhost:4173> |
 
 Para detener un servidor: `Ctrl + C` en la Terminal.
 
@@ -78,7 +78,7 @@ Para detener un servidor: `Ctrl + C` en la Terminal.
 | `npm run typecheck`                             | Tipos de TypeScript (modo estricto)                                                             |
 | `npm run lint`                                  | ESLint (incluye las reglas de arquitectura), Stylelint (solo variables de DESIGN.md) y Prettier |
 | `npm run format`                                | Corrige el formato de todos los archivos                                                        |
-| `npm run build:qa` / `npm run build:production` | Construye `dist/` y genera `robots.txt` y `_headers` del ambiente                               |
+| `npm run build:qa` / `npm run build:production` | Construye `dist/`: prerender de cada página, `robots.txt`, `_headers` y, en PDN, `sitemap.xml`  |
 
 | `npm run content:validate` | Contenido sin precios y política de datos lista |
 | `npm run test:unit` / `npm run test:components` | Pruebas unitarias (con cobertura) y de componentes |

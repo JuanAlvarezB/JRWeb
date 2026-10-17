@@ -9,7 +9,10 @@ export class SitePage {
 
   constructor(readonly page: Page) {
     page.on('console', (message) => {
-      if (message.type() === 'error') this.consoleErrors.push(message.text());
+      if (message.type() !== 'error') return;
+      // La 404 responde con estado 404 a propósito: no es un error de la página.
+      const isDocument404 = message.text().includes('404') && message.location().url === page.url();
+      if (!isDocument404) this.consoleErrors.push(message.text());
     });
     page.on('pageerror', (error) => {
       this.consoleErrors.push(error.message);

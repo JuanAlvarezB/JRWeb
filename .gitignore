@@ -1,6 +1,7 @@
 # Dependencias y builds
 node_modules/
 dist/
+dist-server/
 *.tsbuildinfo
 
 # Reportes de pruebas
@@ -30,3 +31,4 @@ insumos/
 .claude/
 .agents/
 skills-lock.json
+docs/*
