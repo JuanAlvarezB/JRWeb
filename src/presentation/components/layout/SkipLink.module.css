@@ -6,11 +6,12 @@
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-button);
   background-color: var(--color-neutral-surface);
-  box-shadow: var(--shadow-lg);
   font-weight: var(--font-weight-semibold);
   translate: 0 calc(-100% - var(--space-4));
 }
 
+/* La sombra solo al enfocarlo: oculto, no debe asomar sobre el menú. */
 .skipLink:focus-visible {
+  box-shadow: var(--shadow-lg);
   translate: 0 0;
 }

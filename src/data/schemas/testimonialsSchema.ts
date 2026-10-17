@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '../../shared/config/zod';
 import { httpsUrl, isoDate, nonNegativeInt, text } from './common';
 
 /** Esquema de `testimonials.json`: calificación de Google y opiniones reales. */

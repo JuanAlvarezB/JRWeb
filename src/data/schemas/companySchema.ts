@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '../../shared/config/zod';
 import { text } from './common';
 
 const statement = z.strictObject({ title: text, text });

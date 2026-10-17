@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '../../shared/config/zod';
 import { httpsUrl, text } from './common';
 
 /** Esquema de `location.json`. Coordenadas, perfil y mapa son opcionales. */

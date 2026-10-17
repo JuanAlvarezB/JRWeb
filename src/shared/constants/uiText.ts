@@ -216,6 +216,29 @@ export const UI_TEXT = {
     pricing: 'Precios y requisitos',
     location: 'Ubicación',
   },
+  seo: {
+    siteName: 'Conducir J&R del Sinú',
+    ogImageAlt: 'Conducir J&R del Sinú, Centro de Enseñanza Automovilística en Cereté, Córdoba',
+    /** Catálogo de cursos en los datos estructurados. */
+    coursesCatalog: 'Cursos de conducción',
+    /** Descripciones para buscadores (máx. ~160 caracteres, sin cifras del contenido). */
+    descriptions: {
+      home: 'Cursos de conducción para licencias A2, B1 y C1 en Cereté, Córdoba. Clases teóricas de día o de noche y prácticas de lunes a sábado. Escríbenos por WhatsApp.',
+      about:
+        'Conoce a Conducir J&R del Sinú, Centro de Enseñanza Automovilística en Cereté: misión, visión, instructores certificados y horarios flexibles.',
+      services:
+        'Cursos de conducción para licencias A2, B1 y C1: motocicletas, vehículos particulares y de servicio público. Edad mínima y vehículos de cada licencia.',
+      plans:
+        'Planes de los cursos A2, B1 y C1 con sus horas de teoría, taller y manejo. Escríbenos por WhatsApp y te enviamos el precio y las promociones vigentes.',
+      contact:
+        'WhatsApp, celular, correo y redes de Conducir J&R del Sinú. Cómo llegar a la sede en Cereté, Córdoba, y horarios de clases teóricas y prácticas.',
+      faq: 'Respuestas sobre edades, horas de cada curso, horarios de clases, requisitos, precios y ubicación de Conducir J&R del Sinú en Cereté.',
+      dataPolicy:
+        'Política de Tratamiento de Datos Personales de Conducir J&R del Sinú (Ley 1581 de 2012): derechos de los titulares, finalidades y canales de consulta.',
+      notFound:
+        'La página que buscas no existe o cambió de dirección. Vuelve al inicio de Conducir J&R del Sinú.',
+    },
+  },
   pages: {
     /** Título de la pestaña: "Planes · Conducir J&R del Sinú". */
     documentTitle: (page: string): string => `${page} · Conducir J&R del Sinú`,
@@ -260,6 +283,7 @@ export const UI_TEXT = {
     plans: {
       title: 'Planes',
       lead: 'Cada curso con su distribución de horas. Escríbenos y te enviamos el precio y las promociones vigentes.',
+      gridLabel: 'Cursos y distribución de horas',
       faqEyebrow: 'Preguntas sobre los planes',
       faqTitle: 'Antes de elegir tu curso',
     },

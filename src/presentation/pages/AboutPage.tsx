@@ -6,24 +6,29 @@ import { StatementCards } from '@/presentation/components/features/StatementCard
 import { Button } from '@/presentation/components/ui/Button';
 import { PageHeader } from '@/presentation/components/ui/PageHeader';
 import { Section } from '@/presentation/components/ui/Section';
+import { VisuallyHidden } from '@/presentation/components/ui/VisuallyHidden';
 import { SectionHeading } from '@/presentation/components/ui/SectionHeading';
 import { useCompanyInfo } from '@/presentation/hooks/useCompanyInfo';
 import { useWhatsAppLink } from '@/presentation/hooks/useWhatsAppLink';
+import { usePageMeta } from '@/presentation/seo/usePageMeta';
 import { UI_TEXT } from '@/shared/constants/uiText';
 
 const TEXT = UI_TEXT.pages.about;
 
 /** Nosotros (DESIGN.md §8): misión y visión literales, diferenciadores y NIT. */
 export default function AboutPage(): JSX.Element {
+  usePageMeta('about');
   const { summary } = useCompanyInfo();
   const whatsAppHref = useWhatsAppLink();
 
   return (
     <>
-      <title>{UI_TEXT.pages.documentTitle(TEXT.title)}</title>
       <PageHeader title={TEXT.title} lead={summary} />
 
-      <Section label={TEXT.statementsLabel}>
+      <Section labelledBy="mision-vision-titulo">
+        <VisuallyHidden as="h2" id="mision-vision-titulo">
+          {TEXT.statementsLabel}
+        </VisuallyHidden>
         <StatementCards />
       </Section>
 

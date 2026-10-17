@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '../../shared/config/zod';
 import { FAQ_TOPICS } from '../../domain/entities/Faq';
 import { nonNegativeInt, text } from './common';
 

@@ -15,6 +15,7 @@ import { useSchoolLocation } from '@/presentation/hooks/useSchoolLocation';
 import { useTestimonials } from '@/presentation/hooks/useTestimonials';
 import { useWhatsAppLink } from '@/presentation/hooks/useWhatsAppLink';
 import { ROUTES, SECTION_IDS } from '@/shared/constants/routes';
+import { usePageMeta } from '@/presentation/seo/usePageMeta';
 import { UI_TEXT } from '@/shared/constants/uiText';
 import styles from './HomePage.module.css';
 
@@ -25,14 +26,13 @@ const TEXT = UI_TEXT.pages.home;
  * ¿qué tengo que hacer?, ¿qué incluye?, ¿dónde quedan?
  */
 export default function HomePage(): JSX.Element {
+  usePageMeta('home');
   const whatsAppHref = useWhatsAppLink();
   const { testimonials } = useTestimonials();
   const { address } = useSchoolLocation();
 
   return (
     <>
-      <title>{TEXT.documentTitle}</title>
-
       <Section labelledBy="inicio-titulo">
         <HeroFloatingCards>
           <Ribbon className={styles.ribbon}>{UI_TEXT.brand.tagline}</Ribbon>

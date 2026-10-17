@@ -66,6 +66,12 @@ export default defineConfig({
   },
   build: {
     assetsDir: 'static',
+    // El prerender lee el manifiesto para enlazar en cada página el CSS y el JS de su
+    // fragmento (sin esto, la página se vería un instante sin sus estilos).
+    manifest: true,
+    // Un solo CSS para todo el sitio (≈ 10 KB comprimido): se descarga una vez, queda
+    // en caché para todas las páginas y ninguna se pinta sin sus estilos.
+    cssCodeSplit: false,
     sourcemap: false,
   },
   server: {

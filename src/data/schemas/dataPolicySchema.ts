@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '../../shared/config/zod';
 import { isoDate, text } from './common';
 
 /** Esquema del encabezado (frontmatter) de `legal/data-policy.md`. */

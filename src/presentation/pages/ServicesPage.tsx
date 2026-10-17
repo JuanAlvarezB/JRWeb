@@ -5,15 +5,16 @@ import { Button } from '@/presentation/components/ui/Button';
 import { PageHeader } from '@/presentation/components/ui/PageHeader';
 import { Section } from '@/presentation/components/ui/Section';
 import { ROUTES } from '@/shared/constants/routes';
+import { usePageMeta } from '@/presentation/seo/usePageMeta';
 import { UI_TEXT } from '@/shared/constants/uiText';
 
 const TEXT = UI_TEXT.pages.services;
 
 /** Servicios (DESIGN.md §8): un bloque por categoría y el paso a Planes. */
 export default function ServicesPage(): JSX.Element {
+  usePageMeta('services');
   return (
     <>
-      <title>{UI_TEXT.pages.documentTitle(TEXT.title)}</title>
       <PageHeader title={TEXT.title} lead={TEXT.lead} />
 
       <Section label={TEXT.title}>

@@ -2,20 +2,23 @@
 
 Sitio web de Conducir J&R del Sinú: etapas terminadas y etapas que faltan.
 
-Actualizado el 17 oct 2026, al cerrar la etapa de páginas.
+Actualizado el 17 oct 2026, al cerrar la etapa de SEO, prerender y analítica.
 
 ## Resumen
 
-- **Hecho:** el sitio funciona completo en DEV. Tiene las 8 páginas con contenido real y cumple DESIGN.md y los mockups. El CI de GitHub valida cada PR hacia `qa`.
+- **Hecho:**
+  - El sitio está completo: 8 páginas con contenido real que cumplen DESIGN.md y los mockups.
+  - Cada página se genera como HTML estático con SEO y datos estructurados.
+  - Rendimiento medido en Lighthouse: 98–100.
+  - El CI de GitHub valida cada PR hacia `qa`.
 - **Falta para publicar:**
-  - SEO y prerender.
   - Ampliar las pruebas.
   - Desplegar en Cloudflare Pages (QA privado y PDN).
   - Llevar `qa` a `main`.
 
 | Rama   | Estado                                                             |
 | ------ | ------------------------------------------------------------------ |
-| `qa`   | Etapas 1–9 integradas (la etapa 9, páginas, al aprobarse su PR).   |
+| `qa`   | Etapas 1–9 integradas; la 10 entra al aprobarse su PR.             |
 | `main` | Solo el primer commit. Ninguna etapa ha pasado a PDN.              |
 | Sitio  | Aún no está publicado: el despliegue en Cloudflare es la etapa 12. |
 
@@ -32,7 +35,8 @@ Actualizado el 17 oct 2026, al cerrar la etapa de páginas.
 | 6   | DI y providers               | `di/container.ts` como composition root, `DependencyProvider` y `QueryProvider`. El README documenta cómo pasar a Supabase.              | #12             |
 | 7   | Hooks                        | Hooks de datos con TanStack Query y Suspense, claves de consulta centralizadas y enlaces de contacto (WhatsApp, llamada, mapas).         | #13             |
 | 8   | Features                     | Componentes de cada sección con datos reales, validados contra los mockups a 1440 y 390 px.                                              | #14             |
-| 9   | Páginas                      | Detalle en la sección siguiente.                                                                                                         | Pendiente de PR |
+| 9   | Páginas                      | Detalle más abajo.                                                                                                                       | #15             |
+| 10  | SEO, prerender y analítica   | Detalle más abajo.                                                                                                                       | Pendiente de PR |
 
 Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar el flujo de ramas `feature/*`.
 
@@ -47,31 +51,40 @@ Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar
   - Un Error Boundary por página.
 - **Política de datos:** la página muestra el texto oficial aprobado con su índice.
 
+### Detalle de la etapa 10 (SEO, prerender y analítica)
+
+- **Prerender:** cada ruta y la 404 se generan como HTML estático con React 19 (`react-dom/static`). Llevan su CSS y la caché de consultas, y el navegador hidrata sin repetir consultas.
+- **SEO:**
+  - Título, descripción, canónica, Open Graph y JSON-LD (`DrivingSchool` y `FAQPage`).
+  - `sitemap.xml` en PDN.
+  - `noindex` en QA y en la 404.
+- **Analítica:** Cloudflare Web Analytics solo en PDN y solo con token.
+- **Servidor local:** las e2e usan uno con las reglas de Cloudflare Pages, incluida la CSP. Gracias a él se encontraron y corrigieron dos problemas que habrían llegado a producción:
+  - Scripts en línea de React.
+  - Una prueba de `eval` de Zod que Firefox bloqueaba.
+- **Rendimiento (Lighthouse, móvil):** 98–100, con primera pintura de 1.0 a 1.8 s y 0 ms de bloqueo.
+
 ## Etapas que faltan
 
-| #   | Etapa                          | Alcance                                                                                                                                                                                                                                                                                                                                         |
-| --- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 10  | SEO, prerender y analítica     | Prerender de cada ruta con `react-dom/static`, con las consultas precargadas y `404.html`. Título, descripción, canónica, Open Graph y JSON-LD (`DrivingSchool` / `LocalBusiness`) por página. `sitemap.xml` y `robots.txt` por ambiente. Cloudflare Web Analytics solo en PDN. Revisar el peso del JavaScript inicial (hoy 126 KB comprimido). |
-| 11  | Pruebas                        | Page Objects por página. Flujos e2e: WhatsApp con mensaje, selector de horas, menú móvil, aviso de privacidad y anclas. Capturas de referencia por página (`test:visual`). Smoke de PDN con WhatsApp y ubicación.                                                                                                                               |
-| 12  | Despliegue en Cloudflare Pages | `deploy-reusable.yml`, `deploy-qa.yml` (integración en `qa` → QA + regresión) y `deploy-prod.yml` (`main` → aprobación → PDN + smoke). Cloudflare Access para QA con Service Token para las pruebas. Secrets en los environments de GitHub. Fase 3 de los rulesets.                                                                             |
-| 13  | Documentación                  | `configuracion-cloudflare.md`, `guia-actualizar-contenido.md` y `checklist-pruebas-manuales-qa.md`. Actualizar `ambientes-y-despliegue.md` y `configuracion-github.md` (regla de Dependabot sobre versiones mayores).                                                                                                                           |
-| 14  | Paso a PDN                     | PR `qa` → `main` con todas las verificaciones, aprobación del despliegue y revisión del checklist en QA antes de publicar.                                                                                                                                                                                                                      |
+| #   | Etapa                          | Alcance                                                                                                                                                                                                                                                             |
+| --- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 11  | Pruebas                        | Page Objects por página. Flujos e2e: WhatsApp con mensaje, selector de horas, menú móvil, aviso de privacidad y anclas. Capturas de referencia por página (`test:visual`). Smoke de PDN con WhatsApp y ubicación.                                                   |
+| 12  | Despliegue en Cloudflare Pages | `deploy-reusable.yml`, `deploy-qa.yml` (integración en `qa` → QA + regresión) y `deploy-prod.yml` (`main` → aprobación → PDN + smoke). Cloudflare Access para QA con Service Token para las pruebas. Secrets en los environments de GitHub. Fase 3 de los rulesets. |
+| 13  | Documentación                  | `configuracion-cloudflare.md`, `guia-actualizar-contenido.md` y `checklist-pruebas-manuales-qa.md`. Actualizar `ambientes-y-despliegue.md` y `configuracion-github.md` (regla de Dependabot sobre versiones mayores).                                               |
+| 14  | Paso a PDN                     | PR `qa` → `main` con todas las verificaciones, aprobación del despliegue y revisión del checklist en QA antes de publicar.                                                                                                                                          |
 
-## Decisiones pendientes del dueño
+## Pendientes
 
-Ninguna bloquea el desarrollo. Conviene resolverlas antes del paso a PDN.
+Los asuntos abiertos (fotos reales, aprobación de respuestas, token de analítica, Search Console…) se registran en [pendientes.md](pendientes.md).
 
-1. **Respuestas de Preguntas frecuentes:** cinco respuestas se redactaron como propuesta con datos reales (horas, horarios, días de práctica, requisitos y ubicación). Falta aprobarlas o ajustarlas en `src/data/content/faq.json`.
-2. **Fotos reales** de la sede y los vehículos (opcional para el release 1). Al agregarlas al contenido, los bloques de Servicios pasan a dos columnas sin cambiar código.
-3. **Revisión en QA:** cuando QA esté desplegado, revisar el sitio en un celular real (WhatsApp, llamada, mapa y Waze).
+## Verificaciones al cierre de la etapa 10
 
-## Verificaciones al cierre de la etapa 9
-
-| Verificación                                | Resultado                                            |
-| ------------------------------------------- | ---------------------------------------------------- |
-| Lint (ESLint, Stylelint, Prettier, tokens)  | Sin errores                                          |
-| Tipos (`npm run typecheck`)                 | Sin errores                                          |
-| Validación de contenido                     | Sin precios, esquemas y coherencia correctos         |
-| Pruebas unitarias y de componentes (Vitest) | 205 pasan                                            |
-| E2E (Chromium, Firefox, WebKit y móvil)     | 64 pasan; axe sin violaciones WCAG AA en las 8 rutas |
-| gitleaks                                    | Sin hallazgos                                        |
+| Verificación                                | Resultado                                                        |
+| ------------------------------------------- | ---------------------------------------------------------------- |
+| Lint (ESLint, Stylelint, Prettier, tokens)  | Sin errores                                                      |
+| Tipos (`npm run typecheck`)                 | Sin errores                                                      |
+| Validación de contenido                     | Sin precios, esquemas y coherencia correctos                     |
+| Pruebas unitarias y de componentes (Vitest) | 237 pasan                                                        |
+| E2E (Chromium, Firefox, WebKit y móvil)     | 100 pasan: axe WCAG AA y SEO del HTML en las 8 rutas, con la CSP |
+| Lighthouse (móvil)                          | Rendimiento 98–100; accesibilidad y buenas prácticas 98–100      |
+| gitleaks                                    | Sin hallazgos                                                    |

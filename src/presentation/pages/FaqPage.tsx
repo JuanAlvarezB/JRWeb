@@ -6,6 +6,7 @@ import { PageHeader } from '@/presentation/components/ui/PageHeader';
 import { Section } from '@/presentation/components/ui/Section';
 import { useFaqGroups } from '@/presentation/hooks/useFaqs';
 import { useWhatsAppLink } from '@/presentation/hooks/useWhatsAppLink';
+import { usePageMeta } from '@/presentation/seo/usePageMeta';
 import { UI_TEXT } from '@/shared/constants/uiText';
 import styles from './FaqPage.module.css';
 
@@ -13,13 +14,13 @@ const TEXT = UI_TEXT.pages.faq;
 
 /** Preguntas frecuentes (DESIGN.md §8): acordeón agrupado por tema y cierre por WhatsApp. */
 export default function FaqPage(): JSX.Element {
+  usePageMeta('faq');
   const groups = useFaqGroups();
   const whatsAppHref = useWhatsAppLink();
   const firstQuestion = groups[0]?.faqs[0]?.id;
 
   return (
     <>
-      <title>{UI_TEXT.pages.documentTitle(TEXT.title)}</title>
       <PageHeader title={TEXT.title} lead={TEXT.lead} />
 
       {groups.map((group, index) => {

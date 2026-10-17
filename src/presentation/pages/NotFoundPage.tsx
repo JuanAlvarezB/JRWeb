@@ -4,6 +4,7 @@ import { ActionLink } from '@/presentation/components/ui/ActionLink';
 import { Button } from '@/presentation/components/ui/Button';
 import { useWhatsAppLink } from '@/presentation/hooks/useWhatsAppLink';
 import { ROUTES } from '@/shared/constants/routes';
+import { usePageMeta } from '@/presentation/seo/usePageMeta';
 import { UI_TEXT } from '@/shared/constants/uiText';
 import styles from './NotFoundPage.module.css';
 
@@ -12,11 +13,11 @@ const FULL_ARC = [{ id: 'arc', value: 1, tone: 'brand' }] as const;
 
 /** 404 (DESIGN.md §8): el velocímetro con la aguja en cero y el camino de vuelta. */
 export default function NotFoundPage(): JSX.Element {
+  usePageMeta('notFound');
   const whatsAppHref = useWhatsAppLink();
 
   return (
     <>
-      <title>{UI_TEXT.pages.documentTitle(TEXT.documentTitle)}</title>
       <div className={styles.page}>
         <SpeedometerArc
           segments={FULL_ARC}

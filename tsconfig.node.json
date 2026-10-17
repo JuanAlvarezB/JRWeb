@@ -28,6 +28,7 @@
     "scripts/**/*.ts",
     "src/shared/config/envSchema.ts",
     "src/shared/constants/*.ts",
+    "src/shared/prerender.ts",
     "src/domain/**/*.ts",
     "src/data/**/*.ts"
   ]

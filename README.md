@@ -16,16 +16,17 @@ Instalación completa en macOS: [`docs/instalacion-local.md`](docs/instalacion-l
 
 ## Scripts
 
-| Script                              | Descripción                                           |
-| ----------------------------------- | ----------------------------------------------------- |
-| `dev`                               | Genera los tokens y abre el servidor de desarrollo    |
-| `tokens`                            | Genera `variables.css` desde `design-tokens/`         |
-| `tokens:check`                      | Falla si las variables generadas se editaron a mano   |
-| `build:qa` / `build:production`     | Build del ambiente + `robots.txt` y `_headers`        |
-| `preview:qa` / `preview:production` | Build y vista previa local en <http://localhost:4173> |
-| `typecheck`                         | TypeScript estricto                                   |
-| `lint`                              | Tokens + ESLint + Stylelint + Prettier                |
-| `format`                            | Formatea todo con Prettier                            |
+| Script                              | Descripción                                                                                     |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `dev`                               | Genera los tokens y abre el servidor de desarrollo                                              |
+| `tokens`                            | Genera `variables.css` desde `design-tokens/`                                                   |
+| `tokens:check`                      | Falla si las variables generadas se editaron a mano                                             |
+| `build:qa` / `build:production`     | Build del ambiente, prerender de las páginas, `robots.txt`, `_headers` (y `sitemap.xml` en PDN) |
+| `preview:qa` / `preview:production` | Build y vista previa local en <http://localhost:4173>, con las reglas de Cloudflare Pages       |
+| `serve`                             | Sirve el `dist/` actual como Cloudflare Pages (sin volver a construir)                          |
+| `typecheck`                         | TypeScript estricto                                                                             |
+| `lint`                              | Tokens + ESLint + Stylelint + Prettier                                                          |
+| `format`                            | Formatea todo con Prettier                                                                      |
 
 ## Stack
 
@@ -74,12 +75,12 @@ Los componentes solo usan estos hooks:
 | `useSchoolLocation()`                   | Ubicación con dirección en una línea y enlace "Cómo llegar" |
 
 - **Suspense:** usan `useSuspenseQuery`, así que el componente siempre recibe los datos. La carga la muestra un `<Suspense>` y los errores, el Error Boundary de cada página.
-- **Claves y consultas:** las definiciones de `queries.ts` son la única fuente. El prerender usará las mismas con `queryClient.query(queries.plans(container))`.
+- **Claves y consultas:** las definiciones de `queries.ts` son la única fuente. El prerender guarda la caché de TanStack Query en el HTML y el navegador hidrata con ella, sin repetir consultas.
 - **Lógica de enlaces:** las funciones puras de `contactLinks.ts` y `shared/utils/links.ts` arman los enlaces, y se prueban sin React.
 
 ### Páginas y layout
 
-- **Rutas** (`presentation/router/AppRoutes.tsx`): una por página, cada una en un fragmento aparte (carga diferida). La misma definición servirá para el prerender.
+- **Rutas** (`presentation/router/AppRoutes.tsx`): una por página, cada una en un fragmento aparte (carga diferida). El prerender usa la misma definición.
 - **Layout** (`presentation/components/layout/`):
   - Menú fijo de 124 → 72 px al hacer scroll. Usa ☰ cuando los enlaces no caben (celular y pantallas de menos de unos 1240 px).
   - Menú móvil con `<dialog>`: atrapa el foco y se cierra con Esc.
@@ -88,6 +89,20 @@ Los componentes solo usan estos hooks:
   - "Saltar al contenido".
 - **Error Boundary por página:** si una página falla, el menú y el footer siguen funcionando.
 - **Al cambiar de página:** la vista vuelve arriba (o al ancla, p. ej. `/contactanos#horarios`) y el foco pasa al contenido.
+
+### SEO, prerender y analítica
+
+- **Prerender:** `npm run build:qa` y `build:production` generan una página HTML por ruta (`index.html`, `planes.html`, … y `404.html`) con React 19 (`react-dom/static`) desde `src/entry-server.tsx`, sin dependencias extra.
+- **HTML generado:** cada página trae su contenido completo, sus metadatos y la caché de consultas. Cloudflare Pages sirve `planes.html` en `/planes`.
+- **Hidratación:** el navegador hidrata ese HTML; en DEV la aplicación se monta desde cero.
+- **Metadatos** (`presentation/seo/`):
+  - título, descripción, canónica (siempre PDN), Open Graph e imagen para redes;
+  - JSON-LD `DrivingSchool` en Inicio y Contáctanos, y `FAQPage` en Preguntas frecuentes, sin precios ni calificación;
+  - al navegar dentro del sitio, `usePageMeta` actualiza el título y la canónica.
+- **Indexación:** solo PDN se indexa; QA y la 404 llevan `noindex`. `sitemap.xml` solo en PDN.
+- **Analítica:** el beacon de Cloudflare Web Analytics se agrega solo en PDN y solo si existe `VITE_CF_ANALYTICS_TOKEN`. No usa cookies.
+- **Sin scripts en línea:** el prerender falla si el HTML trae `<script>` en línea, porque la CSP los bloquea.
+- **Servidor local** (`scripts/serve-dist.ts`): las pruebas e2e usan un servidor con las reglas de Cloudflare Pages: URL sin `.html`, 404 con estado 404, `_redirects`, `_headers` con la CSP y compresión. Así detectan problemas de CSP antes de publicar.
 
 ### Cambiar la fuente de datos (fase 2: Supabase)
 
@@ -151,5 +166,6 @@ Los mockups aprobados están en [`docs/mockups/`](docs/mockups/) (390 y 1440 px;
 | [`docs/instalacion-local.md`](docs/instalacion-local.md)       | Instalación en macOS y comandos                                  |
 | [`docs/configuracion-github.md`](docs/configuracion-github.md) | Rulesets, environments, seguridad, Azure Boards y flujo de ramas |
 | [`docs/estado-del-proyecto.md`](docs/estado-del-proyecto.md)   | Etapas terminadas y etapas que faltan                            |
+| [`docs/pendientes.md`](docs/pendientes.md)                     | Pendientes abiertos y resueltos                                  |
 
 Se completa en cada etapa: ambientes y despliegue, GitHub, Cloudflare, guía para actualizar contenido y checklist de QA.

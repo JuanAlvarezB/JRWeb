@@ -1,5 +1,5 @@
-import { z } from 'zod';
 import { LICENSE_CATEGORIES } from '../../domain/entities/LicenseCategory';
+import { z } from '../../shared/config/zod';
 
 /**
  * Piezas comunes de los esquemas. Los objetos son estrictos: un campo que no está

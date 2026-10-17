@@ -14,6 +14,7 @@ const LAYER_RULE = 'Regla de dependencias: presentation -> domain <- data.';
 export default defineConfig([
   globalIgnores([
     'dist/',
+    'dist-server/',
     'coverage/',
     'playwright-report/',
     'test-results/',

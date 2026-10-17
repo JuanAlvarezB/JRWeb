@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '../../shared/config/zod';
 import { licenseCategory, nonNegativeInt, serviceType, text } from './common';
 
 /** Esquema de `services.json`. La foto es opcional (sin foto, el bloque va en una columna). */
