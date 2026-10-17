@@ -57,6 +57,26 @@ Flujo de datos: componente → hook → caso de uso → contrato del repositorio
 - **`AppDependencies`** (en `presentation/providers/`) es el contrato: la presentación declara qué casos de uso necesita y el contenedor los entrega.
 - **Pruebas:** usan `createContainer(inMemoryRepositories())`, con repositorios en memoria y sin archivos.
 
+### Hooks de datos (`presentation/hooks/`)
+
+Los componentes solo usan estos hooks:
+
+| Hook                                    | Devuelve                                                    |
+| --------------------------------------- | ----------------------------------------------------------- |
+| `useCompanyInfo()`                      | Razón social, NIT, misión, visión y diferenciadores         |
+| `useServices()` / `usePlans()`          | Cursos y planes en orden A2, B1, C1 (sin precios)           |
+| `useSchedule()`                         | Horarios teóricos y prácticos                               |
+| `useFaqs({ page })` / `useFaqGroups()`  | Preguntas de una página, o agrupadas por tema               |
+| `useTestimonials()`                     | Calificación de Google y opiniones                          |
+| `useDataPolicy()`                       | Política con sus secciones (se descarga solo en su página)  |
+| `useContactChannels(kinds?)`            | Canales con enlaces listos (`tel:`, `mailto:`, WhatsApp…)   |
+| `useWhatsAppLink({ topic, category }?)` | Enlace de WhatsApp con el mensaje general o de la consulta  |
+| `useSchoolLocation()`                   | Ubicación con dirección en una línea y enlace "Cómo llegar" |
+
+- **Suspense:** usan `useSuspenseQuery`, así que el componente siempre recibe los datos. La carga la muestra un `<Suspense>` y los errores, el Error Boundary de cada página.
+- **Claves y consultas:** las definiciones de `queries.ts` son la única fuente. El prerender usará las mismas con `queryClient.query(queries.plans(container))`.
+- **Lógica de enlaces:** las funciones puras de `contactLinks.ts` y `shared/utils/links.ts` arman los enlaces, y se prueban sin React.
+
 ### Cambiar la fuente de datos (fase 2: Supabase)
 
 Solo se crean repositorios nuevos en `data/` y se modifica `src/di/container.ts`. Dominio, hooks y componentes no cambian. Ejemplo con los planes:
