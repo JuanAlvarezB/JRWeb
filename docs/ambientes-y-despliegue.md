@@ -12,30 +12,30 @@ Cómo llega un cambio de tu equipo (DEV) a QA y a PDN. La configuración de GitH
 
 Se ejecuta en **cada PR hacia `qa` o `main`**. Cada job tiene un nombre fijo porque los rulesets lo exigen.
 
-| #   | Job                   | Qué verifica                                                                                             | Equivalente en tu equipo                             |
-| --- | --------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| 0   | `source-branch-check` | Hacia `main` solo puede venir `qa`. Hacia `qa` avisa (sin bloquear) si la rama no trae el último `main`. | —                                                    |
-| 1   | `lint`                | Tokens sin editar a mano, ESLint (incluye reglas de arquitectura), Stylelint y Prettier                  | `npm run lint`                                       |
-| 2   | `typecheck`           | TypeScript estricto en app, scripts y pruebas                                                            | `npm run typecheck`                                  |
-| 3   | `content-validation`  | Ningún precio en el contenido; política de datos aprobada y con analítica (obligatorio hacia `main`)     | `npm run content:validate`                           |
-| 4   | `secret-scan`         | gitleaks sobre todo el historial                                                                         | `gitleaks git .` (opcional: `brew install gitleaks`) |
-| 5   | `unit-tests`          | Vitest con cobertura mínima por capa: dominio, datos, formateadores y SEO                                | `npm run test:unit`                                  |
-| 6   | `component-tests`     | React Testing Library                                                                                    | `npm run test:components`                            |
-| 7   | `build`               | Build del ambiente destino: `qa` en PR hacia `qa`, `production` hacia `main`                             | `npm run build:qa`                                   |
+| #   | Job                   | Qué verifica                                                                                                                                          | Equivalente en tu equipo                             |
+| --- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| 0   | `source-branch-check` | Hacia `main` solo puede venir `qa`. Hacia `qa` avisa (sin bloquear) si la rama no trae el último `main`.                                              | —                                                    |
+| 1   | `lint`                | Tokens sin editar a mano, ESLint (incluye reglas de arquitectura), Stylelint y Prettier                                                               | `npm run lint`                                       |
+| 2   | `typecheck`           | TypeScript estricto en app, scripts y pruebas                                                                                                         | `npm run typecheck`                                  |
+| 3   | `content-validation`  | Ningún precio en el contenido; política de datos aprobada y con analítica (obligatorio hacia `main`)                                                  | `npm run content:validate`                           |
+| 4   | `secret-scan`         | gitleaks sobre todo el historial                                                                                                                      | `gitleaks git .` (opcional: `brew install gitleaks`) |
+| 5   | `unit-tests`          | Vitest con cobertura mínima por capa: dominio, datos, formateadores y SEO                                                                             | `npm run test:unit`                                  |
+| 6   | `component-tests`     | React Testing Library                                                                                                                                 | `npm run test:components`                            |
+| 7   | `build`               | Build del ambiente destino: `qa` en PR hacia `qa`, `production` hacia `main`                                                                          | `npm run build:qa`                                   |
 | 8   | `e2e-tests`           | Playwright en Chromium, Firefox, WebKit y móvil, contra la build del paso 7 servida como Cloudflare Pages: accesibilidad (axe), SEO del HTML y flujos | `npm run test:e2e`                                   |
-| 9   | `visual-tests`        | Capturas de cada página contra las de referencia                                                         | `npm run test:visual`                                |
+| 9   | `visual-tests`        | Capturas de cada página contra las de referencia                                                                                                      | `npm run test:visual`                                |
 
 Los jobs 0 a 6 corren en paralelo; `build` espera a todos; `e2e-tests` y `visual-tests` esperan a `build`. Si cualquiera falla, el PR no se puede integrar (cuando los rulesets estén en fase 2).
 
 ### Qué prueba cada suite
 
-| Suite                                | Dónde                        | Qué cubre                                                                                                                                                                                                                             |
-| ------------------------------------ | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Unitarias                            | `tests/unit/`                | Reglas del dominio, esquemas y coherencia del contenido, formateadores, SEO y datos estructurados, scripts de build y servidor local                                                                                                   |
-| Componentes                          | `tests/components/`          | Hooks, features, páginas y layout con el contenido real: menú móvil, aviso de privacidad, Error Boundary, caché del prerender                                                                                                          |
-| E2E de regresión                     | `tests/e2e/specs/regression/` | Cada página: un H1, sin errores de consola, axe WCAG AA y SEO del HTML. Flujos: navegación y foco, WhatsApp con su mensaje por plan, "Tu curso en horas" (mouse y teclado), menú móvil, aviso de privacidad, contacto, mapa, anclas y preguntas |
-| Visual                               | `tests/e2e/specs/visual/`    | Cada página completa a 1440 y 390 px contra su captura de referencia                                                                                                                                                                  |
-| Smoke de PDN                         | `tests/e2e/specs/smoke/`     | Después de publicar: titular, WhatsApp, ubicación, indexación (robots, sitemap) y 404                                                                                                                                                  |
+| Suite            | Dónde                         | Qué cubre                                                                                                                                                                                                                                       |
+| ---------------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Unitarias        | `tests/unit/`                 | Reglas del dominio, esquemas y coherencia del contenido, formateadores, SEO y datos estructurados, scripts de build y servidor local                                                                                                            |
+| Componentes      | `tests/components/`           | Hooks, features, páginas y layout con el contenido real: menú móvil, aviso de privacidad, Error Boundary, caché del prerender                                                                                                                   |
+| E2E de regresión | `tests/e2e/specs/regression/` | Cada página: un H1, sin errores de consola, axe WCAG AA y SEO del HTML. Flujos: navegación y foco, WhatsApp con su mensaje por plan, "Tu curso en horas" (mouse y teclado), menú móvil, aviso de privacidad, contacto, mapa, anclas y preguntas |
+| Visual           | `tests/e2e/specs/visual/`     | Cada página completa a 1440 y 390 px contra su captura de referencia                                                                                                                                                                            |
+| Smoke de PDN     | `tests/e2e/specs/smoke/`      | Después de publicar: titular, WhatsApp, ubicación, indexación (robots, sitemap) y 404                                                                                                                                                           |
 
 Los Page Objects de cada página están en `tests/e2e/pages/` y se usan como fixtures (`home`, `plans`, `contact`, `faq`, `policy`).
 
@@ -95,10 +95,10 @@ La configuración inicial de Cloudflare y GitHub está en [`configuracion-cloudf
 
 ### Qué cambia en cada ambiente
 
-| Ambiente | Build        | Indexación                          | Analítica          | Etiqueta | Acceso                       |
-| -------- | ------------ | ----------------------------------- | ------------------ | -------- | ---------------------------- |
-| DEV      | `dev`        | —                                   | No                 | No       | Tu equipo                    |
-| QA       | `qa`         | `noindex` (robots, encabezado y HTML) | No                 | "QA"     | Correos autorizados (Access) |
-| PDN      | `production` | Sí, con `sitemap.xml`               | Sí (si hay token)  | No       | Público                      |
+| Ambiente | Build        | Indexación                            | Analítica         | Etiqueta | Acceso                       |
+| -------- | ------------ | ------------------------------------- | ----------------- | -------- | ---------------------------- |
+| DEV      | `dev`        | —                                     | No                | No       | Tu equipo                    |
+| QA       | `qa`         | `noindex` (robots, encabezado y HTML) | No                | "QA"     | Correos autorizados (Access) |
+| PDN      | `production` | Sí, con `sitemap.xml`                 | Sí (si hay token) | No       | Público                      |
 
 Las ejecuciones de despliegue también se pueden lanzar a mano: **Actions** → el workflow → **Run workflow**, sobre `qa` o `main`.

@@ -15,29 +15,29 @@ Actualizado el 17 oct 2026, al cerrar la etapa de despliegue en Cloudflare Pages
   - Desplegar en Cloudflare Pages (QA privado y PDN).
   - Llevar `qa` a `main`.
 
-| Rama   | Estado                                                             |
-| ------ | ------------------------------------------------------------------ |
-| `qa`   | Etapas 1–11 integradas; la 12 entra al aprobarse su PR. |
-| `main` | Solo el primer commit. Ninguna etapa ha pasado a PDN.              |
+| Rama   | Estado                                                                           |
+| ------ | -------------------------------------------------------------------------------- |
+| `qa`   | Etapas 1–11 integradas; la 12 entra al aprobarse su PR.                          |
+| `main` | Solo el primer commit. Ninguna etapa ha pasado a PDN.                            |
 | Sitio  | Aún no está publicado: falta configurar Cloudflare (guía lista) y el paso a PDN. |
 
 ## Etapas terminadas
 
-| #   | Etapa                        | Qué quedó                                                                                                                                | PR              |
-| --- | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| 1   | Entorno local (DEV)          | React 19 + Vite 8 + TypeScript estricto, ESLint, Stylelint y Prettier. Variables de entorno validadas para DEV, QA y PDN.                | —               |
-| 2   | Tokens, fuentes y estilos    | Style Dictionary genera `variables.css` desde `design-tokens/`. Barlow y Barlow Condensed autoalojadas. Stylelint solo acepta variables. | —               |
-| 3   | Marca y componentes base     | Botones, links de acción, franja, encabezados, tarjetas, acordeón, velocímetro, aguada e íconos. Catálogo en `/dev/componentes`.         | —               |
-| —   | Configuración de GitHub y CI | Rulesets de `qa` y `main`, Dependabot, plantilla de PR y CODEOWNERS. `ci.yml` con 10 verificaciones obligatorias.                        | #1              |
-| 4   | Dominio                      | Entidades con sus reglas (NIT, horas, horarios…), contratos de repositorio y 10 casos de uso. Sin React ni librerías externas.           | #9              |
-| 5   | Datos                        | Contenido real en JSON y Markdown, esquemas Zod estrictos, mappers, 9 repositorios y validación de coherencia entre archivos.            | #10             |
-| 6   | DI y providers               | `di/container.ts` como composition root, `DependencyProvider` y `QueryProvider`. El README documenta cómo pasar a Supabase.              | #12             |
-| 7   | Hooks                        | Hooks de datos con TanStack Query y Suspense, claves de consulta centralizadas y enlaces de contacto (WhatsApp, llamada, mapas).         | #13             |
-| 8   | Features                     | Componentes de cada sección con datos reales, validados contra los mockups a 1440 y 390 px.                                              | #14             |
-| 9   | Páginas                      | Detalle más abajo.                                                                                                                       | #15             |
-| 10  | SEO, prerender y analítica   | Detalle más abajo.                                                                                                                       | #16             |
-| 11  | Pruebas                      | Detalle más abajo.                                                                                                                       | #17             |
-| 12  | Despliegue en Cloudflare Pages | Detalle más abajo.                                                                                                                     | Pendiente de PR |
+| #   | Etapa                          | Qué quedó                                                                                                                                | PR              |
+| --- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| 1   | Entorno local (DEV)            | React 19 + Vite 8 + TypeScript estricto, ESLint, Stylelint y Prettier. Variables de entorno validadas para DEV, QA y PDN.                | —               |
+| 2   | Tokens, fuentes y estilos      | Style Dictionary genera `variables.css` desde `design-tokens/`. Barlow y Barlow Condensed autoalojadas. Stylelint solo acepta variables. | —               |
+| 3   | Marca y componentes base       | Botones, links de acción, franja, encabezados, tarjetas, acordeón, velocímetro, aguada e íconos. Catálogo en `/dev/componentes`.         | —               |
+| —   | Configuración de GitHub y CI   | Rulesets de `qa` y `main`, Dependabot, plantilla de PR y CODEOWNERS. `ci.yml` con 10 verificaciones obligatorias.                        | #1              |
+| 4   | Dominio                        | Entidades con sus reglas (NIT, horas, horarios…), contratos de repositorio y 10 casos de uso. Sin React ni librerías externas.           | #9              |
+| 5   | Datos                          | Contenido real en JSON y Markdown, esquemas Zod estrictos, mappers, 9 repositorios y validación de coherencia entre archivos.            | #10             |
+| 6   | DI y providers                 | `di/container.ts` como composition root, `DependencyProvider` y `QueryProvider`. El README documenta cómo pasar a Supabase.              | #12             |
+| 7   | Hooks                          | Hooks de datos con TanStack Query y Suspense, claves de consulta centralizadas y enlaces de contacto (WhatsApp, llamada, mapas).         | #13             |
+| 8   | Features                       | Componentes de cada sección con datos reales, validados contra los mockups a 1440 y 390 px.                                              | #14             |
+| 9   | Páginas                        | Detalle más abajo.                                                                                                                       | #15             |
+| 10  | SEO, prerender y analítica     | Detalle más abajo.                                                                                                                       | #16             |
+| 11  | Pruebas                        | Detalle más abajo.                                                                                                                       | #17             |
+| 12  | Despliegue en Cloudflare Pages | Detalle más abajo.                                                                                                                       | Pendiente de PR |
 
 Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar el flujo de ramas `feature/*`.
 
@@ -92,10 +92,10 @@ Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar
 
 ## Etapas que faltan
 
-| #   | Etapa                          | Alcance                                                                                                                                                                                                                                                             |
-| --- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 13  | Documentación                  | `guia-actualizar-contenido.md` y `checklist-pruebas-manuales-qa.md`. Actualizar `configuracion-github.md` (regla de Dependabot sobre versiones mayores) y la guía de instalación.                                               |
-| 14  | Paso a PDN                     | Configurar Cloudflare con la guía (pasos 1–8), revisar QA con el checklist, PR `qa` → `main`, aprobación del despliegue y smoke en verde.                                                                                                                                          |
+| #   | Etapa         | Alcance                                                                                                                                                                           |
+| --- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 13  | Documentación | `guia-actualizar-contenido.md` y `checklist-pruebas-manuales-qa.md`. Actualizar `configuracion-github.md` (regla de Dependabot sobre versiones mayores) y la guía de instalación. |
+| 14  | Paso a PDN    | Configurar Cloudflare con la guía (pasos 1–8), revisar QA con el checklist, PR `qa` → `main`, aprobación del despliegue y smoke en verde.                                         |
 
 ## Pendientes
 
@@ -103,9 +103,9 @@ Los asuntos abiertos (fotos reales, aprobación de respuestas, token de analíti
 
 ## Verificaciones al cierre de la etapa 12
 
-| Verificación                                      | Resultado                                                                               |
-| ------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| Workflows (actionlint)                            | Sin errores en `ci`, `update-snapshots`, `deploy-reusable`, `deploy-qa` y `deploy-prod` |
-| Opciones de Wrangler 4.147.0                      | Verificadas (`--project-name`, `--branch`, `--commit-hash`, `--production-branch`)      |
-| Lint, tipos y pruebas                             | Sin cambios de código en esta etapa; siguen en verde                                     |
-| Despliegue real                                   | Pendiente de la configuración de Cloudflare (guía, pasos 1–8)                             |
+| Verificación                 | Resultado                                                                               |
+| ---------------------------- | --------------------------------------------------------------------------------------- |
+| Workflows (actionlint)       | Sin errores en `ci`, `update-snapshots`, `deploy-reusable`, `deploy-qa` y `deploy-prod` |
+| Opciones de Wrangler 4.147.0 | Verificadas (`--project-name`, `--branch`, `--commit-hash`, `--production-branch`)      |
+| Lint, tipos y pruebas        | Sin cambios de código en esta etapa; siguen en verde                                    |
+| Despliegue real              | Pendiente de la configuración de Cloudflare (guía, pasos 1–8)                           |

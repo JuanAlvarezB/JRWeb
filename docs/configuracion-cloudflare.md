@@ -11,17 +11,17 @@ GitHub Actions hace los despliegues ([`ambientes-y-despliegue.md`](ambientes-y-d
 
 ## Resumen
 
-| #   | Paso                                        | Dónde                     | Resultado                                                 |
-| --- | ------------------------------------------- | ------------------------- | --------------------------------------------------------- |
-| 1   | Cuenta y Account ID                         | Cloudflare                | `CLOUDFLARE_ACCOUNT_ID`                                   |
-| 2   | Crear el proyecto de Pages                  | Terminal o Cloudflare     | Proyecto `conducirjrdelsinu` (rama de producción `main`) |
-| 3   | Token de API (solo Pages)                   | Cloudflare                | `CLOUDFLARE_API_TOKEN`                                    |
-| 4   | Secrets y variables                         | GitHub                    | Environments `qa` y `production` listos                   |
-| 5   | Proteger QA con Cloudflare Access           | Cloudflare (Zero Trust)   | QA solo para los correos autorizados                      |
-| 6   | Service Token para las pruebas              | Cloudflare (Zero Trust)   | `CF_ACCESS_CLIENT_ID` y `CF_ACCESS_CLIENT_SECRET`         |
-| 7   | Primer despliegue a QA                      | GitHub Actions            | QA publicado y regresión en verde                         |
-| 8   | Web Analytics                               | Cloudflare                | `VITE_CF_ANALYTICS_TOKEN`                                 |
-| 9   | Primer despliegue a PDN                     | GitHub (PR `qa` → `main`) | Sitio público y smoke en verde                            |
+| #   | Paso                              | Dónde                     | Resultado                                                |
+| --- | --------------------------------- | ------------------------- | -------------------------------------------------------- |
+| 1   | Cuenta y Account ID               | Cloudflare                | `CLOUDFLARE_ACCOUNT_ID`                                  |
+| 2   | Crear el proyecto de Pages        | Terminal o Cloudflare     | Proyecto `conducirjrdelsinu` (rama de producción `main`) |
+| 3   | Token de API (solo Pages)         | Cloudflare                | `CLOUDFLARE_API_TOKEN`                                   |
+| 4   | Secrets y variables               | GitHub                    | Environments `qa` y `production` listos                  |
+| 5   | Proteger QA con Cloudflare Access | Cloudflare (Zero Trust)   | QA solo para los correos autorizados                     |
+| 6   | Service Token para las pruebas    | Cloudflare (Zero Trust)   | `CF_ACCESS_CLIENT_ID` y `CF_ACCESS_CLIENT_SECRET`        |
+| 7   | Primer despliegue a QA            | GitHub Actions            | QA publicado y regresión en verde                        |
+| 8   | Web Analytics                     | Cloudflare                | `VITE_CF_ANALYTICS_TOKEN`                                |
+| 9   | Primer despliegue a PDN           | GitHub (PR `qa` → `main`) | Sitio público y smoke en verde                           |
 
 Los menús de Cloudflare cambian de nombre con el tiempo. Si una opción no aparece tal cual, búscala con el buscador del panel; el nombre de la función se mantiene.
 
@@ -82,22 +82,22 @@ Ese token solo puede publicar en Pages: no toca DNS, ni dominios, ni otras parte
 
 En **Settings** → **Environments** (creados en [`configuracion-github.md`](configuracion-github.md), paso 5):
 
-| Environment  | Tipo     | Nombre                    | Valor                                |
-| ------------ | -------- | ------------------------- | ------------------------------------ |
-| `qa`         | Secret   | `CLOUDFLARE_API_TOKEN`    | Token del paso 3                     |
-| `qa`         | Secret   | `CLOUDFLARE_ACCOUNT_ID`   | Account ID del paso 1                |
-| `qa`         | Secret   | `CF_ACCESS_CLIENT_ID`     | Paso 6                               |
-| `qa`         | Secret   | `CF_ACCESS_CLIENT_SECRET` | Paso 6                               |
-| `production` | Secret   | `CLOUDFLARE_API_TOKEN`    | El mismo token del paso 3            |
-| `production` | Secret   | `CLOUDFLARE_ACCOUNT_ID`   | Account ID del paso 1                |
+| Environment  | Tipo     | Nombre                    | Valor                                 |
+| ------------ | -------- | ------------------------- | ------------------------------------- |
+| `qa`         | Secret   | `CLOUDFLARE_API_TOKEN`    | Token del paso 3                      |
+| `qa`         | Secret   | `CLOUDFLARE_ACCOUNT_ID`   | Account ID del paso 1                 |
+| `qa`         | Secret   | `CF_ACCESS_CLIENT_ID`     | Paso 6                                |
+| `qa`         | Secret   | `CF_ACCESS_CLIENT_SECRET` | Paso 6                                |
+| `production` | Secret   | `CLOUDFLARE_API_TOKEN`    | El mismo token del paso 3             |
+| `production` | Secret   | `CLOUDFLARE_ACCOUNT_ID`   | Account ID del paso 1                 |
 | `production` | Variable | `VITE_CF_ANALYTICS_TOKEN` | Paso 8 (es público, por eso variable) |
 
 Y en **Settings** → **Secrets and variables** → **Actions** → pestaña **Variables** → **New repository variable**:
 
-| Variable           | Valor                                                                                            |
-| ------------------ | ------------------------------------------------------------------------------------------------ |
+| Variable           | Valor                                                                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------- |
 | `QA_REMOTE_DEPLOY` | `true` cuando terminen los pasos 5 y 6. `false` = plan de respaldo (QA no se publica en internet) |
-| `CF_PAGES_PROJECT` | Solo si el proyecto no se llama `conducirjrdelsinu`                                              |
+| `CF_PAGES_PROJECT` | Solo si el proyecto no se llama `conducirjrdelsinu`                                               |
 
 ## 5. Proteger QA con Cloudflare Access
 
@@ -196,24 +196,25 @@ QA se revierte igual, buscando en **Preview** los despliegues de la rama `qa`.
    - el sitio de Web Analytics.
 
    Una prueba unitaria verifica que `site.ts` y `.env.production` coincidan.
+
 3. El subdominio `pages.dev` sigue funcionando. Opcional: redirigirlo al dominio nuevo con una regla de Cloudflare.
 
 ## Mantenimiento
 
-| Qué                                   | Cuándo                         | Cómo                                                                                                    |
-| ------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| Service Token `github-actions-qa`     | Antes de su vencimiento        | Crear uno nuevo (paso 6), actualizar los dos secrets de `qa`, agregarlo a la política y borrar el viejo |
-| Token de API                          | Si tiene TTL, o si se filtra   | Crear uno nuevo (paso 3), actualizar los dos environments y revocar el viejo                            |
-| Versión de Wrangler                   | Cada pocos meses               | `WRANGLER_VERSION` en `deploy-reusable.yml` (versión con más de 2 semanas)                              |
-| Correos autorizados en QA             | Cuando cambie el equipo        | Paso 5.3                                                                                                |
+| Qué                               | Cuándo                       | Cómo                                                                                                    |
+| --------------------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Service Token `github-actions-qa` | Antes de su vencimiento      | Crear uno nuevo (paso 6), actualizar los dos secrets de `qa`, agregarlo a la política y borrar el viejo |
+| Token de API                      | Si tiene TTL, o si se filtra | Crear uno nuevo (paso 3), actualizar los dos environments y revocar el viejo                            |
+| Versión de Wrangler               | Cada pocos meses             | `WRANGLER_VERSION` en `deploy-reusable.yml` (versión con más de 2 semanas)                              |
+| Correos autorizados en QA         | Cuando cambie el equipo      | Paso 5.3                                                                                                |
 
 ## Problemas frecuentes
 
-| Síntoma                                                           | Causa y solución                                                                                                                                  |
-| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `deploy` falla con "Faltan los secrets…"                          | El secret no está en el environment correcto (paso 4). Los secrets del repositorio no sirven: deben ir en `qa` o `production`.                    |
-| `deploy` falla con "Authentication error" o "project not found"   | Token sin el permiso **Cloudflare Pages · Edit**, Account ID equivocado, o el proyecto tiene otro nombre (variable `CF_PAGES_PROJECT`).           |
-| `regression-qa` espera y falla con "QA no respondió 200"          | Falta la política **Service Auth** con el Service Token (paso 6.4) o los secrets `CF_ACCESS_*` no coinciden.                                      |
-| QA se abre sin pedir correo                                       | La política de Access no está activa (paso 5.2) o la regla **Allow** incluye a "Everyone".                                                         |
-| El despliegue a PDN no empieza                                    | Está esperando la aprobación del environment `production` (paso 9.3).                                                                             |
-| PDN no muestra datos en Web Analytics                             | Falta `VITE_CF_ANALYTICS_TOKEN` en `production` (la build avisa) o el sitio de Web Analytics tiene otro hostname.                                 |
+| Síntoma                                                         | Causa y solución                                                                                                                        |
+| --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `deploy` falla con "Faltan los secrets…"                        | El secret no está en el environment correcto (paso 4). Los secrets del repositorio no sirven: deben ir en `qa` o `production`.          |
+| `deploy` falla con "Authentication error" o "project not found" | Token sin el permiso **Cloudflare Pages · Edit**, Account ID equivocado, o el proyecto tiene otro nombre (variable `CF_PAGES_PROJECT`). |
+| `regression-qa` espera y falla con "QA no respondió 200"        | Falta la política **Service Auth** con el Service Token (paso 6.4) o los secrets `CF_ACCESS_*` no coinciden.                            |
+| QA se abre sin pedir correo                                     | La política de Access no está activa (paso 5.2) o la regla **Allow** incluye a "Everyone".                                              |
+| El despliegue a PDN no empieza                                  | Está esperando la aprobación del environment `production` (paso 9.3).                                                                   |
+| PDN no muestra datos en Web Analytics                           | Falta `VITE_CF_ANALYTICS_TOKEN` en `production` (la build avisa) o el sitio de Web Analytics tiene otro hostname.                       |
