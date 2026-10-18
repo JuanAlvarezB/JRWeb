@@ -9,18 +9,43 @@ export const WHATSAPP_NUMBER = '573165641048';
  * extienden.
  */
 export class SitePage {
-  readonly consoleErrors: string[] = [];
+  /** Errores de consola y de la página, con la URL que los originó (vacía si no hay). */
+  private readonly errors: { readonly text: string; readonly url: string }[] = [];
 
   constructor(readonly page: Page) {
     page.on('console', (message) => {
-      if (message.type() !== 'error') return;
-      // La 404 responde con estado 404 a propósito: no es un error de la página.
-      const isDocument404 = message.text().includes('404') && message.location().url === page.url();
-      if (!isDocument404) this.consoleErrors.push(message.text());
+      if (message.type() === 'error') {
+        this.errors.push({ text: message.text(), url: message.location().url });
+      }
     });
     page.on('pageerror', (error) => {
-      this.consoleErrors.push(error.message);
+      this.errors.push({ text: error.message, url: '' });
     });
+  }
+
+  /** Todos los errores de consola y de la página desde la carga. */
+  get consoleErrors(): string[] {
+    return this.errors.map((error) => error.text);
+  }
+
+  /**
+   * Errores de consola salvo el aviso del propio documento 404 de `path`. La 404 responde
+   * con estado HTTP 404 a propósito (Cloudflare Pages y serve-dist), y Chromium y WebKit
+   * lo anotan en la consola ("Failed to load resource: … status of 404"). En WebKit el
+   * aviso puede llegar antes de que `page.url()` cambie, así que se compara con la ruta
+   * navegada. Cualquier otro error, incluido un 404 de otro recurso, se conserva.
+   */
+  consoleErrorsIgnoringDocument404(path: string): string[] {
+    return this.errors
+      .filter(
+        (error) =>
+          !(
+            error.text.includes('status of 404') &&
+            URL.canParse(error.url) &&
+            new URL(error.url).pathname === path
+          ),
+      )
+      .map((error) => error.text);
   }
 
   /**
