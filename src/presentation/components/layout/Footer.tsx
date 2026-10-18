@@ -21,7 +21,7 @@ const { footer: TEXT } = UI_TEXT;
 const COMPACT = { compact: true } as const;
 
 /**
- * Footer (DESIGN.md §5, handoff §2): Marfil con divisor Niebla, sin banda oscura.
+ * Footer (DESIGN.md §5, handoff §2): Blanco Cálido con divisor Niebla, sin banda oscura.
  * Logo · Páginas · Contacto · Horarios de clases · Redes, y la barra con el NIT y la
  * Política de Tratamiento de Datos. En móvil: Contacto y Horarios primero (cada
  * horario en una línea, "Prácticas: lunes a sábado") y Páginas y Redes en dos columnas.

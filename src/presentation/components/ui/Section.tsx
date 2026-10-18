@@ -18,7 +18,7 @@ interface SectionProps {
 }
 
 /**
- * Sección de página (DESIGN.md §4 y §8): contenedor centrado sobre Marfil, separado
+ * Sección de página (DESIGN.md §4 y §8): contenedor centrado sobre Blanco Cálido, separado
  * por espacio (80 px escritorio, 48 px móvil), nunca por bandas de color.
  */
 export function Section({
