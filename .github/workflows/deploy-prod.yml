@@ -1,0 +1,73 @@
+# Al integrar el PR de qa en main: aprobación manual (environment production) →
+# build de producción → despliegue a PDN (rama "main" de Cloudflare Pages) → smoke.
+#
+# Si el smoke falla, revierte la versión desde Cloudflare
+# (docs/configuracion-cloudflare.md, "Revertir una publicación").
+name: Despliegue a PDN
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy-reusable.yml
+    with:
+      environment: production
+      build-mode: production
+      pages-branch: main
+      url: https://conducirjrdelsinu.pages.dev
+    secrets: inherit
+
+  smoke:
+    name: smoke-production
+    needs: deploy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - name: Instalar Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Esperar a que PDN responda
+        run: |
+          for attempt in $(seq 1 12); do
+            status=$(curl -s -o /dev/null -w '%{http_code}' https://conducirjrdelsinu.pages.dev/robots.txt)
+            if [ "$status" = "200" ]; then echo "PDN responde (intento $attempt)."; exit 0; fi
+            echo "PDN responde $status; nuevo intento en 10 s…"
+            sleep 10
+          done
+          echo "::error::PDN no respondió 200 en 2 minutos."
+          exit 1
+      - name: Smoke contra PDN
+        run: npm run test:e2e:smoke
+      - name: Publicar reporte de Playwright
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: reporte-smoke-pdn
+          path: playwright-report/
+          retention-days: 30
+          if-no-files-found: ignore
+      - name: Resumen
+        if: always()
+        run: |
+          {
+            echo "### Smoke de PDN: ${{ job.status }}"
+            echo ""
+            echo "Sitio: https://conducirjrdelsinu.pages.dev"
+            if [ "${{ job.status }}" != "success" ]; then
+              echo ""
+              echo "🚨 Revierte la publicación desde Cloudflare: proyecto → Deployments → la versión anterior de producción → **Rollback to this deployment** (docs/configuracion-cloudflare.md)."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

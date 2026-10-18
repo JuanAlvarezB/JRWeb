@@ -6,13 +6,16 @@ name: Actualizar capturas de referencia
 on:
   workflow_dispatch:
 
+# Runner fijo (ubuntu-24.04, no ubuntu-latest): las capturas de referencia de la
+# regresión visual dependen del sistema operativo y no deben cambiar sin aviso.
+
 permissions:
   contents: read
 
 jobs:
   update-snapshots:
     name: update-snapshots
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - name: Solo desde ramas feature

@@ -2,7 +2,7 @@
 
 Sitio web de Conducir J&R del Sinú: etapas terminadas y etapas que faltan.
 
-Actualizado el 17 oct 2026, al cerrar la etapa de pruebas.
+Actualizado el 17 oct 2026, al cerrar la etapa de despliegue en Cloudflare Pages.
 
 ## Resumen
 
@@ -17,9 +17,9 @@ Actualizado el 17 oct 2026, al cerrar la etapa de pruebas.
 
 | Rama   | Estado                                                             |
 | ------ | ------------------------------------------------------------------ |
-| `qa`   | Etapas 1–10 integradas; la 11 entra al aprobarse su PR. |
+| `qa`   | Etapas 1–11 integradas; la 12 entra al aprobarse su PR. |
 | `main` | Solo el primer commit. Ninguna etapa ha pasado a PDN.              |
-| Sitio  | Aún no está publicado: el despliegue en Cloudflare es la etapa 12. |
+| Sitio  | Aún no está publicado: falta configurar Cloudflare (guía lista) y el paso a PDN. |
 
 ## Etapas terminadas
 
@@ -36,7 +36,8 @@ Actualizado el 17 oct 2026, al cerrar la etapa de pruebas.
 | 8   | Features                     | Componentes de cada sección con datos reales, validados contra los mockups a 1440 y 390 px.                                              | #14             |
 | 9   | Páginas                      | Detalle más abajo.                                                                                                                       | #15             |
 | 10  | SEO, prerender y analítica   | Detalle más abajo.                                                                                                                       | #16             |
-| 11  | Pruebas                      | Detalle más abajo.                                                                                                                       | Pendiente de PR |
+| 11  | Pruebas                      | Detalle más abajo.                                                                                                                       | #17             |
+| 12  | Despliegue en Cloudflare Pages | Detalle más abajo.                                                                                                                     | Pendiente de PR |
 
 Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar el flujo de ramas `feature/*`.
 
@@ -80,28 +81,31 @@ Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar
 - **Smoke de PDN:** titular, WhatsApp, ubicación, indexación (robots y sitemap) y 404.
 - **Cobertura mínima obligatoria:** dominio, datos, formateadores y SEO.
 
+### Detalle de la etapa 12 (despliegue en Cloudflare Pages)
+
+- **`deploy-reusable.yml`:** hace la build del ambiente con prerender y la publica con Wrangler (versión fija). Usa los secrets del environment y, en PDN, su aprobación manual.
+- **`deploy-qa.yml`:** al integrar en `qa`, despliega a <https://qa.conducirjrdelsinu.pages.dev> (Cloudflare Access) y corre la regresión en 4 navegadores con el Service Token.
+  - **Plan de respaldo** (`QA_REMOTE_DEPLOY=false`): no publica y prueba la build en Actions.
+- **`deploy-prod.yml`:** al integrar en `main`, espera tu aprobación, despliega a <https://conducirjrdelsinu.pages.dev> y corre el smoke. Si falla, el resumen indica cómo revertir.
+- **Runners fijos en `ubuntu-24.04`:** así la migración de `ubuntu-latest` a Ubuntu 26 no invalida las capturas de referencia.
+- **[`configuracion-cloudflare.md`](configuracion-cloudflare.md):** guía paso a paso del proyecto, el token, Access, el Service Token, Web Analytics, cómo revertir, un dominio propio y el mantenimiento.
+
 ## Etapas que faltan
 
 | #   | Etapa                          | Alcance                                                                                                                                                                                                                                                             |
 | --- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 12  | Despliegue en Cloudflare Pages | `deploy-reusable.yml`, `deploy-qa.yml` (integración en `qa` → QA + regresión) y `deploy-prod.yml` (`main` → aprobación → PDN + smoke). Cloudflare Access para QA con Service Token para las pruebas. Secrets en los environments de GitHub. Fase 3 de los rulesets. |
-| 13  | Documentación                  | `configuracion-cloudflare.md`, `guia-actualizar-contenido.md` y `checklist-pruebas-manuales-qa.md`. Actualizar `ambientes-y-despliegue.md` y `configuracion-github.md` (regla de Dependabot sobre versiones mayores).                                               |
-| 14  | Paso a PDN                     | PR `qa` → `main` con todas las verificaciones, aprobación del despliegue y revisión del checklist en QA antes de publicar.                                                                                                                                          |
+| 13  | Documentación                  | `guia-actualizar-contenido.md` y `checklist-pruebas-manuales-qa.md`. Actualizar `configuracion-github.md` (regla de Dependabot sobre versiones mayores) y la guía de instalación.                                               |
+| 14  | Paso a PDN                     | Configurar Cloudflare con la guía (pasos 1–8), revisar QA con el checklist, PR `qa` → `main`, aprobación del despliegue y smoke en verde.                                                                                                                                          |
 
 ## Pendientes
 
 Los asuntos abiertos (fotos reales, aprobación de respuestas, token de analítica, Search Console…) se registran en [pendientes.md](pendientes.md).
 
-## Verificaciones al cierre de la etapa 11
+## Verificaciones al cierre de la etapa 12
 
-| Verificación                                | Resultado                                                                                                     |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Lint (ESLint, Stylelint, Prettier, tokens)  | Sin errores                                                                                                   |
-| Tipos (`npm run typecheck`)                 | Sin errores                                                                                                   |
-| Validación de contenido                     | Sin precios, esquemas y coherencia correctos                                                                  |
-| Pruebas unitarias y de componentes (Vitest) | 239 pasan; cobertura: dominio 100 %, datos 96 %, formateadores y SEO sobre su mínimo                          |
-| E2E de regresión                            | 191 pasan en 4 navegadores (17 se omiten porque no aplican a ese ancho o navegador)                           |
-| Regresión visual                            | 16 capturas estables en local; las de referencia de Linux se generan con el workflow                          |
-| Smoke de PDN                                | 5 pasan contra la build de producción                                                                         |
-| Lighthouse (móvil, etapa 10)                | Rendimiento 98–100; accesibilidad y buenas prácticas 98–100                                                   |
-| gitleaks                                    | Sin hallazgos                                                                                                 |
+| Verificación                                      | Resultado                                                                               |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Workflows (actionlint)                            | Sin errores en `ci`, `update-snapshots`, `deploy-reusable`, `deploy-qa` y `deploy-prod` |
+| Opciones de Wrangler 4.147.0                      | Verificadas (`--project-name`, `--branch`, `--commit-hash`, `--production-branch`)      |
+| Lint, tipos y pruebas                             | Sin cambios de código en esta etapa; siguen en verde                                     |
+| Despliegue real                                   | Pendiente de la configuración de Cloudflare (guía, pasos 1–8)                             |

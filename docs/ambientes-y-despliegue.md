@@ -70,4 +70,35 @@ Solo se actualizan cuando el cambio de diseño o de contenido es intencional. Mi
 
 ## 3. Despliegue a QA y PDN
 
-Se completa en la etapa de Cloudflare (`deploy-qa.yml`, `deploy-prod.yml` y `deploy-reusable.yml`).
+La configuración inicial de Cloudflare y GitHub está en [`configuracion-cloudflare.md`](configuracion-cloudflare.md). Los dos despliegues usan `deploy-reusable.yml`: build del ambiente (con prerender) y publicación con Wrangler en Cloudflare Pages.
+
+### Llevar un cambio de DEV a QA
+
+1. Trabaja en una rama `feature/*` creada desde `qa` (flujo en [`configuracion-github.md`](configuracion-github.md), paso 9).
+2. Antes del PR, en tu equipo: `npm test` y, para ver la versión de QA, `npm run preview:qa`.
+3. Abre el PR hacia `qa` y espera las 9 verificaciones del CI.
+4. Integra con **Create a merge commit**. Se ejecuta **Despliegue a QA** (`deploy-qa.yml`):
+   - `deploy-qa`: build de QA → rama `qa` de Cloudflare Pages → <https://qa.conducirjrdelsinu.pages.dev> (con Cloudflare Access).
+   - `regression-qa`: la regresión de Playwright (4 navegadores) contra QA, con el Service Token.
+5. Revisa QA a mano (entra con tu correo y el código que llega).
+6. Si `regression-qa` falla, GitHub te avisa y el resumen de la ejecución lo marca. **No abras el PR hacia `main`** hasta corregirlo con otro PR a `qa`.
+
+**Plan de respaldo** (`QA_REMOTE_DEPLOY` = `false`): `deploy-qa` se omite. `regression-qa` construye la versión de QA y la prueba dentro de GitHub Actions. Las pruebas manuales se hacen con `npm run preview:qa`.
+
+### Llevar QA a PDN
+
+1. Con QA en verde, abre el PR **`qa` → `main`** (solo `qa` puede llegar a `main`). El CI corre las 10 verificaciones con la build de producción.
+2. Integra con **Create a merge commit**. Se ejecuta **Despliegue a PDN** (`deploy-prod.yml`), que **espera tu aprobación**: **Review deployments** → `production` → **Approve and deploy**.
+3. `deploy-production`: build de producción (indexable, con sitemap y analítica) → rama `main` de Cloudflare Pages → <https://conducirjrdelsinu.pages.dev>.
+4. `smoke-production`: titular, WhatsApp, ubicación, robots, sitemap y 404 contra PDN.
+5. Si el smoke falla: **revierte desde Cloudflare** ([`configuracion-cloudflare.md`](configuracion-cloudflare.md), "Revertir una publicación") y corrige con el flujo normal.
+
+### Qué cambia en cada ambiente
+
+| Ambiente | Build        | Indexación                          | Analítica          | Etiqueta | Acceso                       |
+| -------- | ------------ | ----------------------------------- | ------------------ | -------- | ---------------------------- |
+| DEV      | `dev`        | —                                   | No                 | No       | Tu equipo                    |
+| QA       | `qa`         | `noindex` (robots, encabezado y HTML) | No                 | "QA"     | Correos autorizados (Access) |
+| PDN      | `production` | Sí, con `sitemap.xml`               | Sí (si hay token)  | No       | Público                      |
+
+Las ejecuciones de despliegue también se pueden lanzar a mano: **Actions** → el workflow → **Run workflow**, sobre `qa` o `main`.

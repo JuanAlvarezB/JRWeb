@@ -1,0 +1,134 @@
+# Al integrar un PR en qa: build de QA → despliegue a QA (rama "qa" de Cloudflare
+# Pages, protegida con Cloudflare Access) → regresión de Playwright contra QA.
+#
+# Variable del repositorio QA_REMOTE_DEPLOY:
+#   true  → se publica en https://qa.conducirjrdelsinu.pages.dev y las pruebas entran
+#           con el Service Token de Access (secrets del environment qa).
+#   false → plan de respaldo: QA no se publica; la regresión corre contra la build de
+#           QA dentro de GitHub Actions (y las pruebas manuales con npm run preview:qa).
+#
+# Si la regresión falla, GitHub lo notifica: no abras el PR hacia main hasta corregirlo.
+name: Despliegue a QA
+
+on:
+  push:
+    branches: [qa]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-qa
+  cancel-in-progress: false
+
+env:
+  QA_URL: https://qa.conducirjrdelsinu.pages.dev
+
+jobs:
+  deploy:
+    if: vars.QA_REMOTE_DEPLOY == 'true'
+    uses: ./.github/workflows/deploy-reusable.yml
+    with:
+      environment: qa
+      build-mode: qa
+      pages-branch: qa
+      url: https://qa.conducirjrdelsinu.pages.dev
+    secrets: inherit
+
+  regression:
+    name: regression-qa
+    needs: deploy
+    # Corre tras el despliegue o, en el plan de respaldo, sin él (deploy omitido).
+    if: always() && (needs.deploy.result == 'success' || needs.deploy.result == 'skipped')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment: qa
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - id: playwright
+        name: Versión de Playwright
+        run: echo "version=$(npx playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+      - id: browsers-cache
+        name: Caché de navegadores
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}-all
+      - name: Instalar navegadores
+        if: steps.browsers-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Instalar dependencias del sistema
+        if: steps.browsers-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium firefox webkit
+
+      - name: Esperar a que QA responda (detrás de Cloudflare Access)
+        if: needs.deploy.result == 'success'
+        env:
+          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+        run: |
+          if [ -z "$CF_ACCESS_CLIENT_ID" ] || [ -z "$CF_ACCESS_CLIENT_SECRET" ]; then
+            echo "::error::Faltan los secrets CF_ACCESS_CLIENT_ID o CF_ACCESS_CLIENT_SECRET en el environment qa (docs/configuracion-cloudflare.md)."
+            exit 1
+          fi
+          for attempt in $(seq 1 12); do
+            status=$(curl -s -o /dev/null -w '%{http_code}' \
+              -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
+              -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
+              "$QA_URL/robots.txt")
+            if [ "$status" = "200" ]; then echo "QA responde (intento $attempt)."; exit 0; fi
+            echo "QA responde $status; nuevo intento en 10 s…"
+            sleep 10
+          done
+          echo "::error::QA no respondió 200 en 2 minutos. Revisa el Service Token y la política de Access."
+          exit 1
+
+      - name: Regresión contra QA publicado
+        if: needs.deploy.result == 'success'
+        env:
+          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+        run: npm run test:e2e:qa
+
+      - name: Regresión contra la build de QA (plan de respaldo)
+        if: needs.deploy.result == 'skipped'
+        run: |
+          npm run build:qa
+          npm run test:e2e
+
+      - name: Publicar reporte de Playwright
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: reporte-regresion-qa
+          path: playwright-report/
+          retention-days: 14
+          if-no-files-found: ignore
+      - name: Publicar trazas y capturas de fallos
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fallos-regresion-qa
+          path: test-results/
+          retention-days: 14
+          if-no-files-found: ignore
+      - name: Resumen
+        if: always()
+        run: |
+          {
+            echo "### Regresión de QA: ${{ job.status }}"
+            echo ""
+            if [ "${{ needs.deploy.result }}" = "success" ]; then
+              echo "Contra el sitio publicado: $QA_URL"
+            else
+              echo "Plan de respaldo (QA_REMOTE_DEPLOY ≠ true): contra la build de QA en GitHub Actions."
+            fi
+            if [ "${{ job.status }}" != "success" ]; then
+              echo ""
+              echo "⚠️ No abras el PR de qa a main hasta corregir el fallo (reporte en Artifacts)."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
