@@ -1,0 +1,84 @@
+# Pasos de despliegue comunes a QA y PDN (los usan deploy-qa.yml y deploy-prod.yml).
+#
+# Construye la versión del ambiente (con prerender) y la publica en Cloudflare Pages
+# con Wrangler (Direct Upload). El job usa el environment de GitHub indicado: sus
+# secrets (token de Cloudflare) y, en PDN, la aprobación manual antes de empezar.
+#
+# Guía de configuración: docs/configuracion-cloudflare.md
+name: Despliegue (reutilizable)
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: Environment de GitHub (qa | production).
+        type: string
+        required: true
+      build-mode:
+        description: Modo de la build (qa | production).
+        type: string
+        required: true
+      pages-branch:
+        description: Rama de Cloudflare Pages (main = producción; otra = vista previa).
+        type: string
+        required: true
+      url:
+        description: URL pública del ambiente (se muestra en GitHub).
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+env:
+  # Versión fija de Wrangler (CLI oficial de Cloudflare), publicada hace más de 2 semanas.
+  # Dependabot no la actualiza: se revisa a mano (docs/configuracion-cloudflare.md).
+  WRANGLER_VERSION: 4.147.0
+
+jobs:
+  deploy:
+    name: deploy-${{ inputs.environment }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ inputs.url }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+
+      - name: Build (${{ inputs.build-mode }})
+        env:
+          # Token PÚBLICO del beacon de analítica: solo existe en el environment production.
+          VITE_CF_ANALYTICS_TOKEN: ${{ vars.VITE_CF_ANALYTICS_TOKEN }}
+        run: npm run build:${{ inputs.build-mode }}
+
+      - name: Publicar en Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PAGES_PROJECT: ${{ vars.CF_PAGES_PROJECT || 'conducirjrdelsinu' }}
+          PAGES_BRANCH: ${{ inputs.pages-branch }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::error::Faltan los secrets CLOUDFLARE_API_TOKEN o CLOUDFLARE_ACCOUNT_ID en el environment '${{ inputs.environment }}' (docs/configuracion-cloudflare.md)."
+            exit 1
+          fi
+          npx --yes "wrangler@${WRANGLER_VERSION}" pages deploy dist \
+            --project-name "$PAGES_PROJECT" \
+            --branch "$PAGES_BRANCH" \
+            --commit-hash "$COMMIT_SHA" \
+            --commit-dirty=true
+
+      - name: Resumen
+        run: |
+          {
+            echo "### Despliegue a ${{ inputs.environment }}"
+            echo ""
+            echo "- URL: ${{ inputs.url }}"
+            echo "- Commit: \`${{ github.sha }}\`"
+            echo "- Build: \`${{ inputs.build-mode }}\` · Rama de Pages: \`${{ inputs.pages-branch }}\`"
+          } >> "$GITHUB_STEP_SUMMARY"

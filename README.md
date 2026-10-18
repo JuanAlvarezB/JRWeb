@@ -161,11 +161,13 @@ Los mockups aprobados están en [`docs/mockups/`](docs/mockups/) (390 y 1440 px;
 
 ## Documentación
 
-| Documento                                                      | Contenido                                                        |
-| -------------------------------------------------------------- | ---------------------------------------------------------------- |
-| [`docs/instalacion-local.md`](docs/instalacion-local.md)       | Instalación en macOS y comandos                                  |
-| [`docs/configuracion-github.md`](docs/configuracion-github.md) | Rulesets, environments, seguridad, Azure Boards y flujo de ramas |
-| [`docs/estado-del-proyecto.md`](docs/estado-del-proyecto.md)   | Etapas terminadas y etapas que faltan                            |
-| [`docs/pendientes.md`](docs/pendientes.md)                     | Pendientes abiertos y resueltos                                  |
+| Documento                                                              | Contenido                                                                         |
+| ---------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [`docs/instalacion-local.md`](docs/instalacion-local.md)               | Instalación en macOS y comandos                                                   |
+| [`docs/configuracion-github.md`](docs/configuracion-github.md)         | Rulesets, environments, seguridad, Azure Boards y flujo de ramas                  |
+| [`docs/configuracion-cloudflare.md`](docs/configuracion-cloudflare.md) | Cloudflare Pages, Access, Service Token, Web Analytics, revertir y dominio propio |
+| [`docs/ambientes-y-despliegue.md`](docs/ambientes-y-despliegue.md)     | Pipeline, pruebas y cómo llevar un cambio de DEV a QA y a PDN                     |
+| [`docs/estado-del-proyecto.md`](docs/estado-del-proyecto.md)           | Etapas terminadas y etapas que faltan                                             |
+| [`docs/pendientes.md`](docs/pendientes.md)                             | Pendientes abiertos y resueltos                                                   |
 
 Se completa en cada etapa: ambientes y despliegue, GitHub, Cloudflare, guía para actualizar contenido y checklist de QA.

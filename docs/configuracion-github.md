@@ -120,6 +120,8 @@ git reset --hard origin/qa  # deshace el commit de prueba
 
 ### 5.3 Secrets y variables (fase 3, etapa de Cloudflare)
 
+Cómo obtener cada valor, paso a paso: [`configuracion-cloudflare.md`](configuracion-cloudflare.md).
+
 | Environment  | Tipo     | Nombre                    | Origen                                        |
 | ------------ | -------- | ------------------------- | --------------------------------------------- |
 | `qa`         | Secret   | `CLOUDFLARE_API_TOKEN`    | Token de Cloudflare con permiso solo de Pages |
@@ -130,7 +132,10 @@ git reset --hard origin/qa  # deshace el commit de prueba
 | `production` | Secret   | `CLOUDFLARE_ACCOUNT_ID`   | Panel de Cloudflare                           |
 | `production` | Variable | `VITE_CF_ANALYTICS_TOKEN` | Cloudflare Web Analytics (es público)         |
 
-Además, en **Settings** → **Secrets and variables** → **Actions** → **Variables** (del repositorio): `QA_REMOTE_DEPLOY` = `true` si Cloudflare Access quedó activo, `false` para el plan de respaldo.
+Además, en **Settings** → **Secrets and variables** → **Actions** → **Variables** (del repositorio):
+
+- `QA_REMOTE_DEPLOY` = `true` si Cloudflare Access quedó activo; `false` para el plan de respaldo (QA no se publica).
+- `CF_PAGES_PROJECT`: solo si el proyecto de Pages no se llama `conducirjrdelsinu`.
 
 Los valores **nunca** se escriben en el repositorio ni en la documentación.
 
