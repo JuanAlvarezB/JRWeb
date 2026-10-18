@@ -9,6 +9,7 @@ import { PageFallback } from './PageFallback';
 import { ScrollManager } from './ScrollManager';
 import styles from './SiteLayout.module.css';
 import { MAIN_CONTENT_ID, SkipLink } from './SkipLink';
+import { useHydrationMarker } from './useHydrationMarker';
 
 /**
  * Estructura común de todas las páginas: menú, contenido, footer y elementos
@@ -17,6 +18,7 @@ import { MAIN_CONTENT_ID, SkipLink } from './SkipLink';
  */
 export function SiteLayout(): JSX.Element {
   const { pathname } = useLocation();
+  useHydrationMarker();
 
   return (
     <>

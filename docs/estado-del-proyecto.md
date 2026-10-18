@@ -2,7 +2,7 @@
 
 Sitio web de Conducir J&R del Sinú: etapas terminadas y etapas que faltan.
 
-Actualizado el 17 oct 2026, al cerrar la etapa de despliegue en Cloudflare Pages.
+Actualizado el 18 oct 2026, tras estabilizar las pruebas e2e (después de la etapa 12).
 
 ## Resumen
 
@@ -17,27 +17,27 @@ Actualizado el 17 oct 2026, al cerrar la etapa de despliegue en Cloudflare Pages
 
 | Rama   | Estado                                                                           |
 | ------ | -------------------------------------------------------------------------------- |
-| `qa`   | Etapas 1–11 integradas; la 12 entra al aprobarse su PR.                          |
+| `qa`   | Etapas 1–12 integradas.                                                          |
 | `main` | Solo el primer commit. Ninguna etapa ha pasado a PDN.                            |
 | Sitio  | Aún no está publicado: falta configurar Cloudflare (guía lista) y el paso a PDN. |
 
 ## Etapas terminadas
 
-| #   | Etapa                          | Qué quedó                                                                                                                                | PR              |
-| --- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| 1   | Entorno local (DEV)            | React 19 + Vite 8 + TypeScript estricto, ESLint, Stylelint y Prettier. Variables de entorno validadas para DEV, QA y PDN.                | —               |
-| 2   | Tokens, fuentes y estilos      | Style Dictionary genera `variables.css` desde `design-tokens/`. Barlow y Barlow Condensed autoalojadas. Stylelint solo acepta variables. | —               |
-| 3   | Marca y componentes base       | Botones, links de acción, franja, encabezados, tarjetas, acordeón, velocímetro, aguada e íconos. Catálogo en `/dev/componentes`.         | —               |
-| —   | Configuración de GitHub y CI   | Rulesets de `qa` y `main`, Dependabot, plantilla de PR y CODEOWNERS. `ci.yml` con 10 verificaciones obligatorias.                        | #1              |
-| 4   | Dominio                        | Entidades con sus reglas (NIT, horas, horarios…), contratos de repositorio y 10 casos de uso. Sin React ni librerías externas.           | #9              |
-| 5   | Datos                          | Contenido real en JSON y Markdown, esquemas Zod estrictos, mappers, 9 repositorios y validación de coherencia entre archivos.            | #10             |
-| 6   | DI y providers                 | `di/container.ts` como composition root, `DependencyProvider` y `QueryProvider`. El README documenta cómo pasar a Supabase.              | #12             |
-| 7   | Hooks                          | Hooks de datos con TanStack Query y Suspense, claves de consulta centralizadas y enlaces de contacto (WhatsApp, llamada, mapas).         | #13             |
-| 8   | Features                       | Componentes de cada sección con datos reales, validados contra los mockups a 1440 y 390 px.                                              | #14             |
-| 9   | Páginas                        | Detalle más abajo.                                                                                                                       | #15             |
-| 10  | SEO, prerender y analítica     | Detalle más abajo.                                                                                                                       | #16             |
-| 11  | Pruebas                        | Detalle más abajo.                                                                                                                       | #17             |
-| 12  | Despliegue en Cloudflare Pages | Detalle más abajo.                                                                                                                       | Pendiente de PR |
+| #   | Etapa                          | Qué quedó                                                                                                                                | PR  |
+| --- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| 1   | Entorno local (DEV)            | React 19 + Vite 8 + TypeScript estricto, ESLint, Stylelint y Prettier. Variables de entorno validadas para DEV, QA y PDN.                | —   |
+| 2   | Tokens, fuentes y estilos      | Style Dictionary genera `variables.css` desde `design-tokens/`. Barlow y Barlow Condensed autoalojadas. Stylelint solo acepta variables. | —   |
+| 3   | Marca y componentes base       | Botones, links de acción, franja, encabezados, tarjetas, acordeón, velocímetro, aguada e íconos. Catálogo en `/dev/componentes`.         | —   |
+| —   | Configuración de GitHub y CI   | Rulesets de `qa` y `main`, Dependabot, plantilla de PR y CODEOWNERS. `ci.yml` con 10 verificaciones obligatorias.                        | #1  |
+| 4   | Dominio                        | Entidades con sus reglas (NIT, horas, horarios…), contratos de repositorio y 10 casos de uso. Sin React ni librerías externas.           | #9  |
+| 5   | Datos                          | Contenido real en JSON y Markdown, esquemas Zod estrictos, mappers, 9 repositorios y validación de coherencia entre archivos.            | #10 |
+| 6   | DI y providers                 | `di/container.ts` como composition root, `DependencyProvider` y `QueryProvider`. El README documenta cómo pasar a Supabase.              | #12 |
+| 7   | Hooks                          | Hooks de datos con TanStack Query y Suspense, claves de consulta centralizadas y enlaces de contacto (WhatsApp, llamada, mapas).         | #13 |
+| 8   | Features                       | Componentes de cada sección con datos reales, validados contra los mockups a 1440 y 390 px.                                              | #14 |
+| 9   | Páginas                        | Detalle más abajo.                                                                                                                       | #15 |
+| 10  | SEO, prerender y analítica     | Detalle más abajo.                                                                                                                       | #16 |
+| 11  | Pruebas                        | Detalle más abajo.                                                                                                                       | #17 |
+| 12  | Despliegue en Cloudflare Pages | Detalle más abajo.                                                                                                                       | #18 |
 
 Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar el flujo de ramas `feature/*`.
 
@@ -80,6 +80,10 @@ Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar
 - **Regresión visual:** las 8 páginas a 1440 y 390 px. Las capturas de referencia se generan en Linux con el workflow "Actualizar capturas de referencia".
 - **Smoke de PDN:** titular, WhatsApp, ubicación, indexación (robots y sitemap) y 404.
 - **Cobertura mínima obligatoria:** dominio, datos, formateadores y SEO.
+- **Estabilidad (18 oct 2026):**
+  - La regresión de QA marcó una prueba inestable en WebKit: el teclado se usó antes de que React hidratara el HTML prerenderizado.
+  - Ahora el sitio marca `<html data-hydrated>` al terminar de hidratar y los Page Objects esperan esa marca.
+  - Verificado con 10 repeticiones en 4 navegadores, sin fallos.
 
 ### Detalle de la etapa 12 (despliegue en Cloudflare Pages)
 

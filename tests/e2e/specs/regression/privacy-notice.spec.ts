@@ -13,6 +13,7 @@ test.describe('aviso de privacidad', () => {
     await notice.getByRole('button', { name: 'Entendido' }).click();
     await expect(notice).toBeHidden();
     await site.page.reload();
+    await site.waitForHydration();
     await expect(site.mainHeading()).toBeVisible();
     await expect(site.privacyNotice()).toBeHidden();
   });
