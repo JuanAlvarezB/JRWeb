@@ -18,7 +18,7 @@ import { NAV_LINKS } from './navLinks';
 const { nav: TEXT } = UI_TEXT;
 
 /**
- * Menú principal (DESIGN.md §5, handoff §2): fijo arriba sobre Marfil. En escritorio
+ * Menú principal (DESIGN.md §5, handoff §2): fijo arriba sobre Blanco Cálido. En escritorio
  * mide 124 px con el logo completo y pasa a 72 px con el logo-ícono al bajar 80 px.
  * La barra es fija y el `<header>` conserva siempre el alto inicial: al encogerse, el
  * contenido no se mueve (si no, los saltos a una sección quedarían bajo el menú).

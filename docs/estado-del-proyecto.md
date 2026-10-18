@@ -2,7 +2,7 @@
 
 Sitio web de Conducir J&R del Sinú: etapas terminadas y etapas que faltan.
 
-Actualizado el 18 oct 2026, tras estabilizar las pruebas e2e (después de la etapa 12).
+Actualizado el 18 oct 2026, tras estabilizar las pruebas e2e y aclarar el fondo de página (después de la etapa 12).
 
 ## Resumen
 
@@ -93,6 +93,14 @@ Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar
 - **`deploy-prod.yml`:** al integrar en `main`, espera tu aprobación, despliega a <https://conducirjrdelsinu.pages.dev> y corre el smoke. Si falla, el resumen indica cómo revertir.
 - **Runners fijos en `ubuntu-24.04`:** así la migración de `ubuntu-latest` a Ubuntu 26 no invalida las capturas de referencia.
 - **[`configuracion-cloudflare.md`](configuracion-cloudflare.md):** guía paso a paso del proyecto, el token, Access, el Service Token, Web Analytics, cómo revertir, un dominio propio y el mantenimiento.
+
+### Ajustes después de la etapa 12
+
+- **Estabilidad de las pruebas e2e** (PR #19): ver el detalle de la etapa 11.
+- **Fondo de página (18 oct 2026):** pasa del Marfil `#FBF8F0` al Blanco Cálido `#FDFBF7`, más claro y menos crema, por decisión del dueño.
+  - Es un solo token (`--color-neutral-canvas`), así que el cambio llega a todas las páginas, al menú, al menú móvil y al footer.
+  - Las tarjetas siguen en blanco y se separan del fondo por su sombra teñida de verde.
+  - Los contrastes de texto suben levemente; DESIGN.md (§2 y registro de cambios) quedó actualizado.
 
 ## Etapas que faltan
 

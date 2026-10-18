@@ -4,7 +4,7 @@ import styles from './CtaPanel.module.css';
 
 /**
  * Llamado a la acción al cierre de una página (mockups):
- * - `plain`: centrado sobre Marfil (Nosotros).
+ * - `plain`: centrado sobre Blanco Cálido (Nosotros).
  * - `card`: tarjeta centrada (Preguntas frecuentes).
  * - `row`: tarjeta a lo ancho con el texto a la izquierda y la acción a la derecha
  *   (Servicios).

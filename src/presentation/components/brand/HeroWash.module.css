@@ -9,7 +9,7 @@
   pointer-events: none;
 
   /*
-   * Centro transparente (el texto del hero queda sobre Marfil limpio) y bordes que se
+   * Centro transparente (el texto del hero queda sobre Blanco Cálido limpio) y bordes que se
    * desvanecen: la aguada es una mancha difusa, nunca un rectángulo.
    */
   mask-image: radial-gradient(
