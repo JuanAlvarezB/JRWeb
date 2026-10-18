@@ -10,7 +10,7 @@ const isProduction =
   process.env.BASE_URL === CANONICAL_ORIGIN || process.env.BUILD_MODE === 'production';
 
 const PAGES = [
-  { path: '/', h1: 'Aprende a conducir con confianza en Cereté', jsonLd: 'DrivingSchool' },
+  { path: '/', h1: 'Aprende a conducir con confianza', jsonLd: 'DrivingSchool' },
   { path: '/nosotros', h1: 'Nosotros', jsonLd: undefined },
   { path: '/servicios', h1: 'Servicios', jsonLd: undefined },
   { path: '/planes', h1: 'Planes', jsonLd: undefined },

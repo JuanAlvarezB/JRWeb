@@ -10,7 +10,7 @@ import styles from './BenefitGrid.module.css';
 import { differentiatorIcon, SCHEDULE_DIFFERENTIATOR_ID } from './differentiatorIcons';
 
 /**
- * "Por qué J&R" (Inicio): los diferenciadores de la escuela y la calificación real de
+ * "Por qué estudiar con nosotros" (Inicio): los diferenciadores de la escuela y la calificación real de
  * Google. Si no hay calificación publicada, se muestran solo los diferenciadores.
  */
 export function BenefitHighlights(): JSX.Element {

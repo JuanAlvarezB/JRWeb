@@ -130,6 +130,12 @@
   color: var(--color-neutral-text-muted);
 }
 
+/* Crédito de diseño: mismo tamaño y gris del copyright, solo el nombre en Verde Sinú. */
+.designer {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-default);
+}
+
 .policy {
   align-self: flex-start;
   color: var(--color-neutral-text-muted);

@@ -50,11 +50,7 @@ export default function HomePage(): JSX.Element {
       </Section>
 
       <Section labelledBy="beneficios-titulo">
-        <SectionHeading
-          id="beneficios-titulo"
-          eyebrow={TEXT.benefitsEyebrow}
-          title={TEXT.benefitsTitle}
-        />
+        <SectionHeading id="beneficios-titulo" title={TEXT.benefitsTitle} />
         <BenefitHighlights />
       </Section>
 

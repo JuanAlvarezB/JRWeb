@@ -143,7 +143,10 @@ export function Footer(): JSX.Element {
       </div>
 
       <div className={styles.bottom}>
-        <p>{TEXT.copyright(BUILD_YEAR, brandName, nit)}</p>
+        <p>
+          {TEXT.copyright(BUILD_YEAR, brandName, nit)} {TEXT.designedBy}{' '}
+          <span className={styles.designer}>{TEXT.designer}</span>
+        </p>
         <Link to={ROUTES.dataPolicy} className={styles.policy}>
           {TEXT.dataPolicy}
         </Link>

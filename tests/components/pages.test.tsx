@@ -13,7 +13,7 @@ afterEach(() => {
 });
 
 const PAGES: readonly (readonly [string, RegExp, string])[] = [
-  [ROUTES.home, /Aprende a conducir con confianza en Cereté/u, 'Inicio'],
+  [ROUTES.home, /Aprende a conducir con confianza/u, 'Inicio'],
   [ROUTES.about, /^Nosotros$/u, 'Nosotros'],
   [ROUTES.services, /^Servicios$/u, 'Servicios'],
   [ROUTES.plans, /^Planes$/u, 'Planes'],
@@ -161,7 +161,9 @@ describe('layout', () => {
     expect(fab.getAttribute('href')).toMatch(/^https:\/\/wa\.me\/573165641048\?text=/u);
 
     const footer = screen.getByRole('contentinfo');
-    expect(within(footer).getByText(/NIT 901722359-5/u)).toBeInTheDocument();
+    expect(within(footer).getByText('Joker').parentElement).toHaveTextContent(
+      /NIT 901722359-5 Designed by Joker$/u,
+    );
     expect(within(footer).getByText('Teóricas · lun a vie')).toBeInTheDocument();
     expect(within(footer).getByRole('link', { name: /^TikTok/u })).toHaveAttribute(
       'href',

@@ -2,7 +2,7 @@
 
 Sitio web de Conducir J&R del Sinú: etapas terminadas y etapas que faltan.
 
-Actualizado el 18 oct 2026, tras estabilizar las pruebas e2e, aclarar el fondo de página y ajustar la regresión contra QA real (después de la etapa 12).
+Actualizado el 18 oct 2026, tras estabilizar las pruebas e2e, aclarar el fondo de página y ajustar la regresión contra QA real y los ajustes de Inicio (después de la etapa 12).
 
 ## Resumen
 
@@ -104,6 +104,8 @@ Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar
 - **Regresión contra QA real (18 oct 2026):** con el despliegue remoto activo, WebKit anotó en la consola el estado 404 del documento de `/no-existe`, que es la respuesta correcta de la página 404.
   - El filtro del Page Object comparaba con `page.url()`, y en WebKit ese aviso puede llegar antes de que esa URL cambie.
   - Ahora solo la prueba de `/no-existe` ignora ese aviso y lo compara con la ruta navegada. Cualquier otro error, incluido un 404 de otro recurso, hace fallar la prueba.
+- **Inicio (18 oct 2026), por decisión del dueño:** la sección de beneficios ya no lleva el eyebrow "Por qué J&R", y el titular pasa de "Aprende a conducir con confianza en Cereté" a "Aprende a conducir con confianza". Cereté sigue en el título de la pestaña, la descripción y los datos estructurados, así que el SEO local no cambia. Con el hero más bajo apareció un error que el titular largo ocultaba: desde 1100 px, la tarjeta del velocímetro invadía la sección siguiente. El alto mínimo de 600 px del hero nunca se aplicaba, porque una consulta de contenedor no puede dar estilos al propio contenedor; ahora va en su contenido. Se actualizaron las pruebas y las capturas de referencia de Inicio.
+- **Crédito en el footer (18 oct 2026):** la franja inferior dice "© 2026 Conducir J&R del Sinú · NIT 901722359-5 Designed by Joker", con el mismo tamaño y gris del copyright y "Joker" en Verde Sinú semibold. En móvil el crédito pasa a una segunda línea porque no cabe. Como el footer está en todas las páginas, se actualizaron todas las capturas de referencia.
 
 ## Etapas que faltan
 
