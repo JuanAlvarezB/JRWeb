@@ -23,8 +23,18 @@ export class SitePage {
     });
   }
 
+  /**
+   * Abre una ruta y espera a que React hidrate el HTML prerenderizado: antes de eso
+   * la página se ve completa pero los botones aún no responden.
+   */
   async goto(path: string): Promise<void> {
     await this.page.goto(path);
+    await this.waitForHydration();
+  }
+
+  /** Espera la marca `<html data-hydrated>` (`useHydrationMarker`). */
+  async waitForHydration(): Promise<void> {
+    await this.page.locator('html[data-hydrated]').waitFor({ state: 'attached' });
   }
 
   /** Marca el aviso de privacidad como leído antes de cargar (capturas y flujos sin él). */

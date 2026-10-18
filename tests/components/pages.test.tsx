@@ -172,6 +172,13 @@ describe('layout', () => {
     ).toHaveAttribute('href', ROUTES.dataPolicy);
   });
 
+  it('marca <html data-hydrated> cuando la página ya es interactiva', async () => {
+    document.documentElement.removeAttribute('data-hydrated');
+    renderRoute(ROUTES.home);
+    await screen.findByRole('heading', { level: 1 });
+    expect(document.documentElement).toHaveAttribute('data-hydrated');
+  });
+
   it('la etiqueta QA no aparece fuera del ambiente de QA', async () => {
     renderRoute(ROUTES.home);
     await screen.findByRole('heading', { level: 1 });
