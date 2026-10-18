@@ -2,7 +2,7 @@
 
 Sitio web de Conducir J&R del Sinú: etapas terminadas y etapas que faltan.
 
-Actualizado el 18 oct 2026, tras estabilizar las pruebas e2e y aclarar el fondo de página (después de la etapa 12).
+Actualizado el 18 oct 2026, tras estabilizar las pruebas e2e, aclarar el fondo de página y ajustar la regresión contra QA real (después de la etapa 12).
 
 ## Resumen
 
@@ -101,6 +101,9 @@ Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar
   - Es un solo token (`--color-neutral-canvas`), así que el cambio llega a todas las páginas, al menú, al menú móvil y al footer.
   - Las tarjetas siguen en blanco y se separan del fondo por su sombra teñida de verde.
   - Los contrastes de texto suben levemente; DESIGN.md (§2 y registro de cambios) quedó actualizado.
+- **Regresión contra QA real (18 oct 2026):** con el despliegue remoto activo, WebKit anotó en la consola el estado 404 del documento de `/no-existe`, que es la respuesta correcta de la página 404.
+  - El filtro del Page Object comparaba con `page.url()`, y en WebKit ese aviso puede llegar antes de que esa URL cambie.
+  - Ahora solo la prueba de `/no-existe` ignora ese aviso y lo compara con la ruta navegada. Cualquier otro error, incluido un 404 de otro recurso, hace fallar la prueba.
 
 ## Etapas que faltan
 
