@@ -241,6 +241,30 @@ export const UI_TEXT = {
       notFound:
         'La página que buscas no existe o cambió de dirección. Vuelve al inicio de Conducir J&R del Sinú.',
     },
+    /**
+     * Vistas previas al compartir (Open Graph y X). Los títulos no repiten el nombre del
+     * sitio (va en `og:site_name`) y las descripciones tienen máx. 80 caracteres para que
+     * WhatsApp no las corte. Contáctanos, Preguntas frecuentes, Política de datos y la 404
+     * usan el título de su página.
+     */
+    share: {
+      titles: {
+        home: 'Centro de Enseñanza Automovilística en Cereté',
+        about: 'Nosotros: misión y visión',
+        services: 'Cursos de conducción A2, B1 y C1',
+        plans: 'Planes de los cursos A2, B1 y C1',
+      },
+      descriptions: {
+        home: 'Licencias A2, B1 y C1: teoría de día o de noche y prácticas de lunes a sábado.',
+        about: 'Conoce nuestra misión, visión e instructores certificados en Cereté.',
+        services: 'Motos, vehículos particulares y de servicio público. Edad mínima por licencia.',
+        plans: 'Horas de teoría, taller y manejo de cada curso. Pide el precio por WhatsApp.',
+        contact: 'WhatsApp, llamadas, correo, redes y cómo llegar a la sede en Cereté, Córdoba.',
+        faq: 'Edades, horas, horarios, requisitos y ubicación de los cursos de conducción.',
+        dataPolicy: 'Cómo tratamos tus datos personales, según la Ley 1581 de 2012.',
+        notFound: 'La página que buscas no existe. Vuelve al inicio.',
+      },
+    },
   },
   pages: {
     /** Título de la pestaña: "Planes · Conducir J&R del Sinú". */

@@ -107,6 +107,11 @@ Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar
   - Ahora solo la prueba de `/no-existe` ignora ese aviso y lo compara con la ruta navegada. Cualquier otro error, incluido un 404 de otro recurso, hace fallar la prueba.
 - **Inicio (18 oct 2026), por decisión del dueño:** la sección de beneficios ya no lleva el eyebrow "Por qué J&R", y el titular pasa de "Aprende a conducir con confianza en Cereté" a "Aprende a conducir con confianza". Cereté sigue en el título de la pestaña, la descripción y los datos estructurados, así que el SEO local no cambia. Con el hero más bajo apareció un error que el titular largo ocultaba: desde 1100 px, la tarjeta del velocímetro invadía la sección siguiente. El alto mínimo de 600 px del hero nunca se aplicaba, porque una consulta de contenedor no puede dar estilos al propio contenedor; ahora va en su contenido. Se actualizaron las pruebas y las capturas de referencia de Inicio.
 - **Crédito en el footer (18 oct 2026):** la franja inferior dice "© 2026 Conducir J&R del Sinú · NIT 901722359-5 Designed by Joker", con el mismo tamaño y gris del copyright y "Joker" en Verde Sinú semibold. En móvil el crédito pasa a una segunda línea porque no cabe. Como el footer está en todas las páginas, se actualizaron todas las capturas de referencia.
+- **Vistas previas al compartir (18 oct 2026):** auditoría y ajuste de Open Graph para WhatsApp, Facebook, LinkedIn y X.
+  - Cada página tiene título propio para compartir (sin repetir el nombre del sitio) y una descripción de máx. 80 caracteres, para que WhatsApp no la corte. Se agregaron `og:image:type` y la tarjeta completa de X.
+  - La imagen `og-image.png` pasó a fondo blanco puro con el mismo logo (72 KB).
+  - Pruebas: unitarias de la construcción de etiquetas, del tamaño y el peso de la imagen; e2e que lee el HTML de las 8 páginas y descarga la imagen; el smoke de PDN descarga la imagen con su URL absoluta.
+  - Checklist de QA, sección 9: verificación con el Sharing Debugger de Facebook y en WhatsApp después de publicar.
 
 ## Etapas que faltan
 

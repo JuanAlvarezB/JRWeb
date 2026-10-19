@@ -99,7 +99,8 @@ Los componentes solo usan estos hooks:
 - **HTML generado:** cada página trae su contenido completo, sus metadatos y la caché de consultas. Cloudflare Pages sirve `planes.html` en `/planes`.
 - **Hidratación:** el navegador hidrata ese HTML; en DEV la aplicación se monta desde cero.
 - **Metadatos** (`presentation/seo/`):
-  - título, descripción, canónica (siempre PDN), Open Graph e imagen para redes;
+  - título, descripción y canónica (siempre PDN) para buscadores;
+  - vistas previas al compartir (WhatsApp, Facebook, LinkedIn y X): Open Graph y tarjeta de X con título propio, descripción de máx. 80 caracteres e imagen `public/og-image.png` (1200 × 630, máx. 250 KB). Las construye `socialTags()` en `headTags.ts`; los textos están en `UI_TEXT.seo.share`;
   - JSON-LD `DrivingSchool` en Inicio y Contáctanos, y `FAQPage` en Preguntas frecuentes, sin precios ni calificación;
   - al navegar dentro del sitio, `usePageMeta` actualiza el título y la canónica.
 - **Indexación:** solo PDN se indexa; QA y la 404 llevan `noindex`. `sitemap.xml` solo en PDN.
