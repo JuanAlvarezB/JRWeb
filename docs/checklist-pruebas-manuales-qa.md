@@ -81,3 +81,27 @@ Compara con los mockups de [`docs/mockups/`](mockups/) y con [DESIGN.md](../DESI
 - [ ] El PR `qa` → `main` tiene esta lista marcada en un comentario.
 
 Después de integrar, aprueba el despliegue en **Actions** y espera que el smoke de PDN pase. Luego abre <https://conducirjrdelsinu.pages.dev> y comprueba que el sitio público **no** tiene la etiqueta "QA".
+
+## 9. Vistas previas al compartir (después de publicar en PDN)
+
+Se revisan **en PDN**: QA está protegido con Cloudflare Access y marcado `noindex`, así que WhatsApp, Facebook y los demás no pueden leerlo (es lo esperado). Hazlo en la revisión completa y cada vez que cambien los títulos, las descripciones o la imagen para compartir.
+
+> **WhatsApp guarda la vista previa de cada enlace en caché varios días** y no hay forma de borrarla. Verifícala **antes** de compartir el enlace de forma masiva: si sale mal la primera vez, quienes lo reciban seguirán viendo la versión vieja aunque se corrija.
+
+**Facebook Sharing Debugger** (WhatsApp lee las mismas etiquetas, aunque guarda su propia caché):
+
+1. Abre <https://developers.facebook.com/tools/debug/> e inicia sesión con una cuenta de Facebook.
+2. Pega la URL de la página (empieza por Inicio: `https://conducirjrdelsinu.pages.dev/`) y pulsa **Debug**.
+3. Si la página ya se había compartido antes del cambio, pulsa **Scrape Again** para que Facebook la vuelva a leer.
+
+- [ ] **Response Code** es 200.
+- [ ] La vista previa muestra la imagen con el logo sobre fondo blanco, el título de la página (sin "Conducir J&R del Sinú" repetido) y su descripción completa.
+- [ ] No aparecen advertencias de propiedades faltantes (`og:image`, `og:title`, `og:description`, `og:url`).
+- [ ] Repite con Planes, Contáctanos y Preguntas frecuentes (las que más se comparten).
+
+**Prueba real en WhatsApp:**
+
+- [ ] Envía a un chat de prueba (por ejemplo, el tuyo) el enlace de Inicio y el de Planes. Cada uno muestra la imagen, el título y la descripción sin cortes.
+- [ ] Toca la vista previa: abre la página correcta en PDN.
+
+Si la vista previa sale mal: corrige con el flujo normal (PR a `qa` → `main`), vuelve a pulsar **Scrape Again** en el Sharing Debugger y prueba en WhatsApp con un enlace que nunca se haya enviado (por ejemplo, agregando `?v=2` al final) para no ver la versión en caché.

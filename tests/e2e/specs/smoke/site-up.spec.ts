@@ -43,3 +43,12 @@ test('PDN es indexable: robots, sitemap y página sin noindex', async ({ request
 test('una ruta inexistente responde 404', async ({ request }) => {
   expect((await request.get('/esta-ruta-no-existe')).status()).toBe(404);
 });
+
+test('la imagen para compartir de PDN responde con su URL absoluta', async ({ request }) => {
+  const home = await (await request.get('/')).text();
+  const imageUrl = /<meta property="og:image" content="([^"]+)"/u.exec(home)?.[1];
+  expect(imageUrl).toMatch(/^https:\/\//u);
+  const image = await request.get(imageUrl ?? '');
+  expect(image.status()).toBe(200);
+  expect(image.headers()['content-type']).toBe('image/png');
+});
