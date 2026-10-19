@@ -17,8 +17,8 @@ AB#
 ## Antes de pedir la integración
 
 - [ ] La rama trae el último `main` (`git pull --no-rebase origin main`).
-- [ ] Ejecuté `npm run lint`, `npm run typecheck` y `npm run build` sin errores.
-- [ ] Ejecuté `npm test` sin errores (cuando exista la suite).
+- [ ] Ejecuté `npm run lint` y `npm run typecheck` sin errores.
+- [ ] Ejecuté `npm test` sin errores.
 - [ ] Cumple DESIGN.md: solo variables de diseño, roles de color respetados, una franja máximo por pantalla.
 - [ ] No incluye contraseñas, llaves, tokens ni datos personales (el repositorio es público).
 
@@ -28,5 +28,5 @@ AB#
 
 ## Solo para `qa` → `main`
 
-- [ ] Completé `docs/checklist-pruebas-manuales-qa.md` en QA.
+- [ ] Completé `docs/checklist-pruebas-manuales-qa.md` en QA y lo dejé marcado en un comentario.
 - [ ] La regresión contra QA pasó en GitHub Actions.

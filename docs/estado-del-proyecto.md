@@ -2,7 +2,7 @@
 
 Sitio web de Conducir J&R del Sinú: etapas terminadas y etapas que faltan.
 
-Actualizado el 18 oct 2026, tras estabilizar las pruebas e2e, aclarar el fondo de página y ajustar la regresión contra QA real y los ajustes de Inicio (después de la etapa 12).
+Actualizado el 18 oct 2026, al cerrar la etapa 13 (documentación).
 
 ## Resumen
 
@@ -11,33 +11,34 @@ Actualizado el 18 oct 2026, tras estabilizar las pruebas e2e, aclarar el fondo d
   - Cada página se genera como HTML estático con SEO y datos estructurados.
   - Rendimiento medido en Lighthouse: 98–100.
   - El CI de GitHub valida cada PR hacia `qa`, con pruebas de cada página y de cada flujo en 4 navegadores.
-- **Falta para publicar:**
-  - Desplegar en Cloudflare Pages (QA privado y PDN).
-  - Llevar `qa` a `main`.
+  - Cloudflare está configurado: cada integración en `qa` publica QA (privado, con Access) y corre la regresión contra el sitio real.
+  - Documentación completa: instalación, GitHub, Cloudflare, despliegue, actualización de contenido y checklist de QA.
+- **Falta para publicar:** revisar QA con el checklist y llevar `qa` a `main` (etapa 14).
 
-| Rama   | Estado                                                                           |
-| ------ | -------------------------------------------------------------------------------- |
-| `qa`   | Etapas 1–12 integradas.                                                          |
-| `main` | Solo el primer commit. Ninguna etapa ha pasado a PDN.                            |
-| Sitio  | Aún no está publicado: falta configurar Cloudflare (guía lista) y el paso a PDN. |
+| Rama   | Estado                                                                |
+| ------ | --------------------------------------------------------------------- |
+| `qa`   | Etapas 1–12 integradas; la 13 en su PR.                               |
+| `main` | Solo el primer commit. Ninguna etapa ha pasado a PDN.                 |
+| Sitio  | QA publicado en <https://qa.conducirjrdelsinu.pages.dev>; PDN aún no. |
 
 ## Etapas terminadas
 
-| #   | Etapa                          | Qué quedó                                                                                                                                | PR  |
-| --- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- | --- |
-| 1   | Entorno local (DEV)            | React 19 + Vite 8 + TypeScript estricto, ESLint, Stylelint y Prettier. Variables de entorno validadas para DEV, QA y PDN.                | —   |
-| 2   | Tokens, fuentes y estilos      | Style Dictionary genera `variables.css` desde `design-tokens/`. Barlow y Barlow Condensed autoalojadas. Stylelint solo acepta variables. | —   |
-| 3   | Marca y componentes base       | Botones, links de acción, franja, encabezados, tarjetas, acordeón, velocímetro, aguada e íconos. Catálogo en `/dev/componentes`.         | —   |
-| —   | Configuración de GitHub y CI   | Rulesets de `qa` y `main`, Dependabot, plantilla de PR y CODEOWNERS. `ci.yml` con 10 verificaciones obligatorias.                        | #1  |
-| 4   | Dominio                        | Entidades con sus reglas (NIT, horas, horarios…), contratos de repositorio y 10 casos de uso. Sin React ni librerías externas.           | #9  |
-| 5   | Datos                          | Contenido real en JSON y Markdown, esquemas Zod estrictos, mappers, 9 repositorios y validación de coherencia entre archivos.            | #10 |
-| 6   | DI y providers                 | `di/container.ts` como composition root, `DependencyProvider` y `QueryProvider`. El README documenta cómo pasar a Supabase.              | #12 |
-| 7   | Hooks                          | Hooks de datos con TanStack Query y Suspense, claves de consulta centralizadas y enlaces de contacto (WhatsApp, llamada, mapas).         | #13 |
-| 8   | Features                       | Componentes de cada sección con datos reales, validados contra los mockups a 1440 y 390 px.                                              | #14 |
-| 9   | Páginas                        | Detalle más abajo.                                                                                                                       | #15 |
-| 10  | SEO, prerender y analítica     | Detalle más abajo.                                                                                                                       | #16 |
-| 11  | Pruebas                        | Detalle más abajo.                                                                                                                       | #17 |
-| 12  | Despliegue en Cloudflare Pages | Detalle más abajo.                                                                                                                       | #18 |
+| #   | Etapa                          | Qué quedó                                                                                                                                                | PR  |
+| --- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| 1   | Entorno local (DEV)            | React 19 + Vite 8 + TypeScript estricto, ESLint, Stylelint y Prettier. Variables de entorno validadas para DEV, QA y PDN.                                | —   |
+| 2   | Tokens, fuentes y estilos      | Style Dictionary genera `variables.css` desde `design-tokens/`. Barlow y Barlow Condensed autoalojadas. Stylelint solo acepta variables.                 | —   |
+| 3   | Marca y componentes base       | Botones, links de acción, franja, encabezados, tarjetas, acordeón, velocímetro, aguada e íconos. Catálogo en `/dev/componentes`.                         | —   |
+| —   | Configuración de GitHub y CI   | Rulesets de `qa` y `main`, Dependabot, plantilla de PR y CODEOWNERS. `ci.yml` con 10 verificaciones obligatorias.                                        | #1  |
+| 4   | Dominio                        | Entidades con sus reglas (NIT, horas, horarios…), contratos de repositorio y 10 casos de uso. Sin React ni librerías externas.                           | #9  |
+| 5   | Datos                          | Contenido real en JSON y Markdown, esquemas Zod estrictos, mappers, 9 repositorios y validación de coherencia entre archivos.                            | #10 |
+| 6   | DI y providers                 | `di/container.ts` como composition root, `DependencyProvider` y `QueryProvider`. El README documenta cómo pasar a Supabase.                              | #12 |
+| 7   | Hooks                          | Hooks de datos con TanStack Query y Suspense, claves de consulta centralizadas y enlaces de contacto (WhatsApp, llamada, mapas).                         | #13 |
+| 8   | Features                       | Componentes de cada sección con datos reales, validados contra los mockups a 1440 y 390 px.                                                              | #14 |
+| 9   | Páginas                        | Detalle más abajo.                                                                                                                                       | #15 |
+| 10  | SEO, prerender y analítica     | Detalle más abajo.                                                                                                                                       | #16 |
+| 11  | Pruebas                        | Detalle más abajo.                                                                                                                                       | #17 |
+| 12  | Despliegue en Cloudflare Pages | Detalle más abajo.                                                                                                                                       | #18 |
+| 13  | Documentación                  | Guía para actualizar el contenido, checklist de pruebas manuales de QA, regla de Dependabot para versiones mayores, guía de instalación y README al día. | —   |
 
 Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar el flujo de ramas `feature/*`.
 
@@ -109,10 +110,9 @@ Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar
 
 ## Etapas que faltan
 
-| #   | Etapa         | Alcance                                                                                                                                                                           |
-| --- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 13  | Documentación | `guia-actualizar-contenido.md` y `checklist-pruebas-manuales-qa.md`. Actualizar `configuracion-github.md` (regla de Dependabot sobre versiones mayores) y la guía de instalación. |
-| 14  | Paso a PDN    | Configurar Cloudflare con la guía (pasos 1–8), revisar QA con el checklist, PR `qa` → `main`, aprobación del despliegue y smoke en verde.                                         |
+| #   | Etapa      | Alcance                                                                                                                        |
+| --- | ---------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| 14  | Paso a PDN | Revisar QA con el [checklist](checklist-pruebas-manuales-qa.md), PR `qa` → `main`, aprobación del despliegue y smoke en verde. |
 
 ## Pendientes
 

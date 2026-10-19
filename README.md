@@ -16,23 +16,26 @@ Instalación completa en macOS: [`docs/instalacion-local.md`](docs/instalacion-l
 
 ## Scripts
 
-| Script                              | Descripción                                                                                     |
-| ----------------------------------- | ----------------------------------------------------------------------------------------------- |
-| `dev`                               | Genera los tokens y abre el servidor de desarrollo                                              |
-| `tokens`                            | Genera `variables.css` desde `design-tokens/`                                                   |
-| `tokens:check`                      | Falla si las variables generadas se editaron a mano                                             |
-| `build:qa` / `build:production`     | Build del ambiente, prerender de las páginas, `robots.txt`, `_headers` (y `sitemap.xml` en PDN) |
-| `preview:qa` / `preview:production` | Build y vista previa local en <http://localhost:4173>, con las reglas de Cloudflare Pages       |
-| `serve`                             | Sirve el `dist/` actual como Cloudflare Pages (sin volver a construir)                          |
-| `typecheck`                         | TypeScript estricto                                                                             |
-| `lint`                              | Tokens + ESLint + Stylelint + Prettier                                                          |
-| `format`                            | Formatea todo con Prettier                                                                      |
+| Script                              | Descripción                                                                                         |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `dev`                               | Genera los tokens y abre el servidor de desarrollo                                                  |
+| `tokens`                            | Genera `variables.css` desde `design-tokens/`                                                       |
+| `tokens:check`                      | Falla si las variables generadas se editaron a mano                                                 |
+| `build:qa` / `build:production`     | Build del ambiente, prerender de las páginas, `robots.txt`, `_headers` (y `sitemap.xml` en PDN)     |
+| `preview:qa` / `preview:production` | Build y vista previa local en <http://localhost:4173>, con las reglas de Cloudflare Pages           |
+| `serve`                             | Sirve el `dist/` actual como Cloudflare Pages (sin volver a construir)                              |
+| `typecheck`                         | TypeScript estricto                                                                                 |
+| `lint`                              | Tokens + ESLint + Stylelint + Prettier                                                              |
+| `format`                            | Formatea todo con Prettier                                                                          |
+| `content:validate`                  | Esquemas del contenido, coherencia entre archivos, sin precios y política de datos aprobada         |
+| `test`                              | Unitarias, componentes, build de QA, e2e (4 navegadores) y visuales: lo que conviene antes de un PR |
+| `test:e2e:qa` / `test:e2e:smoke`    | Regresión contra QA publicado (requiere el Service Token) y smoke contra PDN                        |
 
 ## Stack
 
 React 19 · Vite 8 · TypeScript 6 (estricto) · React Router 8 · TanStack Query · Zod · CSS Modules + variables de Style Dictionary · Vitest + Testing Library · Playwright + axe · Cloudflare Pages · GitHub Actions.
 
-> **Versiones:** TypeScript 7 y ESLint 10 ya existen, pero `typescript-eslint` aún no soporta TypeScript 7, y `eslint-plugin-react` y `eslint-plugin-jsx-a11y` aún no soportan ESLint 10. Por eso el proyecto usa TypeScript 6.0 y ESLint 9.39. Dependabot propondrá la actualización cuando sea compatible.
+> **Versiones:** TypeScript 7 y ESLint 10 ya existen, pero `typescript-eslint` aún no soporta TypeScript 7, y `eslint-plugin-react` y `eslint-plugin-jsx-a11y` aún no soportan ESLint 10. Por eso el proyecto usa TypeScript 6.0 y ESLint 9.39. Cuándo aceptar una versión mayor: [`docs/configuracion-github.md`](docs/configuracion-github.md), paso 6.2.
 
 ## Arquitectura
 
@@ -161,13 +164,13 @@ Los mockups aprobados están en [`docs/mockups/`](docs/mockups/) (390 y 1440 px;
 
 ## Documentación
 
-| Documento                                                              | Contenido                                                                         |
-| ---------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| [`docs/instalacion-local.md`](docs/instalacion-local.md)               | Instalación en macOS y comandos                                                   |
-| [`docs/configuracion-github.md`](docs/configuracion-github.md)         | Rulesets, environments, seguridad, Azure Boards y flujo de ramas                  |
-| [`docs/configuracion-cloudflare.md`](docs/configuracion-cloudflare.md) | Cloudflare Pages, Access, Service Token, Web Analytics, revertir y dominio propio |
-| [`docs/ambientes-y-despliegue.md`](docs/ambientes-y-despliegue.md)     | Pipeline, pruebas y cómo llevar un cambio de DEV a QA y a PDN                     |
-| [`docs/estado-del-proyecto.md`](docs/estado-del-proyecto.md)           | Etapas terminadas y etapas que faltan                                             |
-| [`docs/pendientes.md`](docs/pendientes.md)                             | Pendientes abiertos y resueltos                                                   |
-
-Se completa en cada etapa: ambientes y despliegue, GitHub, Cloudflare, guía para actualizar contenido y checklist de QA.
+| Documento                                                                        | Contenido                                                                         |
+| -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [`docs/instalacion-local.md`](docs/instalacion-local.md)                         | Instalación en macOS y comandos                                                   |
+| [`docs/configuracion-github.md`](docs/configuracion-github.md)                   | Rulesets, environments, seguridad, Azure Boards y flujo de ramas                  |
+| [`docs/configuracion-cloudflare.md`](docs/configuracion-cloudflare.md)           | Cloudflare Pages, Access, Service Token, Web Analytics, revertir y dominio propio |
+| [`docs/ambientes-y-despliegue.md`](docs/ambientes-y-despliegue.md)               | Pipeline, pruebas y cómo llevar un cambio de DEV a QA y a PDN                     |
+| [`docs/guia-actualizar-contenido.md`](docs/guia-actualizar-contenido.md)         | Cambiar teléfonos, horarios, horas, preguntas, opiniones y demás datos            |
+| [`docs/checklist-pruebas-manuales-qa.md`](docs/checklist-pruebas-manuales-qa.md) | Revisión manual de QA antes de publicar en PDN                                    |
+| [`docs/estado-del-proyecto.md`](docs/estado-del-proyecto.md)                     | Etapas terminadas y etapas que faltan                                             |
+| [`docs/pendientes.md`](docs/pendientes.md)                                       | Pendientes abiertos y resueltos                                                   |
