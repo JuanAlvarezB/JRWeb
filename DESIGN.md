@@ -176,7 +176,7 @@ Forma orgánica fluida (no franja de degradado) con `#005932 → #00AA4C → #9B
 **Inicio** (el orden responde a las dudas reales del cliente: ¿son confiables?, ¿qué tengo que hacer?, ¿qué incluye?, ¿dónde quedan?):
 
 1. **Hero:** franja firma, H1 display (máx. 3 líneas), subtítulo, botones "Escríbenos por WhatsApp" + link "Ver planes", tarjetas flotantes sobre la aguada verde y el arco del velocímetro.
-2. **Por qué J&R:** 3 tarjetas de beneficio (diferenciadores).
+2. **Por qué estudiar con nosotros:** 3 tarjetas de beneficio (diferenciadores), con título y sin eyebrow.
 3. **Tu curso en horas:** selector A2 / B1 / C1 y el arco del velocímetro con la distribución real de horas (teoría, taller, manejo) y el total. Debajo, el link "Consulta los requisitos por WhatsApp".
 4. **Planes destacados:** 2–3 tarjetas de plan, sin precio.
 5. **Servicios:** bloques de 2 columnas texto + visual.
@@ -259,4 +259,5 @@ No se escriben a mano. `npm run tokens` genera `src/styles/variables.css` desde 
 | 16 oct 2026 | El mapa del bloque de ubicación es una fachada (plano ilustrado + "Ver mapa"): Google Maps se carga solo al tocarlo. Sin fotos, los bloques de Servicios van en una columna de lectura centrada.                                                                         | Implementación (rendimiento y privacidad)          |
 | 17 oct 2026 | Menú según su ancho: ≥ 1240 px como el mockup; 1140–1239 px sin "Llamar" (está en el footer y en Contáctanos); 1000–1139 px además con el logo-ícono; < 1000 px con ☰. La barra es fija y el `<header>` conserva su alto: al pasar a 72 px el contenido no se desplaza. | Implementación (sin cambio visual a 1440 / 390 px) |
 | 18 oct 2026 | Fondo de página Marfil `#FBF8F0` → Blanco Cálido `#FDFBF7`: más claro y menos crema, sigue sin ser blanco puro. Las tarjetas blancas se separan por la sombra teñida; los contrastes suben levemente (§2).                                                               | Decisión del dueño                                 |
+| 18 oct 2026 | Inicio: titular "Aprende a conducir con confianza" (sin "en Cereté"; Cereté sigue en el título de la pestaña y la descripción) y la sección de beneficios sin el eyebrow "Por qué J&R". El hero mide al menos 600 px desde 1100 px para contener las tarjetas flotantes. | Decisión del dueño                                 |
 | 17 oct 2026 | Política de datos: el mockup era un marcador; la página muestra el texto oficial aprobado con índice. Los títulos de sección (en mayúsculas en el documento) se muestran en tipo oración, sin cambiar el texto guardado.                                                 | Contenido aprobado                                 |

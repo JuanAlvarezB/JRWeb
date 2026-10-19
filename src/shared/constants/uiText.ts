@@ -191,6 +191,9 @@ export const UI_TEXT = {
     /** "© 2026 Conducir J&R del Sinú · NIT 901722359-5". */
     copyright: (year: number, brandName: string, nit: string): string =>
       `© ${String(year)} ${brandName} · NIT ${nit}`,
+    /** Crédito de diseño junto al copyright: "Designed by Joker" (el nombre en verde). */
+    designedBy: 'Designed by',
+    designer: 'Joker',
     dataPolicy: 'Política de Tratamiento de Datos',
   },
   privacyNotice: {
@@ -244,10 +247,9 @@ export const UI_TEXT = {
     documentTitle: (page: string): string => `${page} · Conducir J&R del Sinú`,
     home: {
       documentTitle: 'Conducir J&R del Sinú · Centro de Enseñanza Automovilística en Cereté',
-      title: 'Aprende a conducir con confianza en Cereté',
+      title: 'Aprende a conducir con confianza',
       lead: 'Cursos para licencias A2, B1 y C1 con instructores certificados. Clases teóricas de día o de noche y prácticas de lunes a sábado.',
       seePlans: 'Ver planes',
-      benefitsEyebrow: 'Por qué J&R',
       benefitsTitle: 'Por qué estudiar con nosotros',
       hoursEyebrow: 'Tu curso en horas',
       hoursTitle: 'Así se reparten tus horas de clase',

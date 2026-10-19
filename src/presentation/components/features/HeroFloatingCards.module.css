@@ -185,11 +185,14 @@
 }
 
 @container hero (width >= 1100px) {
-  .hero {
-    min-block-size: calc(var(--layout-container-max) / 2);
-  }
-
+  /*
+   * Las tarjetas flotan (posición absoluta) y no dan alto al hero: sin un mínimo, las de
+   * abajo invaden la sección siguiente. El hero mide al menos 600 px (la mitad del
+   * contenedor), pero el mínimo va en el contenido: una consulta de contenedor no puede
+   * dar estilos al propio contenedor (.hero).
+   */
   .content {
+    min-block-size: calc(var(--layout-container-max) / 2 - var(--space-12) - var(--space-16));
     max-inline-size: calc(
       var(--layout-container-max) - 2 * var(--component-card-hero-max-width) - 2 * var(--space-6)
     );

@@ -6,7 +6,7 @@ const PAGES = [
   { link: 'Planes', path: '/planes', h1: 'Planes' },
   { link: 'Preguntas frecuentes', path: '/preguntas-frecuentes', h1: 'Preguntas frecuentes' },
   { link: 'Contáctanos', path: '/contactanos', h1: 'Contáctanos' },
-  { link: 'Inicio', path: '/', h1: 'Aprende a conducir con confianza en Cereté' },
+  { link: 'Inicio', path: '/', h1: 'Aprende a conducir con confianza' },
 ] as const;
 
 test.describe('navegación', () => {
@@ -66,6 +66,6 @@ test.describe('navegación', () => {
     await expect(site.mainHeading()).toHaveText('Te saliste de la vía');
     await site.main().getByRole('link', { name: 'Volver al inicio' }).click();
     await expect(site.page).toHaveURL('/');
-    await expect(site.mainHeading()).toHaveText('Aprende a conducir con confianza en Cereté');
+    await expect(site.mainHeading()).toHaveText('Aprende a conducir con confianza');
   });
 });

@@ -9,7 +9,7 @@ import { expect, test } from '../../fixtures/test';
 test('el sitio responde y muestra el titular sin errores', async ({ home }) => {
   await home.skipPrivacyNotice();
   await home.open();
-  await expect(home.mainHeading()).toHaveText('Aprende a conducir con confianza en Cereté');
+  await expect(home.mainHeading()).toHaveText('Aprende a conducir con confianza');
   expect(home.consoleErrors).toEqual([]);
 });
 
