@@ -80,14 +80,14 @@ La configuración inicial de Cloudflare y GitHub está en [`configuracion-cloudf
 4. Integra con **Create a merge commit**. Se ejecuta **Despliegue a QA** (`deploy-qa.yml`):
    - `deploy-qa`: build de QA → rama `qa` de Cloudflare Pages → <https://qa.conducirjrdelsinu.pages.dev> (con Cloudflare Access).
    - `regression-qa`: la regresión de Playwright (4 navegadores) contra QA, con el Service Token.
-5. Revisa QA a mano (entra con tu correo y el código que llega).
+5. Revisa QA a mano con el [checklist de QA](checklist-pruebas-manuales-qa.md) (entra con tu correo y el código que llega).
 6. Si `regression-qa` falla, GitHub te avisa y el resumen de la ejecución lo marca. **No abras el PR hacia `main`** hasta corregirlo con otro PR a `qa`.
 
 **Plan de respaldo** (`QA_REMOTE_DEPLOY` = `false`): `deploy-qa` se omite. `regression-qa` construye la versión de QA y la prueba dentro de GitHub Actions. Las pruebas manuales se hacen con `npm run preview:qa`.
 
 ### Llevar QA a PDN
 
-1. Con QA en verde, abre el PR **`qa` → `main`** (solo `qa` puede llegar a `main`). El CI corre las 10 verificaciones con la build de producción.
+1. Con QA en verde y el [checklist](checklist-pruebas-manuales-qa.md) completo, abre el PR **`qa` → `main`** (solo `qa` puede llegar a `main`). El CI corre las 10 verificaciones con la build de producción.
 2. Integra con **Create a merge commit**. Se ejecuta **Despliegue a PDN** (`deploy-prod.yml`), que **espera tu aprobación**: **Review deployments** → `production` → **Approve and deploy**.
 3. `deploy-production`: build de producción (indexable, con sitemap y analítica) → rama `main` de Cloudflare Pages → <https://conducirjrdelsinu.pages.dev>.
 4. `smoke-production`: titular, WhatsApp, ubicación, robots, sitemap y 404 contra PDN.

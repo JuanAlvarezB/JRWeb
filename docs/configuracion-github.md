@@ -145,6 +145,43 @@ Ya está configurado en `.github/dependabot.yml`: revisa npm y GitHub Actions ca
 
 > Las alertas de seguridad de Dependabot siempre van a la rama por defecto; por eso la rama por defecto es `qa`.
 
+### 6.1 Qué PR abre
+
+| Grupo o caso           | Qué incluye                                                               | Ejemplo de título                                    |
+| ---------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------- |
+| `dev-dependencies`     | Parches y menores de las herramientas (Vite, Vitest, ESLint, Playwright…) | `chore(deps): bump the dev-dependencies group …`     |
+| `runtime-dependencies` | Parches de lo que llega al sitio (React, TanStack Query, Zod…)            | `chore(deps): bump the runtime-dependencies group …` |
+| Una dependencia sola   | Menores de producción y versiones mayores                                 | `chore(deps): bump react-router from 8.1.0 to 8.2.0` |
+| GitHub Actions         | Nuevas versiones de las acciones (fijadas por SHA)                        | `chore(ci): bump actions/checkout from … to …`       |
+
+### 6.2 Versiones mayores: regla del proyecto
+
+Una versión mayor (de `9.x` a `10.x`) puede romper la compatibilidad. Antes de integrarla:
+
+1. **Espera dos semanas desde su publicación.** El proyecto solo usa versiones con más de 2 semanas: da tiempo a que aparezcan y se corrijan los primeros errores. La fecha está en la página del paquete en npm (pestaña **Versions**).
+2. **Comprueba que el ecosistema la soporte.** Los plugins que dependen de ella deben declarar la versión nueva en su `peerDependencies`. Hoy hay cuatro ignoradas en `.github/dependabot.yml`:
+
+   | Paquete                 | Por qué se ignora la mayor                                                 | Cuándo quitarla de la lista                                                          |
+   | ----------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+   | `typescript`            | `typescript-eslint` aún no soporta TypeScript 7                            | Cuando `typescript-eslint` publique soporte para la 7                                |
+   | `eslint` y `@eslint/js` | `eslint-plugin-react` y `eslint-plugin-jsx-a11y` aún no soportan ESLint 10 | Cuando ambos plugins declaren ESLint 10                                              |
+   | `@types/node`           | Los tipos deben coincidir con el Node del proyecto (24, `.nvmrc`)          | Al cambiar de Node en `.nvmrc` y en `engines` de `package.json` (el CI usa `.nvmrc`) |
+
+3. **Lee las notas de la versión** (enlazadas en el PR de Dependabot) y busca cambios que afecten al proyecto.
+4. **Deja que el CI decida.** Si todo pasa, integra con merge commit. Si falla, cierra el PR con un comentario del motivo; Dependabot no lo volverá a abrir hasta la siguiente versión.
+
+Para quitar un paquete de la lista, borra su bloque en `ignore` de `.github/dependabot.yml` con un PR normal. Dependabot propondrá la mayor el lunes siguiente.
+
+### 6.3 Qué no actualiza Dependabot
+
+- **Wrangler** (la CLI de Cloudflare en `deploy-reusable.yml`) se ejecuta con `npx` y una versión fija: se revisa a mano ([configuracion-cloudflare.md](configuracion-cloudflare.md), "Mantenimiento").
+- **El runner `ubuntu-24.04`**: cambiarlo regenera todas las capturas de referencia ([ambientes-y-despliegue.md](ambientes-y-despliegue.md), sección 2).
+- **Node.js** (`.nvmrc`): se cambia a mano cuando salga el siguiente LTS.
+
+### 6.4 Si un PR de Dependabot falla por las capturas
+
+Una actualización de Playwright puede cambiar cómo se dibujan las páginas y hacer fallar `visual-tests` sin cambio de diseño. Ejecuta **Actualizar capturas de referencia** sobre la rama de Dependabot ([ambientes-y-despliegue.md](ambientes-y-despliegue.md), sección 2), revisa que las diferencias sean solo de dibujo y súbelas a esa rama.
+
 ## 7. Azure Boards (referencias `AB#`)
 
 ### 7.1 Conectar (una sola vez)
@@ -192,7 +229,7 @@ git switch -c feature/descripcion-corta
 git pull --no-rebase origin main
 
 # 3. Trabajar y comprobar en tu equipo
-npm run lint && npm run typecheck && npm run build
+npm run lint && npm run typecheck && npm test
 
 # 4. Commit y push
 git add .
