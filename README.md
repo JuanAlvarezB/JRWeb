@@ -172,6 +172,7 @@ Los mockups aprobados están en [`docs/mockups/`](docs/mockups/) (390 y 1440 px;
 | [`docs/configuracion-cloudflare.md`](docs/configuracion-cloudflare.md)           | Cloudflare Pages, Access, Service Token, Web Analytics, revertir y dominio propio |
 | [`docs/ambientes-y-despliegue.md`](docs/ambientes-y-despliegue.md)               | Pipeline, pruebas y cómo llevar un cambio de DEV a QA y a PDN                     |
 | [`docs/guia-actualizar-contenido.md`](docs/guia-actualizar-contenido.md)         | Cambiar teléfonos, horarios, horas, preguntas, opiniones y demás datos            |
+| [`docs/guia-paso-a-pdn.md`](docs/guia-paso-a-pdn.md)                             | Paso a paso para publicar QA en PDN: PR, aprobación, smoke y verificación         |
 | [`docs/checklist-pruebas-manuales-qa.md`](docs/checklist-pruebas-manuales-qa.md) | Revisión manual de QA antes de publicar en PDN                                    |
 | [`docs/estado-del-proyecto.md`](docs/estado-del-proyecto.md)                     | Etapas terminadas y etapas que faltan                                             |
 | [`docs/pendientes.md`](docs/pendientes.md)                                       | Pendientes abiertos y resueltos                                                   |

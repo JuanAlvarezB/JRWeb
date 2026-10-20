@@ -115,13 +115,13 @@ Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar
 
 ## Etapas que faltan
 
-| #   | Etapa      | Alcance                                                                                                                        |
-| --- | ---------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| 14  | Paso a PDN | Revisar QA con el [checklist](checklist-pruebas-manuales-qa.md), PR `qa` → `main`, aprobación del despliegue y smoke en verde. |
+| #   | Etapa      | Alcance                                                                                                                                                                               |
+| --- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 14  | Paso a PDN | Seguir la [guía para pasar a PDN](guia-paso-a-pdn.md): revisar QA con el [checklist](checklist-pruebas-manuales-qa.md), PR `qa` → `main`, aprobación del despliegue y smoke en verde. |
 
 ## Pendientes
 
-Los asuntos abiertos (fotos reales, aprobación de respuestas, token de analítica, Search Console…) se registran en [pendientes.md](pendientes.md).
+Los asuntos abiertos (fotos reales, token de analítica, Search Console…) se registran en [pendientes.md](pendientes.md).
 
 ## Verificaciones al cierre de la etapa 12
 
