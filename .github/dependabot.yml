@@ -1,0 +1,48 @@
+# Actualizaciones automáticas de dependencias. Los PR van hacia qa y pasan por el
+# mismo pipeline que cualquier cambio (docs/configuracion-github.md, paso 6).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    target-branch: qa
+    schedule:
+      interval: weekly
+      day: monday
+      time: '07:00'
+      timezone: America/Bogota
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: 'chore(deps)'
+    # Versiones mayores que no se proponen hasta que el ecosistema las soporte
+    # (se revisan a mano; docs/configuracion-github.md, paso 6).
+    ignore:
+      # Los tipos deben coincidir con el Node del proyecto (24 LTS, .nvmrc).
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+      # typescript-eslint aún no soporta TypeScript 7.
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
+      # eslint-plugin-react y eslint-plugin-jsx-a11y aún no soportan ESLint 10.
+      - dependency-name: 'eslint'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@eslint/js'
+        update-types: ['version-update:semver-major']
+    groups:
+      # Agrupa los parches y menores de desarrollo en un solo PR para no saturar.
+      dev-dependencies:
+        dependency-type: development
+        update-types: [minor, patch]
+      runtime-dependencies:
+        dependency-type: production
+        update-types: [patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: qa
+    schedule:
+      interval: weekly
+      day: monday
+      time: '07:00'
+      timezone: America/Bogota
+    commit-message:
+      prefix: 'chore(ci)'

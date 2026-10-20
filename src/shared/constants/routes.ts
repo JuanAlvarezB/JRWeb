@@ -13,3 +13,17 @@ export const ROUTES = {
 } as const;
 
 export type RoutePath = (typeof ROUTES)[keyof typeof ROUTES];
+
+/**
+ * Anclas de secciones enlazadas desde otras páginas (p. ej. "Ver horarios" lleva a
+ * los horarios de Contáctanos).
+ */
+export const SECTION_IDS = {
+  schedules: 'horarios',
+  location: 'ubicacion',
+} as const;
+
+/** Ruta con ancla: `withSection(ROUTES.contact, SECTION_IDS.schedules)`. */
+export function withSection(route: RoutePath, sectionId: string): string {
+  return `${route}#${sectionId}`;
+}

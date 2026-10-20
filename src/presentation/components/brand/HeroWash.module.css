@@ -8,10 +8,15 @@
   opacity: var(--opacity-hero-wash);
   pointer-events: none;
 
-  /* Centro transparente: el texto del hero queda sobre Marfil limpio. */
+  /*
+   * Centro transparente (el texto del hero queda sobre Blanco Cálido limpio) y bordes que se
+   * desvanecen: la aguada es una mancha difusa, nunca un rectángulo.
+   */
   mask-image: radial-gradient(
-    ellipse 42% 58% at 50% 48%,
-    transparent 55%,
-    var(--color-neutral-surface) 100%
+    ellipse 50% 50% at 50% 50%,
+    transparent 38%,
+    var(--color-neutral-surface) 62%,
+    var(--color-neutral-surface) 78%,
+    transparent 100%
   );
 }

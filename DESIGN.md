@@ -38,16 +38,16 @@
 
 ### Neutros
 
-| Nombre      | Valor     | Token                           | Rol                                                                                      |
-| ----------- | --------- | ------------------------------- | ---------------------------------------------------------------------------------------- |
-| Marfil Sinú | `#FBF8F0` | `--color-neutral-canvas`        | Fondo de todas las páginas, nav y footer. La calidez es parte de la identidad.           |
-| Papel       | `#FFFFFF` | `--color-neutral-surface`       | Tarjetas, paneles elevados, aviso de privacidad.                                         |
-| Tinta       | `#1D1E1C` | `--color-neutral-text`          | Texto principal, íconos, títulos de tarjeta. Nunca `#000000`.                            |
-| Piedra      | `#615F5C` | `--color-neutral-text-muted`    | Texto secundario y descripciones (6.0:1).                                                |
-| Madera      | `#8E8B87` | `--color-neutral-text-disabled` | Solo trazos decorativos y estados deshabilitados. **No para texto informativo** (3.2:1). |
-| Hueso       | `#C0BBB6` | `--color-neutral-border-strong` | Bordes de controles en reposo.                                                           |
-| Niebla      | `#E4DFD3` | `--color-neutral-border`        | Divisores y líneas finas.                                                                |
-| Error       | `#B42318` | `--color-feedback-error`        | Mensajes de error, siempre con ícono y texto. Distinto del rojo de marca.                |
+| Nombre        | Valor     | Token                           | Rol                                                                                      |
+| ------------- | --------- | ------------------------------- | ---------------------------------------------------------------------------------------- |
+| Blanco Cálido | `#FDFBF7` | `--color-neutral-canvas`        | Fondo de todas las páginas, nav y footer. La calidez es parte de la identidad.           |
+| Papel         | `#FFFFFF` | `--color-neutral-surface`       | Tarjetas, paneles elevados, aviso de privacidad.                                         |
+| Tinta         | `#1D1E1C` | `--color-neutral-text`          | Texto principal, íconos, títulos de tarjeta. Nunca `#000000`.                            |
+| Piedra        | `#615F5C` | `--color-neutral-text-muted`    | Texto secundario y descripciones (6.2:1).                                                |
+| Madera        | `#8E8B87` | `--color-neutral-text-disabled` | Solo trazos decorativos y estados deshabilitados. **No para texto informativo** (3.3:1). |
+| Hueso         | `#C0BBB6` | `--color-neutral-border-strong` | Bordes de controles en reposo.                                                           |
+| Niebla        | `#E4DFD3` | `--color-neutral-border`        | Divisores y líneas finas.                                                                |
+| Error         | `#B42318` | `--color-feedback-error`        | Mensajes de error, siempre con ícono y texto. Distinto del rojo de marca.                |
 
 ### Proporción de uso
 
@@ -57,16 +57,16 @@ Lienzo y tarjetas ~60 % · tinta y neutros ~28 % · verde Sinú ~10 % · rojo < 
 
 ### Contraste verificado (WCAG 2.1)
 
-| Combinación                     | Ratio       | Uso permitido            |
-| ------------------------------- | ----------- | ------------------------ |
-| Tinta sobre Marfil              | 15.8:1      | Todo texto               |
-| Piedra sobre Marfil             | 6.0:1       | Texto secundario         |
-| Verde Sinú sobre Marfil         | 8.0:1       | Links, títulos, eyebrows |
-| Blanco sobre Verde Sinú         | 8.5:1       | Botón principal          |
-| Blanco sobre Rojo Franja        | 4.37:1      | Solo texto bold ≥ 19 px  |
-| Blanco sobre Rojo Aguja         | 5.9:1       | Etiquetas pequeñas       |
-| Error sobre Marfil              | 6.2:1       | Mensajes de error        |
-| Verde Pista / Lima sobre Marfil | 2.9 / 1.8:1 | Prohibido como texto     |
+| Combinación                            | Ratio       | Uso permitido            |
+| -------------------------------------- | ----------- | ------------------------ |
+| Tinta sobre Blanco Cálido              | 16.2:1      | Todo texto               |
+| Piedra sobre Blanco Cálido             | 6.2:1       | Texto secundario         |
+| Verde Sinú sobre Blanco Cálido         | 8.2:1       | Links, títulos, eyebrows |
+| Blanco sobre Verde Sinú                | 8.5:1       | Botón principal          |
+| Blanco sobre Rojo Franja               | 4.37:1      | Solo texto bold ≥ 19 px  |
+| Blanco sobre Rojo Aguja                | 5.9:1       | Etiquetas pequeñas       |
+| Error sobre Blanco Cálido              | 6.4:1       | Mensajes de error        |
+| Verde Pista / Lima sobre Blanco Cálido | 3.0 / 1.9:1 | Prohibido como texto     |
 
 ---
 
@@ -111,7 +111,7 @@ Forma orgánica fluida (no franja de degradado) con `#005932 → #00AA4C → #9B
 
 ## 5. Componentes
 
-**Navegación.** Sticky, fondo Marfil con línea Niebla al hacer scroll. Escritorio: 124 px de alto con el logo completo (240 px); con scroll > 80 px pasa a 72 px con el logo-ícono (96 px). Móvil: 64 px con el logo-ícono (84 px). Logo horizontal a la izquierda; enlaces al centro (Barlow 500, 16 px, Tinta; activo en Verde Sinú con subrayado de 2 px); a la derecha "Llamar" como link y **"Escríbenos"** como botón principal. En móvil: logo-ícono, botón "Escríbenos" y menú hamburguesa a pantalla completa sobre Marfil.
+**Navegación.** Sticky, fondo Blanco Cálido con línea Niebla al hacer scroll. Escritorio: 124 px de alto con el logo completo (240 px); con scroll > 80 px pasa a 72 px con el logo-ícono (96 px). Móvil: 64 px con el logo-ícono (84 px). Logo horizontal a la izquierda; enlaces al centro (Barlow 500, 16 px, Tinta; activo en Verde Sinú con subrayado de 2 px); a la derecha "Llamar" como link y **"Escríbenos"** como botón principal. En móvil: logo-ícono, botón "Escríbenos" y menú hamburguesa a pantalla completa sobre Blanco Cálido.
 
 **Botón principal.** Verde Sinú, texto blanco Barlow 600 16 px, 48 px de alto (52 px a todo el ancho en móvil), relleno horizontal 24 px, radio 16, `--shadow-sm`, hover Verde Profundo `#00502C`. Es el único botón con relleno de color. Ícono de WhatsApp a la izquierda cuando abre WhatsApp.
 
@@ -145,7 +145,7 @@ Forma orgánica fluida (no franja de degradado) con `#005932 → #00AA4C → #9B
 
 **Aviso de privacidad.** Tarjeta blanca radio 16, `--shadow-lg`, máx. 360 px, abajo a la izquierda (ancho completo menos 32 px en móvil), texto Piedra 14 px, link a la política y link de acción "Entendido".
 
-**Footer.** Fondo Marfil con divisor Niebla superior (sin banda oscura). Logo, columnas (Páginas, Contacto, Horarios, Redes), NIT y enlace a la Política de Tratamiento de Datos en Piedra 14 px.
+**Footer.** Fondo Blanco Cálido con divisor Niebla superior (sin banda oscura). Logo, columnas (Páginas, Contacto, Horarios, Redes), NIT y enlace a la Política de Tratamiento de Datos en Piedra 14 px.
 
 **Etiqueta de ambiente (solo QA).** Píldora Tinta con texto blanco "QA", fija arriba a la izquierda.
 
@@ -171,12 +171,12 @@ Forma orgánica fluida (no franja de degradado) con `#005932 → #00AA4C → #9B
 
 ## 8. Arquetipo y estructura de páginas
 
-**Modelo:** contenedor centrado de 1200 px sobre Marfil a todo el ancho. Secciones separadas por espacio, no por bandas de color. Grillas: 3 columnas para beneficios, 2 columnas para texto + visual, 1 columna centrada para llamados a la acción.
+**Modelo:** contenedor centrado de 1200 px sobre Blanco Cálido a todo el ancho. Secciones separadas por espacio, no por bandas de color. Grillas: 3 columnas para beneficios, 2 columnas para texto + visual, 1 columna centrada para llamados a la acción.
 
 **Inicio** (el orden responde a las dudas reales del cliente: ¿son confiables?, ¿qué tengo que hacer?, ¿qué incluye?, ¿dónde quedan?):
 
 1. **Hero:** franja firma, H1 display (máx. 3 líneas), subtítulo, botones "Escríbenos por WhatsApp" + link "Ver planes", tarjetas flotantes sobre la aguada verde y el arco del velocímetro.
-2. **Por qué J&R:** 3 tarjetas de beneficio (diferenciadores).
+2. **Por qué estudiar con nosotros:** 3 tarjetas de beneficio (diferenciadores), con título y sin eyebrow.
 3. **Tu curso en horas:** selector A2 / B1 / C1 y el arco del velocímetro con la distribución real de horas (teoría, taller, manejo) y el total. Debajo, el link "Consulta los requisitos por WhatsApp".
 4. **Planes destacados:** 2–3 tarjetas de plan, sin precio.
 5. **Servicios:** bloques de 2 columnas texto + visual.
@@ -206,7 +206,7 @@ Forma orgánica fluida (no franja de degradado) con `#005932 → #00AA4C → #9B
 ### Do
 
 - Usar Verde Sinú `#005932` exclusivamente para acciones, links, estados activos y eyebrows.
-- Mantener todas las páginas sobre Marfil `#FBF8F0` y las tarjetas en blanco.
+- Mantener todas las páginas sobre Blanco Cálido `#FDFBF7` y las tarjetas en blanco.
 - Reservar Barlow Condensed ExtraBold Italic para un titular de máxima jerarquía por pantalla.
 - Aplicar radio 16 a botones e inputs y 20 a tarjetas.
 - Usar sombras teñidas de verde para la profundidad.
@@ -243,15 +243,21 @@ No se escriben a mano. `npm run tokens` genera `src/styles/variables.css` desde 
 
 ## 12. Registro de cambios
 
-| Fecha       | Cambio                                                                                                                                                                                                 | Origen                             |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------- |
-| 14 oct 2026 | Hover de acción `#00472A` → `#00502C` (Verde Profundo del logo).                                                                                                                                       | Ajustes aprobados del handoff      |
-| 14 oct 2026 | Franja a 30° con `clip-path` (antes −12°); variante pequeña Rojo Aguja 14 px en móvil; la franja del logo no cuenta en el límite.                                                                      | Ajustes aprobados del handoff      |
-| 14 oct 2026 | Tarjetas de beneficio en blanco; títulos de sección siempre en Tinta.                                                                                                                                  | Ajustes aprobados del handoff      |
-| 14 oct 2026 | Colores del arco por horas: Teoría / Taller / Manejo (excepción documentada).                                                                                                                          | Ajustes aprobados del handoff      |
-| 14 oct 2026 | Menú de escritorio 124 → 72 px con scroll; tarjetas de testimonio y calificación; sin Barlow Semi Condensed.                                                                                           | Ajustes aprobados del handoff      |
-| 15 oct 2026 | Espacios de foto 4:3 ocultos mientras no haya fotos reales.                                                                                                                                            | Decisión del dueño (desarrollo)    |
-| 15 oct 2026 | Nombres de variables alineados con las generadas por Style Dictionary; medidas de componentes del handoff en `design-tokens/components.json`.                                                          | Implementación (sin cambio visual) |
-| 16 oct 2026 | Número del centro del velocímetro sin leyenda (404 y tarjeta del hero): 64 px, medido en los mockups (con leyenda sigue en 56 px).                                                                     | Validación visual contra mockups   |
-| 16 oct 2026 | Íconos de marca en estilo de línea y flecha del link de acción como ícono (ver §6).                                                                                                                    | Validación visual contra mockups   |
-| 16 oct 2026 | El componente `SpeedometerArc` dibuja el arco del handoff (tramos proporcionales); `speedometer-arc.svg` (velocímetro del logo, segmentos fijos) queda como activo de marca en `public/assets/brand/`. | Implementación                     |
+| Fecha       | Cambio                                                                                                                                                                                                                                                                   | Origen                                             |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- |
+| 14 oct 2026 | Hover de acción `#00472A` → `#00502C` (Verde Profundo del logo).                                                                                                                                                                                                         | Ajustes aprobados del handoff                      |
+| 14 oct 2026 | Franja a 30° con `clip-path` (antes −12°); variante pequeña Rojo Aguja 14 px en móvil; la franja del logo no cuenta en el límite.                                                                                                                                        | Ajustes aprobados del handoff                      |
+| 14 oct 2026 | Tarjetas de beneficio en blanco; títulos de sección siempre en Tinta.                                                                                                                                                                                                    | Ajustes aprobados del handoff                      |
+| 14 oct 2026 | Colores del arco por horas: Teoría / Taller / Manejo (excepción documentada).                                                                                                                                                                                            | Ajustes aprobados del handoff                      |
+| 14 oct 2026 | Menú de escritorio 124 → 72 px con scroll; tarjetas de testimonio y calificación; sin Barlow Semi Condensed.                                                                                                                                                             | Ajustes aprobados del handoff                      |
+| 15 oct 2026 | Espacios de foto 4:3 ocultos mientras no haya fotos reales.                                                                                                                                                                                                              | Decisión del dueño (desarrollo)                    |
+| 15 oct 2026 | Nombres de variables alineados con las generadas por Style Dictionary; medidas de componentes del handoff en `design-tokens/components.json`.                                                                                                                            | Implementación (sin cambio visual)                 |
+| 16 oct 2026 | Número del centro del velocímetro sin leyenda (404 y tarjeta del hero): 64 px, medido en los mockups (con leyenda sigue en 56 px).                                                                                                                                       | Validación visual contra mockups                   |
+| 16 oct 2026 | Íconos de marca en estilo de línea y flecha del link de acción como ícono (ver §6).                                                                                                                                                                                      | Validación visual contra mockups                   |
+| 16 oct 2026 | El componente `SpeedometerArc` dibuja el arco del handoff (tramos proporcionales); `speedometer-arc.svg` (velocímetro del logo, segmentos fijos) queda como activo de marca en `public/assets/brand/`.                                                                   | Implementación                                     |
+| 16 oct 2026 | Hero entre 720 px y un contenedor de 1100 px: las 4 tarjetas en grilla 2 × 2 bajo el titular (no caben a los lados sin tapar el texto). Desde 1100 px, flotantes como en el mockup.                                                                                      | Implementación (sin cambio visual a 1440 px)       |
+| 16 oct 2026 | El mapa del bloque de ubicación es una fachada (plano ilustrado + "Ver mapa"): Google Maps se carga solo al tocarlo. Sin fotos, los bloques de Servicios van en una columna de lectura centrada.                                                                         | Implementación (rendimiento y privacidad)          |
+| 17 oct 2026 | Menú según su ancho: ≥ 1240 px como el mockup; 1140–1239 px sin "Llamar" (está en el footer y en Contáctanos); 1000–1139 px además con el logo-ícono; < 1000 px con ☰. La barra es fija y el `<header>` conserva su alto: al pasar a 72 px el contenido no se desplaza. | Implementación (sin cambio visual a 1440 / 390 px) |
+| 18 oct 2026 | Fondo de página Marfil `#FBF8F0` → Blanco Cálido `#FDFBF7`: más claro y menos crema, sigue sin ser blanco puro. Las tarjetas blancas se separan por la sombra teñida; los contrastes suben levemente (§2).                                                               | Decisión del dueño                                 |
+| 18 oct 2026 | Inicio: titular "Aprende a conducir con confianza" (sin "en Cereté"; Cereté sigue en el título de la pestaña y la descripción) y la sección de beneficios sin el eyebrow "Por qué J&R". El hero mide al menos 600 px desde 1100 px para contener las tarjetas flotantes. | Decisión del dueño                                 |
+| 17 oct 2026 | Política de datos: el mockup era un marcador; la página muestra el texto oficial aprobado con índice. Los títulos de sección (en mayúsculas en el documento) se muestran en tipo oración, sin cambiar el texto guardado.                                                 | Contenido aprobado                                 |

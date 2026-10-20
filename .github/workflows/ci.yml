@@ -1,0 +1,341 @@
+# Pipeline de validación de cada PR hacia qa o main.
+# Los nombres de los jobs son fijos: los rulesets (.github/rulesets/) los exigen
+# como verificaciones obligatorias. Si se renombra un job, hay que actualizar los rulesets.
+name: CI
+
+on:
+  pull_request:
+    branches: [qa, main]
+
+# Runner fijo (ubuntu-24.04, no ubuntu-latest): las capturas de referencia de la
+# regresión visual dependen del sistema operativo y no deben cambiar sin aviso.
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  # qa → build de QA; main → build de producción.
+  BUILD_MODE: ${{ github.base_ref == 'main' && 'production' || 'qa' }}
+
+jobs:
+  # 0. Solo qa puede llegar a main.
+  source-branch-check:
+    name: source-branch-check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Verificar el origen del PR
+        env:
+          BASE: ${{ github.base_ref }}
+          HEAD: ${{ github.head_ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ "$BASE" = "main" ] && { [ "$HEAD" != "qa" ] || [ "$HEAD_REPO" != "$REPO" ]; }; then
+            echo "::error::A main solo se llega desde la rama qa de este repositorio (origen: $HEAD_REPO:$HEAD)."
+            exit 1
+          fi
+          echo "Origen válido: $HEAD → $BASE"
+
+      - name: Descargar historial
+        if: github.base_ref == 'qa'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Avisar si la rama no trae el último main
+        if: github.base_ref == 'qa'
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if git merge-base --is-ancestor origin/main "$HEAD_SHA"; then
+            echo "La rama incluye el último commit de main."
+          else
+            echo "::warning::Esta rama no trae el último main. Ejecuta 'git pull --no-rebase origin main' para que el PR qa → main no quede desactualizado."
+          fi
+
+  # 1. ESLint (incluye reglas de arquitectura), Stylelint, Prettier y tokens.
+  lint:
+    name: lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - run: npm run lint
+
+  # 2. TypeScript estricto (app, scripts y pruebas).
+  typecheck:
+    name: typecheck
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - run: npm run typecheck
+
+  # 3. Contenido: sin precios y política de datos lista (en PR hacia main es obligatorio).
+  content-validation:
+    name: content-validation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - run: npm run content:validate
+        env:
+          TARGET_BRANCH: ${{ github.base_ref }}
+
+  # 4. Secretos en todo el historial con gitleaks (binario MIT, sin licencia de pago).
+  secret-scan:
+    name: secret-scan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      GITLEAKS_VERSION: 8.30.1
+      GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Instalar gitleaks (verificando el checksum)
+        run: |
+          archive="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl -sSfL -o "$archive" "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/${archive}"
+          echo "${GITLEAKS_SHA256}  ${archive}" | sha256sum -c -
+          tar -xzf "$archive" gitleaks
+      - name: Buscar secretos
+        run: ./gitleaks git --redact --no-banner --exit-code 1 .
+
+  # 5. Pruebas unitarias con cobertura (el dominio exige 80 %).
+  unit-tests:
+    name: unit-tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - run: npm run test:unit
+      - name: Resumen de cobertura
+        if: always()
+        run: |
+          if [ -f coverage/coverage-summary.json ]; then
+            node -e '
+              const t = require("./coverage/coverage-summary.json").total;
+              const rows = ["lines", "statements", "functions", "branches"]
+                .map((k) => `| ${k} | ${t[k].pct}% |`).join("\n");
+              console.log(`### Cobertura\n\n| Métrica | Total |\n|---|---|\n${rows}`);
+            ' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Publicar reporte de cobertura
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: cobertura
+          path: coverage/
+          retention-days: 14
+          if-no-files-found: ignore
+
+  # 6. Componentes con React Testing Library.
+  component-tests:
+    name: component-tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - run: npm run test:components
+
+  # 7. Build del ambiente destino (tokens + Vite + prerender + robots/_headers/sitemap).
+  build:
+    name: build
+    needs:
+      [
+        source-branch-check,
+        lint,
+        typecheck,
+        content-validation,
+        secret-scan,
+        unit-tests,
+        component-tests,
+      ]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - name: Build (${{ env.BUILD_MODE }})
+        run: npm run build:${{ env.BUILD_MODE }}
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+          include-hidden-files: true
+
+  # 8. Regresión end-to-end + axe en Chromium, Firefox, WebKit y móvil, contra la build del paso 7.
+  e2e-tests:
+    name: e2e-tests
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: dist
+          path: dist/
+      - id: playwright
+        name: Versión de Playwright
+        run: echo "version=$(npx playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+      - id: browsers-cache
+        name: Caché de navegadores
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}-all
+      - name: Instalar navegadores
+        if: steps.browsers-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Instalar dependencias del sistema
+        if: steps.browsers-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium firefox webkit
+      - run: npm run test:e2e
+      - name: Publicar reporte de Playwright
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: reporte-e2e
+          path: playwright-report/
+          retention-days: 14
+          if-no-files-found: ignore
+      - name: Publicar trazas y capturas de fallos
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fallos-e2e
+          path: test-results/
+          retention-days: 14
+          if-no-files-found: ignore
+
+  # 9. Regresión visual contra las capturas de referencia (generadas en Linux).
+  visual-tests:
+    name: visual-tests
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: dist
+          path: dist/
+      - id: playwright
+        name: Versión de Playwright
+        run: echo "version=$(npx playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+      - id: browsers-cache
+        name: Caché de Chromium
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}-chromium
+      - name: Instalar Chromium
+        if: steps.browsers-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+      - name: Instalar dependencias del sistema
+        if: steps.browsers-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+      - run: npm run test:visual
+      - name: Publicar diferencias visuales
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: diferencias-visuales
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
+          if-no-files-found: ignore
+
+  # Resumen en el PR (no es verificación obligatoria).
+  report:
+    name: resumen
+    needs:
+      [
+        source-branch-check,
+        lint,
+        typecheck,
+        content-validation,
+        secret-scan,
+        unit-tests,
+        component-tests,
+        build,
+        e2e-tests,
+        visual-tests,
+      ]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Publicar resumen en el PR
+        # Los PR de Dependabot y de forks no tienen permiso para comentar: no se bloquea.
+        continue-on-error: true
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        with:
+          script: |
+            const results = JSON.parse(process.env.RESULTS);
+            const icon = { success: '✅', failure: '❌', cancelled: '⏹️', skipped: '⏭️' };
+            const rows = Object.entries(results)
+              .map(([job, { result }]) => `| \`${job}\` | ${icon[result] ?? '❔'} ${result} |`)
+              .join('\n');
+            const allGreen = Object.values(results).every(({ result }) => result === 'success');
+            const marker = '<!-- ci-resumen -->';
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              marker,
+              `### ${allGreen ? '✅ CI en verde' : '❌ CI con fallos'} · build \`${process.env.BUILD_MODE}\``,
+              '',
+              '| Verificación | Resultado |',
+              '|---|---|',
+              rows,
+              '',
+              `Reportes (cobertura, Playwright, diferencias visuales): [ejecución](${runUrl}) → Artifacts.`,
+            ].join('\n');
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo,
+              issue_number: context.issue.number,
+            });
+            const previous = comments.find((comment) => comment.body?.includes(marker));
+            if (previous) {
+              await github.rest.issues.updateComment({ ...context.repo, comment_id: previous.id, body });
+            } else {
+              await github.rest.issues.createComment({ ...context.repo, issue_number: context.issue.number, body });
+            }

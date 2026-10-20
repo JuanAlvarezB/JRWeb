@@ -1,0 +1,45 @@
+{
+  "blocks": [
+    {
+      "id": "theory-day",
+      "kind": "theory",
+      "days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      "slots": [
+        {
+          "start": "08:00",
+          "end": "10:00"
+        },
+        {
+          "start": "10:00",
+          "end": "12:00"
+        },
+        {
+          "start": "14:00",
+          "end": "16:00"
+        },
+        {
+          "start": "16:00",
+          "end": "18:00"
+        }
+      ]
+    },
+    {
+      "id": "theory-night",
+      "kind": "theory",
+      "days": ["monday", "tuesday", "wednesday"],
+      "slots": [
+        {
+          "start": "18:00",
+          "end": "20:00"
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "kind": "practice",
+      "days": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"],
+      "slots": [],
+      "note": "Escríbenos para coordinar tus clases de manejo."
+    }
+  ]
+}

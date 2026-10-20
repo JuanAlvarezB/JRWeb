@@ -1,0 +1,91 @@
+.header {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  padding-block-end: var(--space-3);
+  border-block-end: var(--component-border-hairline) solid var(--color-neutral-border);
+}
+
+.iconCircle {
+  display: grid;
+  place-items: center;
+  inline-size: var(--size-icon-circle-small);
+  block-size: var(--size-icon-circle-small);
+  border-radius: 50%;
+  background-color: var(--color-brand-glow);
+  color: var(--color-neutral-text);
+}
+
+.icon {
+  inline-size: var(--component-card-contact-icon-size);
+  block-size: var(--component-card-contact-icon-size);
+}
+
+.label {
+  font-size: var(--font-size-small);
+  color: var(--color-neutral-text-muted);
+}
+
+.entries {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.entry {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+  padding-block-start: var(--space-3);
+}
+
+.entry + .entry {
+  margin-block-start: var(--space-2);
+  border-block-start: var(--component-border-hairline) solid var(--color-neutral-border);
+}
+
+.value {
+  font-size: var(--font-size-body-lg);
+  font-weight: var(--font-weight-semibold);
+  overflow-wrap: anywhere;
+  color: var(--color-neutral-text);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-6);
+}
+
+/* Móvil: el enlace cubre toda la fila (área táctil grande). */
+.rowLink::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+}
+
+/* "Copiar" solo en escritorio (DESIGN.md §5): en el celular se toca el enlace. */
+.copy {
+  display: none;
+}
+
+.copied {
+  color: var(--color-neutral-text);
+}
+
+@media (width >= 720px) {
+  .entry {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .copy {
+    display: inline-flex;
+  }
+
+  .rowLink::after {
+    content: none;
+  }
+}

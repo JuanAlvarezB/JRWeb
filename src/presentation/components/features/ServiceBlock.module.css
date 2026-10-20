@@ -1,0 +1,97 @@
+.block {
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.eyebrow {
+  font: var(--typography-eyebrow);
+  letter-spacing: var(--font-letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-brand-default);
+}
+
+.title {
+  margin-block: var(--space-4) var(--space-4);
+  font-size: var(--font-size-section-mobile);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--font-line-height-heading);
+  letter-spacing: var(--font-letter-spacing-heading);
+  text-wrap: balance;
+  color: var(--color-neutral-text);
+}
+
+.audience {
+  font-size: var(--component-section-heading-subtitle-size-mobile);
+  color: var(--color-neutral-text-muted);
+  line-height: var(--font-line-height-body);
+}
+
+.facts {
+  margin-block-start: var(--space-5);
+  padding-inline: var(--space-6);
+}
+
+.factList {
+  margin: 0;
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: calc(var(--space-20) + var(--space-6)) 1fr;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+  border-block-end: var(--component-border-hairline) solid var(--color-neutral-border);
+}
+
+.fact:last-child {
+  border-block-end: 0;
+}
+
+.factLabel {
+  color: var(--color-neutral-text-muted);
+}
+
+.factValue {
+  margin: 0;
+  color: var(--color-neutral-text);
+  line-height: var(--font-line-height-body);
+}
+
+.link {
+  margin-block-start: var(--space-5);
+}
+
+.photo {
+  inline-size: 100%;
+  aspect-ratio: var(--component-photo-aspect-ratio);
+  border-radius: var(--radius-image);
+  object-fit: cover;
+}
+
+@media (width >= 720px) {
+  /* Sin foto: una columna de lectura centrada bajo el encabezado de la página. */
+  .block {
+    inline-size: 100%;
+    max-inline-size: var(--layout-reading-width);
+    margin-inline: auto;
+  }
+
+  .withPhoto {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-16);
+    max-inline-size: none;
+  }
+
+  .reversed .photo {
+    order: -1;
+  }
+
+  .title {
+    font-size: var(--font-size-section);
+  }
+
+  .audience {
+    font-size: var(--font-size-body-lg);
+  }
+}

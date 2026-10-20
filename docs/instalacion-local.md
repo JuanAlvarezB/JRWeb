@@ -40,11 +40,13 @@ npm --version
 
 > Si ya tienes otra versión de Node, puedes usar [nvm](https://github.com/nvm-sh/nvm): el proyecto incluye `.nvmrc`, así que basta con `nvm install && nvm use` dentro de la carpeta.
 
-### 2.4 GitHub CLI (se usará en la etapa de GitHub)
+### 2.4 GitHub CLI (opcional)
 
 ```bash
 brew install gh
 ```
+
+Permite ver los PR y las ejecuciones de Actions desde la Terminal (`gh pr status`, `gh run list`). Todo se puede hacer también desde la web de GitHub.
 
 ### 2.5 Visual Studio Code y extensiones
 
@@ -63,11 +65,11 @@ npm ci
 
 ## 4. Ejecutar el sitio
 
-| Comando                      | Qué hace                                                              | Dónde se ve             |
-| ---------------------------- | --------------------------------------------------------------------- | ----------------------- |
-| `npm run dev`                | Servidor de desarrollo con recarga automática (modo `development`)    | <http://localhost:5173> |
-| `npm run preview:qa`         | Construye la versión de **QA** y la sirve tal como quedaría publicada | <http://localhost:4173> |
-| `npm run preview:production` | Igual, con la configuración de **PDN**                                | <http://localhost:4173> |
+| Comando                      | Qué hace                                                                                                   | Dónde se ve             |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `npm run dev`                | Servidor de desarrollo con recarga automática (modo `development`)                                         | <http://localhost:5173> |
+| `npm run preview:qa`         | Construye la versión de **QA** y la sirve con las reglas de Cloudflare Pages (rutas, 404, CSP, compresión) | <http://localhost:4173> |
+| `npm run preview:production` | Igual, con la configuración de **PDN**                                                                     | <http://localhost:4173> |
 
 Para detener un servidor: `Ctrl + C` en la Terminal.
 
@@ -78,9 +80,15 @@ Para detener un servidor: `Ctrl + C` en la Terminal.
 | `npm run typecheck`                             | Tipos de TypeScript (modo estricto)                                                             |
 | `npm run lint`                                  | ESLint (incluye las reglas de arquitectura), Stylelint (solo variables de DESIGN.md) y Prettier |
 | `npm run format`                                | Corrige el formato de todos los archivos                                                        |
-| `npm run build:qa` / `npm run build:production` | Construye `dist/` y genera `robots.txt` y `_headers` del ambiente                               |
+| `npm run build:qa` / `npm run build:production` | Construye `dist/`: prerender de cada página, `robots.txt`, `_headers` y, en PDN, `sitemap.xml`  |
+| `npm run content:validate`                      | Contenido sin precios y política de datos lista                                                 |
+| `npm run test:unit` / `npm run test:components` | Pruebas unitarias (con cobertura) y de componentes                                              |
+| `npm run test:e2e` / `npm run test:visual`      | Playwright (regresión + accesibilidad) y regresión visual, sobre `dist/`                        |
+| `npm test`                                      | Todo lo anterior en orden: es lo que conviene ejecutar antes de un PR                           |
 
-Las pruebas (`npm test` y sus variantes) se agregan en la etapa de pruebas.
+La primera vez, instala los navegadores de Playwright con `npx playwright install` (unos 300 MB, una sola vez). El detalle del pipeline está en [`ambientes-y-despliegue.md`](ambientes-y-despliegue.md).
+
+> **Capturas en tu equipo:** `npm run test:visual` compara con capturas de macOS que solo existen en tu computador (git las ignora). La primera vez, o después de un cambio visual intencional, créalas con `npm run test:visual:update`. Las que valen para el CI son las de Linux ([`ambientes-y-despliegue.md`](ambientes-y-despliegue.md), sección 2).
 
 ## 6. Variables de entorno
 
@@ -88,10 +96,21 @@ Los archivos `.env.development`, `.env.qa` y `.env.production` **solo tienen val
 
 **Nunca** pongas contraseñas, llaves ni tokens privados en ningún `.env`: todo lo que empieza por `VITE_` termina dentro del sitio publicado.
 
-## 7. Problemas frecuentes
+## 7. Siguientes pasos
 
-| Síntoma                              | Solución                                                                             |
-| ------------------------------------ | ------------------------------------------------------------------------------------ |
-| `Port 5173 is in use`                | Ya hay un servidor abierto. Ciérralo (`Ctrl + C`) o cierra la otra Terminal.         |
-| `npm ERR! engine Unsupported engine` | Tu Node es anterior a la 24. Repite el paso 2.3.                                     |
-| `Variables de entorno inválidas`     | Revisa que el `.env.[modo]` tenga `VITE_ENV_NAME` y `VITE_SITE_URL` sin barra final. |
+| Para                                        | Lee                                                                    |
+| ------------------------------------------- | ---------------------------------------------------------------------- |
+| Crear una rama, abrir un PR y llevarlo a QA | [`configuracion-github.md`](configuracion-github.md), paso 9           |
+| Cambiar teléfonos, horarios, preguntas…     | [`guia-actualizar-contenido.md`](guia-actualizar-contenido.md)         |
+| Revisar QA antes de publicar                | [`checklist-pruebas-manuales-qa.md`](checklist-pruebas-manuales-qa.md) |
+
+## 8. Problemas frecuentes
+
+| Síntoma                                     | Solución                                                                                                                            |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `Port 5173 is in use`                       | Ya hay un servidor abierto. Ciérralo (`Ctrl + C`) o cierra la otra Terminal.                                                        |
+| `npm ERR! engine Unsupported engine`        | Tu Node es anterior a la 24. Repite el paso 2.3.                                                                                    |
+| `Variables de entorno inválidas`            | Revisa que el `.env.[modo]` tenga `VITE_ENV_NAME` y `VITE_SITE_URL` sin barra final.                                                |
+| `Executable doesn't exist` (Playwright)     | Faltan los navegadores de las pruebas: `npx playwright install`.                                                                    |
+| `A snapshot doesn't exist` en `test:visual` | No hay capturas de macOS en tu equipo: `npm run test:visual:update`.                                                                |
+| Las e2e no ven tu último cambio             | Hay un `preview` abierto en el puerto 4173 y las pruebas lo reutilizan. Ciérralo (`Ctrl + C`), ejecuta `npm run build:qa` y repite. |

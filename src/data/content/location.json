@@ -1,0 +1,15 @@
+{
+  "address": {
+    "street": "Calle 13 # 10-96",
+    "city": "Cereté",
+    "region": "Córdoba",
+    "country": "Colombia"
+  },
+  "businessName": "CEA Conducir J&R del Sinú - Centro de Enseñanza Automovilística",
+  "coordinates": {
+    "latitude": 8.8877998,
+    "longitude": -75.7887601
+  },
+  "googleProfileUrl": "https://maps.app.goo.gl/Zko5WSsCAiaZyExX7",
+  "embedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3941.911719722109!2d-75.79133502473604!3d8.887799791168007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e5a2b370a7cc6f3%3A0x958e2a706f6e2e2b!2sCEA%20Conducir%20J%26R%20del%20Sin%C3%BA%20-%20Centro%20de%20Ense%C3%B1anza%20Automovil%C3%ADstica!5e0!3m2!1ses!2sco!4v1792124923859!5m2!1ses!2sco"
+}

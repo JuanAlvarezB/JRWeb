@@ -1,0 +1,240 @@
+/*
+ * Hero con tarjetas flotantes (DESIGN.md §5).
+ * - Móvil (< 720 px): titular y debajo dos tarjetas (horas y clases teóricas).
+ * - Escritorio angosto: titular y las cuatro tarjetas en una grilla de 2 × 2.
+ * - Contenedor de 1100 px o más: las tarjetas rodean el titular, como en el mockup.
+ *   Se usa una consulta de contenedor porque depende del espacio del hero, no de la
+ *   pantalla (titular de 560 px + dos tarjetas de 250–290 px).
+ */
+.hero {
+  position: relative;
+  container: hero / inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-block: var(--space-2) var(--space-6);
+}
+
+.wash {
+  inset-block: auto 0;
+  block-size: 60%;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.cards {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--space-3);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.card {
+  padding: var(--space-5);
+  border-radius: var(--radius-card);
+  background-color: var(--color-neutral-surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.desktopOnly {
+  display: none;
+}
+
+.eyebrow {
+  font-size: var(--font-size-small);
+  color: var(--color-neutral-text-muted);
+}
+
+.title {
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--font-line-height-heading);
+  color: var(--color-neutral-text);
+}
+
+.cardHeading {
+  font-size: var(--font-size-body-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-text);
+}
+
+.text,
+.breakdown {
+  font-size: var(--font-size-small);
+  line-height: var(--font-line-height-body);
+  color: var(--color-neutral-text-muted);
+}
+
+.theory {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.iconCircle {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  inline-size: var(--size-icon-circle-small);
+  block-size: var(--size-icon-circle-small);
+  border-radius: 50%;
+  background-color: var(--color-brand-glow);
+  color: var(--color-neutral-text);
+}
+
+.icon {
+  inline-size: var(--component-card-contact-icon-size);
+  block-size: var(--component-card-contact-icon-size);
+}
+
+/* Móvil: arco pequeño sin número a la izquierda y el texto a la derecha. */
+.hours {
+  display: flex;
+  gap: var(--space-5);
+  align-items: center;
+}
+
+.arc {
+  flex-shrink: 0;
+  inline-size: calc(var(--size-icon-circle) + var(--space-8));
+}
+
+.arc text {
+  display: none;
+}
+
+.miniMap {
+  overflow: hidden;
+  block-size: calc(var(--size-icon-circle) + var(--space-12));
+  margin-block-end: var(--space-4);
+  border-radius: var(--radius-image);
+}
+
+.street {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-text);
+}
+
+@media (width >= 720px) {
+  .hero {
+    padding-block: var(--space-12) var(--space-16);
+  }
+
+  /* La aguada sobresale del contenedor, como en el mockup. */
+  .wash {
+    inset: calc(var(--space-8) * -1);
+    block-size: auto;
+  }
+
+  .desktopOnly {
+    display: block;
+  }
+
+  .content {
+    max-inline-size: var(--layout-section-header-width);
+    margin-inline: auto;
+  }
+
+  .mobileOnly {
+    display: none;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  .plan,
+  .hours {
+    rotate: calc(var(--angle-hero-card-tilt) * -1);
+  }
+
+  .location,
+  .theory {
+    rotate: var(--angle-hero-card-tilt);
+  }
+
+  .hours {
+    flex-direction: column;
+    gap: var(--space-2);
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .hours .eyebrow {
+    text-align: start;
+  }
+
+  .arc {
+    inline-size: 100%;
+    max-inline-size: calc(var(--component-card-hero-min-width) - var(--space-10));
+    margin-inline: auto;
+  }
+
+  .arc text {
+    display: initial;
+  }
+}
+
+@container hero (width >= 1100px) {
+  /*
+   * Las tarjetas flotan (posición absoluta) y no dan alto al hero: sin un mínimo, las de
+   * abajo invaden la sección siguiente. El hero mide al menos 600 px (la mitad del
+   * contenedor), pero el mínimo va en el contenido: una consulta de contenedor no puede
+   * dar estilos al propio contenedor (.hero).
+   */
+  .content {
+    min-block-size: calc(var(--layout-container-max) / 2 - var(--space-12) - var(--space-16));
+    max-inline-size: calc(
+      var(--layout-container-max) - 2 * var(--component-card-hero-max-width) - 2 * var(--space-6)
+    );
+    margin-inline: auto;
+  }
+
+  .cards {
+    position: absolute;
+    inset: 0;
+    display: block;
+    pointer-events: none;
+  }
+
+  .card {
+    position: absolute;
+    inline-size: var(--component-card-hero-max-width);
+    pointer-events: auto;
+  }
+
+  .plan {
+    inset-block-start: var(--space-12);
+    inset-inline-start: 0;
+  }
+
+  /* Las tarjetas de abajo son más angostas: el subtítulo queda libre. */
+  .location,
+  .hours {
+    inline-size: var(--component-card-hero-min-width);
+  }
+
+  .location {
+    inset-block-start: calc(var(--space-20) * 4);
+    inset-inline-start: var(--space-10);
+  }
+
+  .theory {
+    inset-block-start: var(--space-16);
+    inset-inline-end: 0;
+  }
+
+  .hours {
+    inset-block-start: calc(var(--space-20) * 4);
+    inset-inline-end: var(--space-8);
+  }
+}

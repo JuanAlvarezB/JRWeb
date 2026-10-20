@@ -49,6 +49,11 @@ function preloadDisplayFont(): Plugin {
  */
 export default defineConfig({
   plugins: [react(), preloadDisplayFont()],
+  // Año de la build para el copyright: el HTML prerenderizado y el navegador muestran
+  // el mismo valor (con `new Date()` en el cliente no coincidirían en enero).
+  define: {
+    __BUILD_YEAR__: JSON.stringify(new Date().getFullYear()),
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -61,6 +66,12 @@ export default defineConfig({
   },
   build: {
     assetsDir: 'static',
+    // El prerender lee el manifiesto para enlazar en cada página el CSS y el JS de su
+    // fragmento (sin esto, la página se vería un instante sin sus estilos).
+    manifest: true,
+    // Un solo CSS para todo el sitio (≈ 10 KB comprimido): se descarga una vez, queda
+    // en caché para todas las páginas y ninguna se pinta sin sus estilos.
+    cssCodeSplit: false,
     sourcemap: false,
   },
   server: {

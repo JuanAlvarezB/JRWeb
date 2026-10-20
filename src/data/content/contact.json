@@ -1,0 +1,77 @@
+{
+  "channels": [
+    {
+      "kind": "whatsapp",
+      "label": "WhatsApp",
+      "entries": [
+        {
+          "value": "+573165641048",
+          "display": "+57 316 564 1048"
+        },
+        {
+          "value": "+573246525153",
+          "display": "+57 324 652 5153"
+        }
+      ]
+    },
+    {
+      "kind": "phone",
+      "label": "Celular · llamadas",
+      "entries": [
+        {
+          "value": "+573165641048",
+          "display": "+57 316 564 1048"
+        },
+        {
+          "value": "+573246525153",
+          "display": "+57 324 652 5153"
+        }
+      ]
+    },
+    {
+      "kind": "email",
+      "label": "Correo",
+      "entries": [
+        {
+          "value": "conducirdelsinu@gmail.com",
+          "display": "conducirdelsinu@gmail.com"
+        }
+      ]
+    },
+    {
+      "kind": "facebook",
+      "label": "Facebook",
+      "entries": [
+        {
+          "value": "https://www.facebook.com/ceaconducirjrdelsinu/",
+          "display": "ceaconducirjrdelsinu"
+        }
+      ]
+    },
+    {
+      "kind": "instagram",
+      "label": "Instagram",
+      "entries": [
+        {
+          "value": "https://www.instagram.com/ceaconducirjrdelsinu/",
+          "display": "@ceaconducirjrdelsinu"
+        }
+      ]
+    },
+    {
+      "kind": "tiktok",
+      "label": "TikTok",
+      "entries": [
+        {
+          "value": "https://www.tiktok.com/@ceaconducirjrdelsinu",
+          "display": "@ceaconducirjrdelsinu"
+        }
+      ]
+    }
+  ],
+  "whatsAppMessages": {
+    "general": "Hola, vi la página web y quiero información sobre los cursos.",
+    "priceInquiry": "Hola, vi en la página web el curso {categoria} y quiero conocer el precio.",
+    "requirementsInquiry": "Hola, vi en la página web el curso {categoria} y quiero conocer los requisitos."
+  }
+}

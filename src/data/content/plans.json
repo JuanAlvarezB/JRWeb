@@ -1,0 +1,38 @@
+[
+  {
+    "category": "A2",
+    "name": "Licencia A2",
+    "description": "Motocicletas, motociclos y mototriciclos con cilindrada mayor a 125 cc.",
+    "serviceType": "private",
+    "ageRequirement": "Desde 16 años",
+    "hours": {
+      "theory": 25,
+      "workshop": 3,
+      "driving": 15
+    }
+  },
+  {
+    "category": "B1",
+    "name": "Licencia B1",
+    "description": "Automóviles, motocarros, cuatrimotos, camperos, camionetas y microbuses de servicio particular.",
+    "serviceType": "private",
+    "ageRequirement": "Desde 16 años",
+    "hours": {
+      "theory": 25,
+      "workshop": 5,
+      "driving": 20
+    }
+  },
+  {
+    "category": "C1",
+    "name": "Licencia C1",
+    "description": "Automóviles, camperos, camionetas y microbuses de servicio público.",
+    "serviceType": "public",
+    "ageRequirement": "Mayores de 18 años",
+    "hours": {
+      "theory": 30,
+      "workshop": 5,
+      "driving": 30
+    }
+  }
+]

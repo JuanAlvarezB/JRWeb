@@ -1,0 +1,80 @@
+.block {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: var(--font-size-small);
+  color: var(--color-neutral-text-muted);
+}
+
+.address {
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  margin-block-start: var(--space-2);
+  font-size: var(--font-size-heading-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--font-line-height-heading);
+  color: var(--color-brand-default);
+  text-decoration: none;
+}
+
+.address:hover {
+  color: var(--color-brand-hover);
+  text-decoration: underline;
+  text-decoration-thickness: var(--component-action-link-underline-thickness);
+  text-underline-offset: var(--component-action-link-underline-offset);
+}
+
+.address:focus-visible {
+  border-radius: var(--component-action-link-focus-radius);
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset-link);
+}
+
+.addressIcon {
+  flex-shrink: 0;
+  inline-size: var(--component-button-icon-size);
+  block-size: var(--component-button-icon-size);
+}
+
+.extra {
+  display: grid;
+  gap: var(--space-2);
+  margin-block-start: var(--space-6);
+  padding-block-start: var(--space-6);
+  border-block-start: var(--component-border-hairline) solid var(--color-neutral-border);
+}
+
+.googleName {
+  margin-block-start: var(--space-6);
+  color: var(--color-neutral-text-muted);
+  line-height: var(--font-line-height-body);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: center;
+  margin-block-start: auto;
+  padding-block-start: var(--space-8);
+}
+
+@media (width >= 720px) {
+  .block {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-6);
+  }
+
+  .actions {
+    flex-direction: row;
+    gap: var(--space-6);
+  }
+}

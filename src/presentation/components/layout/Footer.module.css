@@ -1,0 +1,192 @@
+.footer {
+  max-inline-size: calc(var(--layout-container-max) + 2 * var(--layout-gutter-mobile));
+  margin: var(--component-footer-gap-top-mobile) auto 0;
+  padding-inline: var(--layout-gutter-mobile);
+}
+
+/* Móvil: logo, Contacto, Horarios y, abajo, Páginas y Redes en dos columnas. */
+.grid {
+  display: grid;
+  grid-template-areas:
+    'brand brand'
+    'contact contact'
+    'schedules schedules'
+    'pages social';
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-8) var(--space-4);
+  padding-block: var(--space-10);
+  border-block-start: var(--component-border-hairline) solid var(--color-neutral-border);
+}
+
+.brand {
+  grid-area: brand;
+  justify-self: start;
+  border-radius: var(--component-action-link-focus-radius);
+}
+
+.logo {
+  inline-size: var(--component-nav-logo-width);
+  block-size: auto;
+}
+
+.pages {
+  grid-area: pages;
+}
+
+.contact {
+  grid-area: contact;
+}
+
+.schedules {
+  grid-area: schedules;
+}
+
+.social {
+  grid-area: social;
+}
+
+.heading {
+  margin-block-end: var(--space-3);
+  font: var(--typography-eyebrow);
+  letter-spacing: var(--font-letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-brand-default);
+}
+
+.list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link,
+.address {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--size-touch-target);
+  color: var(--color-neutral-text);
+  text-decoration: none;
+}
+
+.caption {
+  display: none;
+  font-size: var(--font-size-small);
+  color: var(--color-neutral-text-muted);
+}
+
+.address {
+  gap: var(--space-2);
+  align-items: flex-start;
+  padding-block: var(--space-3);
+}
+
+.pin {
+  flex-shrink: 0;
+  inline-size: var(--component-button-icon-size);
+  block-size: var(--component-button-icon-size);
+  color: var(--color-brand-default);
+}
+
+.link:hover,
+.address:hover {
+  color: var(--color-brand-default);
+  text-decoration: underline;
+}
+
+.scheduleList {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+/* Móvil: "Nocturnas: lun, mar y mié, 6–8 p. m." en una línea. */
+.scheduleList dt,
+.scheduleList dd {
+  display: inline;
+}
+
+.scheduleList dt {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-text);
+}
+
+.scheduleList dt::after {
+  content: ': ';
+}
+
+.scheduleList dd {
+  margin: 0;
+  color: var(--color-neutral-text-muted);
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-block: var(--space-6) var(--space-8);
+  border-block-start: var(--component-border-hairline) solid var(--color-neutral-border);
+  font-size: var(--font-size-small);
+  color: var(--color-neutral-text-muted);
+}
+
+/* Crédito de diseño: mismo tamaño y gris del copyright, solo el nombre en Verde Sinú. */
+.designer {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-default);
+}
+
+.policy {
+  align-self: flex-start;
+  color: var(--color-neutral-text-muted);
+  text-decoration: underline;
+}
+
+.policy:hover {
+  color: var(--color-brand-default);
+}
+
+@media (width >= 720px) {
+  .footer {
+    max-inline-size: calc(var(--layout-container-max) + 2 * var(--layout-gutter-desktop));
+    margin-block-start: var(--component-footer-gap-top-desktop);
+    padding-inline: var(--layout-gutter-desktop);
+  }
+
+  .grid {
+    grid-template-areas: 'brand pages contact schedules social';
+    grid-template-columns: var(--component-footer-brand-column) repeat(4, minmax(0, 1fr));
+    gap: var(--space-8);
+    padding-block: var(--space-16);
+  }
+
+  .link,
+  .address {
+    min-block-size: auto;
+    padding-block: var(--space-1);
+  }
+
+  .caption {
+    display: list-item;
+    list-style: none;
+  }
+
+  /* Escritorio: etiqueta arriba y texto debajo, con mayúscula inicial. */
+  .scheduleList dt,
+  .scheduleList dd {
+    display: block;
+  }
+
+  .scheduleList dt::after {
+    content: none;
+  }
+
+  .scheduleList dd::first-letter {
+    text-transform: uppercase;
+  }
+
+  .bottom {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

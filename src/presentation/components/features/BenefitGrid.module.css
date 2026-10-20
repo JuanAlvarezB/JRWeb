@@ -1,0 +1,21 @@
+.grid {
+  display: grid;
+  gap: var(--space-4);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+@media (width >= 720px) {
+  .grid {
+    gap: var(--space-6);
+  }
+
+  .threeColumns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .twoColumns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

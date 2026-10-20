@@ -1,0 +1,140 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.arcColumn {
+  display: grid;
+  place-items: center;
+}
+
+.arc {
+  inline-size: 100%;
+  max-inline-size: calc(var(--size-icon-circle) * 5);
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.chips {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.chip {
+  min-inline-size: var(--component-selector-chip-min-width);
+  block-size: var(--component-selector-chip-height);
+  padding-inline: var(--space-4);
+  border: var(--component-selector-chip-border-width) solid var(--color-neutral-border-strong);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-neutral-surface);
+  color: var(--color-neutral-text);
+  font: var(--typography-button);
+  letter-spacing: var(--font-letter-spacing-body);
+  cursor: pointer;
+  transition:
+    background-color var(--motion-duration-fast) var(--motion-easing-out),
+    border-color var(--motion-duration-fast) var(--motion-easing-out);
+}
+
+.chip:hover {
+  border-color: var(--color-brand-default);
+}
+
+.chip:focus-visible {
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+}
+
+.chipSelected {
+  border-color: var(--color-brand-default);
+  background-color: var(--color-brand-default);
+  color: var(--color-neutral-surface);
+}
+
+.name {
+  margin-block: var(--space-8) var(--space-2);
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--font-line-height-heading);
+  color: var(--color-neutral-text);
+}
+
+.description {
+  color: var(--color-neutral-text-muted);
+  line-height: var(--font-line-height-body);
+}
+
+.legend {
+  padding: 0;
+  margin: var(--space-4) 0 0;
+  list-style: none;
+}
+
+.legendRow {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  padding-block: var(--space-3);
+  border-block-end: var(--component-border-hairline) solid var(--color-neutral-border);
+  color: var(--color-neutral-text);
+}
+
+.swatch {
+  inline-size: var(--space-3);
+  block-size: var(--space-3);
+  border-radius: var(--component-action-link-focus-radius);
+}
+
+.theory {
+  background-color: var(--color-course-theory);
+}
+
+.workshop {
+  background-color: var(--color-course-workshop);
+}
+
+.driving {
+  background-color: var(--color-course-driving);
+}
+
+.legendLabel {
+  flex: 1;
+}
+
+.legendValue {
+  font-weight: var(--font-weight-semibold);
+}
+
+.link {
+  margin-block-start: var(--space-6);
+}
+
+@media (width >= 720px) {
+  .card {
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: var(--space-16);
+  }
+
+  .arcColumn,
+  .details {
+    flex: 1;
+  }
+
+  .chips {
+    display: flex;
+  }
+
+  .chip {
+    padding-inline: var(--space-6);
+  }
+
+  .arc {
+    max-inline-size: none;
+  }
+}

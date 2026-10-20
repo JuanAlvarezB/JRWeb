@@ -1,0 +1,38 @@
+# Regenera las capturas de referencia de la regresión visual EN LINUX (las mismas
+# condiciones que el CI). No hace commit: publica las capturas como artefacto para
+# que las revises y las subas tú a tu rama feature (docs/ambientes-y-despliegue.md).
+name: Actualizar capturas de referencia
+
+on:
+  workflow_dispatch:
+
+# Runner fijo (ubuntu-24.04, no ubuntu-latest): las capturas de referencia de la
+# regresión visual dependen del sistema operativo y no deben cambiar sin aviso.
+
+permissions:
+  contents: read
+
+jobs:
+  update-snapshots:
+    name: update-snapshots
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Solo desde ramas feature
+        if: github.ref_name == 'qa' || github.ref_name == 'main'
+        run: |
+          echo "::error::Ejecuta este workflow sobre tu rama feature/*, no sobre qa ni main."
+          exit 1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build:qa
+      - run: npm run test:visual:update
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: capturas-de-referencia
+          path: tests/e2e/specs/visual/**/*-snapshots/
+          retention-days: 7
+          if-no-files-found: warn

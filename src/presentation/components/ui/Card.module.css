@@ -33,3 +33,36 @@
     padding: var(--space-6);
   }
 }
+
+/* Entrada (DESIGN.md §7): 12 px y opacidad, 300 ms, escalonada 60 ms entre hermanas. */
+.card[data-reveal='pending'] {
+  opacity: 0;
+}
+
+.card[data-reveal='shown'] {
+  animation: card-enter var(--motion-duration-enter) var(--motion-easing-out) both;
+}
+
+.card[data-reveal='shown']:nth-child(2) {
+  animation-delay: var(--motion-duration-stagger);
+}
+
+.card[data-reveal='shown']:nth-child(3) {
+  animation-delay: calc(var(--motion-duration-stagger) * 2);
+}
+
+.card[data-reveal='shown']:nth-child(n + 4) {
+  animation-delay: calc(var(--motion-duration-stagger) * 3);
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    translate: 0 var(--motion-distance-enter);
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "category": "A2",
+    "title": "Motocicletas",
+    "audience": "Para quienes van a conducir moto de alto cilindraje en servicio particular.",
+    "summary": "Motocicletas, motociclos y mototriciclos de más de 125 cc.",
+    "vehicles": "Motocicletas, motociclos y mototriciclos con cilindrada mayor a 125 cc.",
+    "serviceType": "private",
+    "minimumAge": 16,
+    "ageRequirement": "Desde los 16 años"
+  },
+  {
+    "category": "B1",
+    "title": "Vehículos de servicio particular",
+    "audience": "Para quienes van a conducir carro, camioneta o microbús de uso particular.",
+    "summary": "Automóviles, camionetas y otros vehículos de servicio particular.",
+    "vehicles": "Automóviles, motocarros, cuatrimotos, camperos, camionetas y microbuses.",
+    "serviceType": "private",
+    "minimumAge": 16,
+    "ageRequirement": "Desde los 16 años"
+  },
+  {
+    "category": "C1",
+    "title": "Vehículos de servicio público",
+    "audience": "Para quienes van a trabajar conduciendo vehículos de servicio público.",
+    "summary": "Automóviles, camperos, camionetas y microbuses de servicio público.",
+    "vehicles": "Automóviles, camperos, camionetas y microbuses.",
+    "serviceType": "public",
+    "minimumAge": 18,
+    "ageRequirement": "Mayores de 18 años"
+  }
+]

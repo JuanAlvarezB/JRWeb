@@ -1,6 +1,7 @@
 # Dependencias y builds
 node_modules/
 dist/
+dist-server/
 *.tsbuildinfo
 
 # Reportes de pruebas
@@ -30,3 +31,20 @@ insumos/
 .claude/
 .agents/
 skills-lock.json
+docs/*
+# Documentos del proyecto (sí se versionan); el resto de docs/ son notas locales.
+!docs/mockups/
+!docs/ambientes-y-despliegue.md
+!docs/checklist-pruebas-manuales-qa.md
+!docs/configuracion-cloudflare.md
+!docs/configuracion-github.md
+!docs/estado-del-proyecto.md
+!docs/guia-actualizar-contenido.md
+!docs/guia-paso-a-pdn.md
+!docs/instalacion-local.md
+!docs/pendientes.md
+
+# Capturas de regresión visual hechas fuera de Linux: las de referencia salen del CI
+# (workflow "Actualizar capturas de referencia").
+tests/e2e/specs/visual/**/*-darwin.png
+tests/e2e/specs/visual/**/*-win32.png

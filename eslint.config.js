@@ -14,6 +14,7 @@ const LAYER_RULE = 'Regla de dependencias: presentation -> domain <- data.';
 export default defineConfig([
   globalIgnores([
     'dist/',
+    'dist-server/',
     'coverage/',
     'playwright-report/',
     'test-results/',
@@ -144,9 +145,15 @@ export default defineConfig([
     },
   },
 
+  // Pruebas end-to-end: los fixtures de Playwright no son hooks de React.
+  {
+    files: ['tests/e2e/**/*.ts'],
+    rules: { 'react-hooks/rules-of-hooks': 'off' },
+  },
+
   // Archivos de configuración y scripts de Node
   {
-    files: ['*.config.{js,ts}', 'scripts/**/*.ts'],
+    files: ['*.config.{js,ts}', 'scripts/**/*.ts', 'tests/**/*.{ts,tsx}'],
     languageOptions: { globals: { ...globals.node } },
     rules: { 'no-console': 'off' },
   },
