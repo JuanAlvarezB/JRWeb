@@ -87,6 +87,8 @@ La configuración inicial de Cloudflare y GitHub está en [`configuracion-cloudf
 
 ### Llevar QA a PDN
 
+Paso a paso detallado, con pantallas y qué hacer si algo falla: [`guia-paso-a-pdn.md`](guia-paso-a-pdn.md).
+
 1. Con QA en verde y el [checklist](checklist-pruebas-manuales-qa.md) completo, abre el PR **`qa` → `main`** (solo `qa` puede llegar a `main`). El CI corre las 10 verificaciones con la build de producción.
 2. Integra con **Create a merge commit**. Se ejecuta **Despliegue a PDN** (`deploy-prod.yml`), que **espera tu aprobación**: **Review deployments** → `production` → **Approve and deploy**.
 3. `deploy-production`: build de producción (indexable, con sitemap y analítica) → rama `main` de Cloudflare Pages → <https://conducirjrdelsinu.pages.dev>.

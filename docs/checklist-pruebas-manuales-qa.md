@@ -28,7 +28,7 @@ Revisión a mano de <https://qa.conducirjrdelsinu.pages.dev> antes de abrir el P
 - [ ] **Servicios:** las tres licencias (A2, B1 y C1) con sus vehículos y la edad mínima.
 - [ ] **Planes:** horas de teoría, taller y manejo de cada licencia; **ningún precio** en la página.
 - [ ] **Contáctanos:** teléfonos, correo, redes, dirección y horarios correctos.
-- [ ] **Preguntas frecuentes:** respuestas aprobadas por el dueño ([pendientes.md](pendientes.md), #2).
+- [ ] **Preguntas frecuentes:** las respuestas son las aprobadas por el dueño y siguen vigentes.
 - [ ] **Política de datos:** la versión aprobada, con su índice y la sección de analítica al final.
 - [ ] **Footer:** NIT, horarios, redes y el enlace a la Política de datos.
 

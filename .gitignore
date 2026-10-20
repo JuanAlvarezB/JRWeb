@@ -40,6 +40,7 @@ docs/*
 !docs/configuracion-github.md
 !docs/estado-del-proyecto.md
 !docs/guia-actualizar-contenido.md
+!docs/guia-paso-a-pdn.md
 !docs/instalacion-local.md
 !docs/pendientes.md
 
