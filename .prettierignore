@@ -12,3 +12,7 @@ tests/e2e/specs/visual/**/*-snapshots/
 src/data/content/legal/
 src/shared/constants/designTokens.ts
 dist-server/
+
+# Verificación de Google Search Console: Google exige el contenido exacto del archivo
+# (sin salto de línea final). No se formatea.
+public/google*.html
