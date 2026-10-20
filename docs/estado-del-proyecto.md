@@ -2,7 +2,7 @@
 
 Sitio web de Conducir J&R del Sinú: etapas terminadas y etapas que faltan.
 
-Actualizado el 18 oct 2026, al cerrar la etapa 13 (documentación).
+Actualizado el 19 oct 2026, al publicar el release 1 en PDN (etapa 14).
 
 ## Resumen
 
@@ -12,14 +12,16 @@ Actualizado el 18 oct 2026, al cerrar la etapa 13 (documentación).
   - Rendimiento medido en Lighthouse: 98–100.
   - El CI de GitHub valida cada PR hacia `qa`, con pruebas de cada página y de cada flujo en 4 navegadores.
   - Cloudflare está configurado: cada integración en `qa` publica QA (privado, con Access) y corre la regresión contra el sitio real.
-  - Documentación completa: instalación, GitHub, Cloudflare, despliegue, actualización de contenido y checklist de QA.
-- **Falta para publicar:** revisar QA con el checklist y llevar `qa` a `main` (etapa 14).
+  - Documentación completa: instalación, GitHub, Cloudflare, despliegue, actualización de contenido, checklist de QA y guía para pasar a PDN.
+  - **Release 1 publicado en PDN el 19 oct 2026:** <https://conducirjrdelsinu.pages.dev>, con Cloudflare Web Analytics activo.
+- **Lo que sigue:** los asuntos abiertos de [pendientes.md](pendientes.md) (Search Console, dominio propio, fotos reales…).
 
-| Rama   | Estado                                                                |
-| ------ | --------------------------------------------------------------------- |
-| `qa`   | Etapas 1–12 integradas; la 13 en su PR.                               |
-| `main` | Solo el primer commit. Ninguna etapa ha pasado a PDN.                 |
-| Sitio  | QA publicado en <https://qa.conducirjrdelsinu.pages.dev>; PDN aún no. |
+| Rama / ambiente | Estado                                                                                  |
+| --------------- | --------------------------------------------------------------------------------------- |
+| `qa`            | Etapas 1–14 integradas.                                                                 |
+| `main`          | Release 1 (PR #29, `qa` → `main`, 19 oct 2026).                                         |
+| PDN             | Público en <https://conducirjrdelsinu.pages.dev>, indexable y con analítica.            |
+| QA              | Publicado en <https://qa.conducirjrdelsinu.pages.dev>, protegido con Cloudflare Access. |
 
 ## Etapas terminadas
 
@@ -38,7 +40,8 @@ Actualizado el 18 oct 2026, al cerrar la etapa 13 (documentación).
 | 10  | SEO, prerender y analítica     | Detalle más abajo.                                                                                                                                       | #16 |
 | 11  | Pruebas                        | Detalle más abajo.                                                                                                                                       | #17 |
 | 12  | Despliegue en Cloudflare Pages | Detalle más abajo.                                                                                                                                       | #18 |
-| 13  | Documentación                  | Guía para actualizar el contenido, checklist de pruebas manuales de QA, regla de Dependabot para versiones mayores, guía de instalación y README al día. | —   |
+| 13  | Documentación                  | Guía para actualizar el contenido, checklist de pruebas manuales de QA, regla de Dependabot para versiones mayores, guía de instalación y README al día. | #23 |
+| 14  | Paso a PDN                     | Detalle más abajo.                                                                                                                                       | #29 |
 
 Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar el flujo de ramas `feature/*`.
 
@@ -98,30 +101,39 @@ Las etapas 1–3 entraron con el primer commit del repositorio, antes de adoptar
 ### Ajustes después de la etapa 12
 
 - **Estabilidad de las pruebas e2e** (PR #19): ver el detalle de la etapa 11.
-- **Fondo de página (18 oct 2026):** pasa del Marfil `#FBF8F0` al Blanco Cálido `#FDFBF7`, más claro y menos crema, por decisión del dueño.
+- **Fondo de página (18 oct 2026, PR #20):** pasa del Marfil `#FBF8F0` al Blanco Cálido `#FDFBF7`, más claro y menos crema, por decisión del dueño.
   - Es un solo token (`--color-neutral-canvas`), así que el cambio llega a todas las páginas, al menú, al menú móvil y al footer.
   - Las tarjetas siguen en blanco y se separan del fondo por su sombra teñida de verde.
   - Los contrastes de texto suben levemente; DESIGN.md (§2 y registro de cambios) quedó actualizado.
-- **Regresión contra QA real (18 oct 2026):** con el despliegue remoto activo, WebKit anotó en la consola el estado 404 del documento de `/no-existe`, que es la respuesta correcta de la página 404.
+- **Regresión contra QA real (18 oct 2026, PR #21):** con el despliegue remoto activo, WebKit anotó en la consola el estado 404 del documento de `/no-existe`, que es la respuesta correcta de la página 404.
   - El filtro del Page Object comparaba con `page.url()`, y en WebKit ese aviso puede llegar antes de que esa URL cambie.
   - Ahora solo la prueba de `/no-existe` ignora ese aviso y lo compara con la ruta navegada. Cualquier otro error, incluido un 404 de otro recurso, hace fallar la prueba.
-- **Inicio (18 oct 2026), por decisión del dueño:** la sección de beneficios ya no lleva el eyebrow "Por qué J&R", y el titular pasa de "Aprende a conducir con confianza en Cereté" a "Aprende a conducir con confianza". Cereté sigue en el título de la pestaña, la descripción y los datos estructurados, así que el SEO local no cambia. Con el hero más bajo apareció un error que el titular largo ocultaba: desde 1100 px, la tarjeta del velocímetro invadía la sección siguiente. El alto mínimo de 600 px del hero nunca se aplicaba, porque una consulta de contenedor no puede dar estilos al propio contenedor; ahora va en su contenido. Se actualizaron las pruebas y las capturas de referencia de Inicio.
+- **Inicio (18 oct 2026, PR #22), por decisión del dueño:** la sección de beneficios ya no lleva el eyebrow "Por qué J&R", y el titular pasa de "Aprende a conducir con confianza en Cereté" a "Aprende a conducir con confianza". Cereté sigue en el título de la pestaña, la descripción y los datos estructurados, así que el SEO local no cambia. Con el hero más bajo apareció un error que el titular largo ocultaba: desde 1100 px, la tarjeta del velocímetro invadía la sección siguiente. El alto mínimo de 600 px del hero nunca se aplicaba, porque una consulta de contenedor no puede dar estilos al propio contenedor; ahora va en su contenido. Se actualizaron las pruebas y las capturas de referencia de Inicio.
 - **Crédito en el footer (18 oct 2026):** la franja inferior dice "© 2026 Conducir J&R del Sinú · NIT 901722359-5 Designed by Joker", con el mismo tamaño y gris del copyright y "Joker" en Verde Sinú semibold. En móvil el crédito pasa a una segunda línea porque no cabe. Como el footer está en todas las páginas, se actualizaron todas las capturas de referencia.
-- **Vistas previas al compartir (18 oct 2026):** auditoría y ajuste de Open Graph para WhatsApp, Facebook, LinkedIn y X.
+- **Vistas previas al compartir (18 oct 2026, PR #24):** auditoría y ajuste de Open Graph para WhatsApp, Facebook, LinkedIn y X.
   - Cada página tiene título propio para compartir (sin repetir el nombre del sitio) y una descripción de máx. 80 caracteres, para que WhatsApp no la corte. Se agregaron `og:image:type` y la tarjeta completa de X.
   - La imagen `og-image.png` pasó a fondo blanco puro con el mismo logo (72 KB).
   - Pruebas: unitarias de la construcción de etiquetas, del tamaño y el peso de la imagen; e2e que lee el HTML de las 8 páginas y descarga la imagen; el smoke de PDN descarga la imagen con su URL absoluta.
   - Checklist de QA, sección 9: verificación con el Sharing Debugger de Facebook y en WhatsApp después de publicar.
+- **Guía para pasar a PDN (19 oct 2026, PR #28):** [`guia-paso-a-pdn.md`](guia-paso-a-pdn.md), el paso a paso de la publicación, de la revisión de QA a la verificación del sitio público.
+
+### Detalle de la etapa 14 (paso a PDN)
+
+- **Publicación:** el 19 oct 2026, PR #29 (`qa` → `main`, AB#01 AB#2 AB#3) con la [guía para pasar a PDN](guia-paso-a-pdn.md).
+  - **Despliegue a PDN #1** en verde: `deploy-production` publicó <https://conducirjrdelsinu.pages.dev> y `smoke-production` pasó.
+- **QA:** publicado en <https://qa.conducirjrdelsinu.pages.dev> y protegido con Cloudflare Access (`QA_REMOTE_DEPLOY=true`). La regresión de cada integración en `qa` corre contra QA real con el Service Token.
+  - Antes de publicar se corrigió la prueba de `/no-existe` en WebKit (PR #21): ahora ignora solo el aviso de consola del documento 404 real de Cloudflare Pages.
+- **Revisión previa:** checklist de QA completo, revisión en varios celulares y respuestas de Preguntas frecuentes aprobadas por el dueño.
+- **Analítica:** Cloudflare Web Analytics activo en PDN y verificado: el beacon carga y Core Web Vitals están en verde.
+- **Verificación del sitio público** (parte 6 de la guía): `robots.txt`, `sitemap.xml` con 7 páginas y vista previa al compartir en WhatsApp y Facebook.
 
 ## Etapas que faltan
 
-| #   | Etapa      | Alcance                                                                                                                                                                               |
-| --- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 14  | Paso a PDN | Seguir la [guía para pasar a PDN](guia-paso-a-pdn.md): revisar QA con el [checklist](checklist-pruebas-manuales-qa.md), PR `qa` → `main`, aprobación del despliegue y smoke en verde. |
+Ninguna: las 14 etapas del release 1 están terminadas y publicadas. Los cambios siguientes siguen el flujo normal (rama `feature/*` → `qa` → `main`) con la [guía para pasar a PDN](guia-paso-a-pdn.md).
 
 ## Pendientes
 
-Los asuntos abiertos (fotos reales, token de analítica, Search Console…) se registran en [pendientes.md](pendientes.md).
+Los asuntos abiertos (Google Search Console, dominio propio, fotos reales…) se registran en [pendientes.md](pendientes.md).
 
 ## Verificaciones al cierre de la etapa 12
 
@@ -130,4 +142,14 @@ Los asuntos abiertos (fotos reales, token de analítica, Search Console…) se r
 | Workflows (actionlint)       | Sin errores en `ci`, `update-snapshots`, `deploy-reusable`, `deploy-qa` y `deploy-prod` |
 | Opciones de Wrangler 4.147.0 | Verificadas (`--project-name`, `--branch`, `--commit-hash`, `--production-branch`)      |
 | Lint, tipos y pruebas        | Sin cambios de código en esta etapa; siguen en verde                                    |
-| Despliegue real              | Pendiente de la configuración de Cloudflare (guía, pasos 1–8)                           |
+| Despliegue real              | Hecho: QA desde el 18 oct 2026 y PDN desde el 19 oct 2026 (etapa 14)                    |
+
+## Verificaciones de la publicación (etapa 14)
+
+| Verificación                 | Resultado                                                  |
+| ---------------------------- | ---------------------------------------------------------- |
+| Despliegue a PDN #1          | `deploy-production` y `smoke-production` en verde          |
+| Sitio público                | Carga sin Access y sin la etiqueta "QA"                    |
+| `robots.txt` y `sitemap.xml` | `Allow: /` con la línea del sitemap; sitemap con 7 páginas |
+| Vista previa al compartir    | Correcta en WhatsApp y en el Sharing Debugger de Facebook  |
+| Cloudflare Web Analytics     | El beacon carga; Core Web Vitals en verde                  |
